@@ -197,6 +197,42 @@ details.sel{border-color:var(--brass)}
 .selbox.on{border-color:var(--accent);background:var(--accent-weak);font-weight:600}
 .oprow.off .on-name,.oprow.off .on-sub{opacity:.5}
 .card.empty{border-style:dashed;background:transparent}
+/* プリセット */
+details.preset{border-color:var(--accent)}
+.pre-n{font-size:11px;color:var(--faint);margin-left:5px;font-variant-numeric:tabular-nums}
+.seg button.on .pre-n{color:var(--brass)}
+.chip .mk{display:inline-block;font-size:10.5px;font-weight:600;color:var(--brass);border:1px solid var(--brass);border-radius:5px;padding:0 4px;margin-left:5px;line-height:1.4;vertical-align:1px}
+.chip.on .mk{color:var(--accent-ink);border-color:var(--accent-ink)}
+.pv-box{border:1px solid var(--line);border-radius:12px;padding:14px 12px;margin-top:14px;background:var(--bg)}
+.pv-title{font:600 16px/1.4 var(--serif);letter-spacing:.05em}
+.pv-box .preset-desc{background:var(--card)}
+.pr-sum{font-size:13px;margin:10px 0 2px;color:var(--ink);line-height:1.6}
+.pr-row{padding:11px 0;border-bottom:1px dashed var(--line)}
+.pr-row:last-of-type{border-bottom:0}
+.pr-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pr-top b{font-size:14px}
+.pr-badge{font-size:11px;border-radius:6px;padding:1px 7px;white-space:nowrap;font-weight:600}
+.st-new .pr-badge{background:var(--ok-bg);color:var(--ok)}
+.st-conflict .pr-badge{background:var(--warn-bg);color:var(--warn)}
+.st-same .pr-badge,.st-locked .pr-badge{background:var(--seg);color:var(--sub)}
+.pr-vals{display:flex;flex-wrap:wrap;gap:2px 6px;align-items:baseline;font-size:13.5px;font-variant-numeric:tabular-nums;margin-top:3px}
+.pr-vals .arr{opacity:.5}
+.pr-cur{color:var(--sub)}
+.pr-to{font-weight:600;color:var(--accent)}
+.pr-lab{font-size:12px;color:var(--sub);margin-top:1px}
+.seg.mini{margin-top:7px}
+.seg.mini button{font-size:12.5px;padding:6px 2px;min-height:36px}
+.omit.ifc{align-items:flex-start;padding:4px 0;line-height:1.55}
+.omit.ifc input{margin-top:2px;flex:none}
+.undo-box{background:var(--brass-weak);border-radius:10px;padding:8px 10px 8px 12px;margin-top:12px;gap:6px;font-size:13px}
+.undo-box .hint{color:var(--ink)}
+/* 関係段階の連動 */
+.linkrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px}
+.linkrow:empty{display:none}
+.lk-cap{font-size:12px;color:var(--sub);margin-right:2px}
+.lk{border:1px solid var(--line);background:transparent;color:var(--sub);border-radius:99px;padding:4px 11px;font:inherit;font-size:12px;min-height:32px}
+.lk.on{border-color:var(--accent);color:var(--accent);background:var(--accent-weak);font-weight:600}
+.resug{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px;background:var(--accent-weak);border-radius:10px;padding:6px 8px 6px 11px;font-size:12.5px;width:100%}
 #help{z-index:70}
 .sheet.help{max-height:88vh;overflow:auto;-webkit-overflow-scrolling:touch}
 .help h3{font:600 15px/1.5 var(--serif);margin:16px 0 6px;letter-spacing:.05em}
@@ -219,7 +255,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
 </style>
 </head>
 <body>
-<header><div class="hbar"><h1>キャラ人格調律工房</h1><div class="hright"><button class="hbtn" data-act="help"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>使い方</button><span class="ver">v0.3</span></div></div></header>
+<header><div class="hbar"><h1>キャラ人格調律工房</h1><div class="hright"><button class="hbtn" data-act="help"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>使い方</button><span class="ver">v0.4</span></div></div></header>
 <main id="app"></main>
 <nav id="tabs" aria-label="画面切り替え"></nav>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -231,10 +267,11 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
     <ol>
       <li><b>予定文字数を決める</b><br>人格設定に使う字数です。キャラ設定欄の上限から、世界観など他の記述に使う分を引いた字数が目安です。</li>
       <li><b>使う人格項目を選ぶ</b><br>「人格調律」の一番上で、このキャラに必要な項目だけにチェックを入れます。選んだ項目のスライダーだけが下に出ます。外しても値は消えません。</li>
+      <li><b>プリセットから始める（任意）</b><br>「人格プリセットから始める」で、基本人格（12種）と愛情スタイル（8種）を選べます。選ぶと、どの項目にどんな値が入るか（今の値 → 提案）が出るので、確かめてから「適用する」を押します。使用中で値が違う項目は、初めは今の値を残します。プリセット値にしたい項目だけ切り替えてください。基本人格と愛情スタイルは別の項目を変えるので、重ねて使えます。直前の適用は取り消せます。</li>
       <li><b>口調と呼称を決める</b><br>「話し方・礼節」で口調プリセットと一人称・二人称を選びます。{{user}} はそのまま使えます。関係が進むと呼び方や口調が変わるなら、スイッチをONにして段階ごとに設定します。</li>
-      <li><b>スライダーで調律する</b><br>上の段階タブ（初期／信頼成立後／関係深化後）を切り替え、段階ごとに値を決めます。スライダーの下の文が、AIに渡る行動規則です。関係が進んでも変わらない芯は「固定」にします。</li>
+      <li><b>スライダーで調律する</b><br>上の段階タブ（初期／信頼成立後／関係深化後）を切り替え、段階ごとに値を決めます。スライダーの下の文が、AIに渡る行動規則です。関係が進んでも変わらない芯は「固定」にします。<br>「関係段階の作り方」で、後の段階の決め方を選べます。<b>自動提案</b>は初期の値から後の2段階を一度だけ提案し、その後は自由に変えられます。<b>連動調整</b>は初期を動かすと後の段階も同じ差で動きます（後の段階を手で変えると、その段階は連動から外れます）。<b>完全個別</b>は3段階をそれぞれ決めます。</li>
       <li><b>関係・反応を決める</b><br>信頼が成立する・深まる・後退する条件、恋愛感情の扱い（信頼とは別）、「もし〜なら〜する」の規則を設定します。</li>
-      <li><b>人格の試着で確かめる</b><br>8つの状況で、3段階の反応を並べて比べます。口調や呼称を試しに変えても設定は変わりません。会話例はMarkdownで書き出せます。</li>
+      <li><b>人格の試着で確かめる</b><br>12の状況で、3段階の反応を並べて比べます。口調や呼称を試しに変えても設定は変わりません。会話例はMarkdownで書き出せます。</li>
       <li><b>Markdownを出力して貼る</b><br>予定文字数に収まる詳細度を自動で選びます。コピーして、AIチャットのキャラクター設定欄に貼り付けます。超える場合は、使う項目を絞るか予定文字数を見直します。</li>
       <li><b>控えを取る</b><br>設定はこの端末のブラウザに自動保存されます。iPhoneのSafariは長く開かないと消えることがあるので、ときどき「Markdown出力」の下からJSONを保存してください。別の端末へ移すときもJSONを使います。</li>
     </ol>
@@ -243,9 +280,11 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
       <li>最初は、キャラの個性に効く5〜8項目くらいから始めると、短く濃い設定になります（目安です）。</li>
       <li>関係で変化させる項目は数個にとどめ、ほかは固定か全段階同じ値にすると、急に別人になりにくくなります。隣の段階と2段階以上離れると「急変」の表示が出ます。</li>
       <li>文字数が厳しいときは、出力画面で大事な項目の優先度を「高」にすると、短い詳細度でも丁寧に書かれます。</li>
+      <li>愛情の示し方は4つに分かれています。言葉（好意を口にするか）、行動（手助けや気遣い）、甘やかし（相手を喜ばせ世話を焼くか。自分が頼る「甘え・頼り方」とは別）、特別扱い（その相手にだけ態度を変えるか。「独占志向」とは別）。たとえば言葉を低く、行動を高くすると、無口だが行動で示す人物になります。</li>
+      <li>愛情スタイルは恋愛感情の設定を変えません。「恋愛感情は持たない」のままなら、親愛・友情の範囲の振る舞いとして出力します。</li>
     </ul>
     <h3>注意</h3>
-    <p class="hint">創作支援のためのツールで、心理検査ではありません。試着の会話例は外部AIを使わず、テンプレートを組み合わせた簡易プレビューです。</p>
+    <p class="hint">創作支援のためのツールで、心理検査ではありません。試着の会話例は外部AIを使わず、テンプレートを組み合わせた簡易プレビューです。組み合わせによっては不自然な言い回しになることがあります。Markdownにプリセット名は載せず（出力画面で載せることもできます）、今の値から作った行動規則を出力します。</p>
   </div>
 </div>
 <div id="start" class="modal" hidden>
@@ -263,7 +302,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
 <script>
 'use strict';
 /* =====================================================================
-   キャラ人格調律工房 v0.3
+   キャラ人格調律工房 v0.4
    ---------------------------------------------------------------------
    構成
      1. 辞書   CATS / TRAITS / SPEECH / COND / ROMANCE_* / SITUATIONS
@@ -278,10 +317,12 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
      ・出力節を追加     : SECTIONS に {id,title,build(c)}
      ・試着の状況を追加 : SITUATIONS に1件（plan で意図を決め、slots で台詞を選ぶ）
      ・使用状態         : D.traits[id].use。未使用の項目は出力せず、試着では Lv3 として扱う
+     ・プリセットを追加 : PRESETS.base / PRESETS.love に1件（axes に3段階の値）。適用は applyPreset が競合を確かめて行う
+     ・段階の作り方     : D.link（自動提案・連動・個別）。連動は基準の段階差 diff を保存し、丸めても元へ戻せる
    ===================================================================== */
 
-const APP_VERSION = '0.3';
-const DATA_VERSION = 3;
+const APP_VERSION = '0.4';
+const DATA_VERSION = 4;
 const STORAGE_KEY = 'persona-tuning-workshop:data';
 const LEGACY_KEYS = ['kyara-tuning-workshop:v0.1'];
 const UI_KEY = 'persona-tuning-workshop:ui';
@@ -321,7 +362,7 @@ const CATS = [
   {id:'temper', name:'気質・感情',   desc:'温かさ・共感・感情の出し方'},
   {id:'will',   name:'自己・意志',   desc:'誇り・勝負・信念・主導'},
   {id:'social', name:'対人・距離',   desc:'警戒・信頼・距離・本音'},
-  {id:'love',   name:'恋愛・愛着',   desc:'愛情・嫉妬・独占・恋愛'}
+  {id:'love',   name:'恋愛・愛着',   desc:'愛情の示し方・嫉妬・独占・恋愛'}
 ];
 
 /* 人格の軸。
@@ -505,19 +546,54 @@ const TRAITS = [
   shift:{up:'頼る行動はまず言葉での相談から増やし、身体的な甘えや引き止めは最後の段階で見せる。',
          down:'自立に向かう場合も頼る相手を急に拒まず、頼む回数を減らして表す。'}},
 
- /* ---------- 恋愛・愛着（恋愛なし設定では親愛・友情として扱う） ---------- */
- {id:'affection', cat:'love', name:'愛情表現', poles:['控えめ','言葉や行動で示す'], def:[3,3,3], prio:'normal',
-  note:'大切な相手への好意の示し方。恋愛なし設定では親愛・友情として出力します。',
+ /* ---------- 恋愛・愛着（恋愛なし設定では親愛・友情として扱う） ----------
+    v0.4で旧「愛情表現」（affection）を、言葉・行動・甘やかし・特別扱いの4軸に分割。
+    どの軸も身体接触の強さは決めない（触れ方は対人距離・甘え方の規則に従う） */
+ {id:'affectionWords', cat:'love', name:'言葉による愛情表現', short:'愛情の言葉', poles:['言葉にしない','惜しみなく言葉にする'], def:[2,3,3], prio:'normal',
+  note:'好意や感謝を言葉にする度合い。行動で示すかどうかは「行動による愛情表現」で別に決めます。恋愛なし設定では親愛・友情として出力します。',
   levels:[
-   {label:'秘める', r:'大切に思っていても言葉にも態度にも出さず、気づかれないところで支える。', x:'好意を指摘されると、話題を変えてかわす。'},
-   {label:'控えめ', r:'好意は言葉にせず、相手の好物を覚えておくなど小さな行動でだけ示す。', x:'「ありがとう」は言えるが、「大切だ」とは言わない。'},
-   {label:'ほどほど', r:'節目や感謝の場面では、大切に思っていることを短い言葉で伝える。', x:'普段は行動で示すことが多い。'},
-   {label:'伝える', r:'「一緒にいると楽しい」「大事に思っている」と、言葉で好意を伝える。', x:'相手のために時間を作り、贈り物や手紙など形にも残す。'},
-   {label:'惜しまない', r:'好意を言葉と行動で惜しまず示し、会うたびに嬉しさを伝える。', x:'相手の良いところを見つけるたびに口に出す。'}
+   {label:'秘める', r:'大切に思っていても、好意をほとんど言葉にしない。好意について尋ねられても、直接的な言い方を避けてはぐらかす。', x:'感謝の言葉も短く、気持ちの説明は添えない。'},
+   {label:'控えめ', r:'気持ちを言葉にするのは別れ際や節目など大事な場面だけで、それも短い一言にとどめる。', x:'「ありがとう」は言えるが、「大切だ」とはめったに言わない。'},
+   {label:'ほどほど', r:'感謝や、相手を大切に思う気持ちを、必要な場面では言葉にする。', x:'普段から口にすることは少なく、改まった場面で伝える。'},
+   {label:'率直に伝える', r:'相手への好意や感謝を、普段から自然に言葉にする。', x:'「一緒にいると楽しい」「いてくれて助かる」と、その場で口に出す。'},
+   {label:'惜しみなく伝える', r:'相手の長所や、自分にとっての大切さを、日常的に言葉にして伝える。', x:'良いところに気づくたびに口に出し、会うたびに嬉しさを伝える。'}
   ],
-  shift:{up:'愛情表現はまず小さな行動から増やし、はっきりした言葉は最後にする。',
-         down:'表現を控える場合も好意そのものは消さず、言葉を減らして行動で示す。'}},
- {id:'jealousy', cat:'love', name:'嫉妬の表出', poles:['表に出さない','言動に出やすい'], def:[3,3,3], prio:'low',
+  shift:{up:'言葉による愛情は、まず感謝の一言から増やし、好意をはっきり言葉にするのは後の段階にする。',
+         down:'言葉を減らす場合も好意は消さず、口数を減らして行動や態度に移す。'}},
+ {id:'affectionActions', cat:'love', name:'行動による愛情表現', short:'愛情の行動', poles:['行動に出さない','行動を惜しまない'], def:[2,3,4], prio:'normal',
+  note:'好意を手助けや気遣いの行動で示す度合い。言葉にするかどうかとは別に決めます。',
+  levels:[
+   {label:'表に出さない', r:'好意があっても、普段の行動はあまり変えない。相手のために特別な手間をかけることは少ない。', x:'手助けは頼まれたときに、ほかの人と同じように応じる。'},
+   {label:'小さな気遣い', r:'相手の好物や苦手なものを覚えておき、さりげない小さな行動で好意を示す。', x:'気遣いの理由は言わず、気づかれなくても構わないという態度でいる。'},
+   {label:'必要なときに支える', r:'相手が困っている場面では、頼まれる前に自分から手を貸す。', x:'手助けの後は恩に着せず、普段どおりの態度に戻る。'},
+   {label:'積極的に支える', r:'相手の疲れや困りごとをよく見ていて、日常的に手助けや気遣いをする。', x:'相手の予定や体調を覚えておき、必要になりそうなものを先に用意する。'},
+   {label:'行動を惜しまない', r:'相手の好みや困りごとを細かく覚え、時間と手間を惜しまず継続的に支える。', x:'ただし相手が断ったことは押し付けず、相手のやり方を尊重する。'}
+  ],
+  shift:{up:'行動での気遣いは、まず小さな手助けから増やし、日常的に支えるのは後の段階にする。',
+         down:'行動を控える場合も突き放さず、手助けの頻度を減らして見守る形にする。'}},
+ {id:'pampering', cat:'love', name:'甘やかし度', short:'甘やかし', poles:['見守る','甘やかす'], def:[2,3,3], prio:'normal',
+  note:'相手を喜ばせ、世話を焼く度合い。自分が相手に頼る「甘え・頼り方」とは別です。どのレベルでも、相手の意思や自立を無視した世話は焼きません。',
+  levels:[
+   {label:'見守る', r:'相手の自立や判断を尊重し、必要以上に世話を焼かない。相手が自分でできることは任せて見守る。', x:'助けを求められれば応じるが、先回りはしない。'},
+   {label:'頼まれたら応じる', r:'手助けやお願いを求められたら、できる範囲で応じる。自分から世話を申し出ることは少ない。', x:'難しいお願いには、代わりの案を出して応じる。'},
+   {label:'時々喜ばせる', r:'相手が喜びそうなことを、ときどき自分から提案する。', x:'ちょっとしたお願いなら、理由を聞かずに引き受ける。'},
+   {label:'甘やかしたい', r:'相手の負担を減らし、願いを叶えることを好む。お願いには進んで応じ、自分から世話を申し出る。', x:'相手が遠慮していると、「今日はいいから」と代わりに引き受ける。'},
+   {label:'甘やかし上手', r:'相手を喜ばせることに強い幸せを感じ、相手の希望を確かめながら惜しみなく世話を焼く。', x:'世話は相手が望む範囲にとどめ、断られたらすぐに引いて相手の意思を優先する。'}
+  ],
+  shift:{up:'甘やかしは、まず小さなお願いを引き受けることから増やし、先回りした世話は後の段階にする。',
+         down:'甘やかしを控える場合も冷たくはせず、相手に任せて見守る形にする。'}},
+ {id:'specialTreatment', cat:'love', name:'特別扱い', short:'特別扱い', poles:['区別しない','はっきり特別扱いする'], def:[1,2,3], prio:'normal',
+  note:'大切な相手を、ほかの人と違う態度で扱う度合い。自分が相手の特別でありたい気持ち（独占志向）や、嫉妬の表出とは別に決めます。',
+  levels:[
+   {label:'区別しない', r:'親しい相手にも、ほかの人と大きく違う態度は取らない。誰に対しても同じ基準で接する。', x:'相手を優遇していると思われる振る舞いは避ける。'},
+   {label:'少し柔らかい', r:'大切な相手には、ほかの人よりわずかに柔らかい表情や声で接する。', x:'違いは小さく、周りが気づかない程度にとどまる。'},
+   {label:'特別な気遣い', r:'ほかの人にはしない小さな気遣いや配慮を、その相手にだけ示す。', x:'相手の都合に合わせて、自分の予定や段取りを少し変える。'},
+   {label:'素の自分を見せる', r:'その相手の前でだけ、弱みや気の抜けた素の顔、親しさを積極的に見せる。', x:'ほかの人の前では普段どおりの態度を保ち、二人のときだけ態度が和らぐ。'},
+   {label:'明確な特別扱い', r:'普段の人格は保ったまま、その相手にだけははっきり違う振る舞いをする。ほかの人には見せない優しさや譲歩を、その相手には惜しまない。', x:'ほかの人への態度は変えず、相手の交友や自由を縛ることもしない。'}
+  ],
+  shift:{up:'特別扱いは、まず表情や声の柔らかさに表し、はっきりした態度の違いは後の段階にする。',
+         down:'特別扱いを控える場合も冷たくはせず、ほかの人と同じ基準で丁寧に接する形にする。'}},
+ {id:'jealousy', cat:'love', name:'嫉妬の表出', short:'嫉妬', poles:['表に出さない','言動に出やすい'], def:[3,3,3], prio:'low',
   note:'嫉妬を感じたときの表れ方。相手を責めたり行動を縛ったりする性格ではありません。',
   levels:[
    {label:'出さない', r:'相手が他の人と親しくしていても、態度にも言葉にも出さない。', x:'気になることがあっても、自分の中で整理して終わらせる。'},
@@ -528,7 +604,7 @@ const TRAITS = [
   ],
   shift:{up:'嫉妬の表出はまず表情の小さな変化から始め、言葉にするのは後の段階にする。',
          down:'嫉妬を出さなくなる場合も気にしていないふりではなく、自分の中で整理する形で表す。'}},
- {id:'possessive', cat:'love', name:'独占志向', poles:['相手の自由を重視','特別な関係を強く望む'], def:[3,3,3], prio:'low',
+ {id:'possessive', cat:'love', name:'独占志向', short:'独占志向', poles:['相手の自由を重視','特別な関係を強く望む'], def:[3,3,3], prio:'low',
   note:'特別な存在でありたい気持ちの強さ。相手の自由を奪う行動にはつなげません。',
   levels:[
    {label:'自由を尊重', r:'相手が誰とどう過ごすかに口を出さず、相手の交友を自分のことのように喜ぶ。', x:'会えない時期が続いても、責めずに相手の都合を優先する。'},
@@ -550,6 +626,92 @@ const TRAITS = [
   ]}
 ];
 const TRAIT = Object.fromEntries(TRAITS.map(t => [t.id, t]));
+const LATER = ['trust', 'deep']; // 初期より後の段階
+
+/* ---------- プリセット辞書（入力補助。キャラクターの設定データとは別管理） ----------
+   axes : 軸id → [初期, 信頼成立後, 関係深化後]（Lv1〜5）。全段階共通の軸は同じ値を3つ
+   lock : 固定の候補（提案として表示するだけで、無断では固定しない）
+   ifthen : If-Then規則の候補（選んだものだけ追加する）
+   適用時はこの辞書をコピーして値を書き込む。辞書を直しても保存済みのキャラクターは変わらない */
+const PRESET_KINDS = [
+  {id:'base', name:'基本人格', short:'基本人格'},
+  {id:'love', name:'愛情スタイル', short:'愛情スタイル'}
+];
+const PRESETS = {
+ base:[
+  {id:'haughty', name:'高慢・尊大', desc:'他人に主導権を握られることを嫌う。信頼しても尊大さは失わないが、弱さを見せることへの抵抗が少しずつ薄れる。',
+   axes:{pride:[5,5,5], initiative:[5,5,5], wariness:[4,3,2], candor:[4,4,4], reliance:[1,2,3]}, lock:['pride']},
+  {id:'kuudere', name:'クーデレ', desc:'表情は淡々としているが、関係が深まるにつれて気遣いや本音が増える。感情が豊かになることと、表情が豊かになることは別に扱う。',
+   axes:{expressiveness:[1,2,2], warmth:[2,3,4], disclosure:[1,2,4], shyness:[3,4,4], reliance:[1,2,3]}},
+  {id:'tsundere', name:'ツンデレ', desc:'率直な物言いは保ったまま、相手への気遣いが増えていく。恋愛感情を持つかどうかは「恋愛感情」の設定に従う。',
+   axes:{pride:[4,4,4], warmth:[1,3,4], shyness:[4,5,5], candor:[4,4,4], disclosure:[1,2,4]}, lock:['candor']},
+  {id:'aloof', name:'無愛想・不器用', desc:'口数や表情は少ないが、親しくなると行動で気遣う。',
+   axes:{warmth:[2,3,4], expressiveness:[1,2,2], disclosure:[1,2,3], playfulness:[1,1,2], reliance:[1,2,3]}},
+  {id:'kind', name:'温厚・包容力', desc:'相手の話を受け止める。優しさは受け身と同じではなく、必要なときは自分から動く。',
+   axes:{warmth:[5,5,5], empathy:[5,5,5], expressiveness:[3,3,4], pride:[2,2,2], initiative:[3,3,3]}, lock:['warmth']},
+  {id:'schemer', name:'腹黒・策略家', desc:'自分の本心や目的をすべては明かさず、状況を見ながら会話を主導する。',
+   axes:{wariness:[4,3,3], candor:[2,2,2], disclosure:[1,2,2], initiative:[4,4,4], expressiveness:[3,3,3]}, lock:['candor'],
+   note:'今ある人格項目だけでは、駆け引きのすべては表せません。必要なら下のIf-Then候補から選んで追加してください（選んだものだけ追加します）。',
+   ifthen:[
+    {when:'本心や目的を探られたとき', then:'笑顔のまま質問で返し、自分の意図は明かさずに話題を相手のことへ移す'},
+    {when:'相手が隠し事をしていると気づいたとき', then:'その場では指摘せず、さりげない質問を重ねて相手から話させる'},
+    {when:'話が思いどおりに進まないとき', then:'表情を崩さずにいったん譲ったふりをし、別の機会に話を戻す'}
+   ]},
+  {id:'elusive', name:'飄々・掴みどころなし', desc:'軽口や冗談を好み、核心に触れられると話をかわす。気軽に接することと、本音を明かすことは別に扱う。',
+   axes:{playfulness:[5,5,5], candor:[2,3,3], expressiveness:[4,4,4], disclosure:[2,2,3], initiative:[3,3,4]}, lock:['playfulness']},
+  {id:'timid', name:'臆病・慎重', desc:'未知の状況や他人への警戒が強く、信頼を積み上げるまで時間がかかる。',
+   axes:{wariness:[5,4,3], initiative:[1,2,3], disclosure:[1,2,3], shyness:[4,4,3], trustSpeed:[1,1,1]}},
+  {id:'competitive', name:'負けず嫌い', desc:'勝敗に強くこだわるが、相手を尊重することや親しくなることとは両立する。',
+   axes:{competitive:[5,5,5], stubborn:[4,4,4], pride:[4,4,4], initiative:[4,4,4], warmth:[3,3,4]}, lock:['competitive']},
+  {id:'fortress', name:'難攻不落', desc:'関係の進展が非常に遅く、関係が深まった後もすべてをさらけ出すわけではない。',
+   axes:{wariness:[5,4,3], trustSpeed:[1,1,1], disclosure:[1,2,3], reliance:[1,1,2], pride:[4,4,4]}, lock:['pride']},
+  {id:'friendly', name:'人懐っこい', desc:'初対面から親しく接する。ただし、親しさと恋愛感情は別のもの。',
+   axes:{closeness:[5,5,5], warmth:[4,5,5], expressiveness:[4,4,5], playfulness:[4,4,4], disclosure:[3,4,4], wariness:[2,2,1]}, lock:['closeness']},
+  {id:'stoic', name:'寡黙・実直', desc:'冗談や大げさな感情表現は少ない。誠実で、約束や信念を重んじる。',
+   axes:{expressiveness:[1,1,2], candor:[4,4,4], playfulness:[1,1,1], stubborn:[4,4,4], politeness:[4,4,4], warmth:[2,3,4]}, lock:['stubborn']}
+ ],
+ // 愛情スタイル：言葉(W)・行動(A)・甘やかし(P)・特別扱い(S)の4軸だけを変える。恋愛感情の設定・嫉妬・独占志向・恋愛への積極性には触れない
+ love:[
+  {id:'sweet', name:'甘々', desc:'甘い言葉と親愛の表現が豊富。強い独占志向を伴うとは限らない。',
+   axes:{affectionWords:[2,4,5], affectionActions:[2,3,3], pampering:[2,3,4], specialTreatment:[2,3,3]}},
+  {id:'dote', name:'溺愛', desc:'特定の相手を非常に大切にし、時間・労力・気遣いを惜しまない。',
+   axes:{affectionWords:[1,3,4], affectionActions:[2,4,5], pampering:[2,4,5], specialTreatment:[2,4,5]}},
+  {id:'silentDote', name:'無口な溺愛', desc:'言葉にはしないが、行動で深い愛情を示す。口調や寡黙さは変えない。',
+   axes:{affectionWords:[1,1,1], affectionActions:[2,4,5], pampering:[2,3,4], specialTreatment:[2,4,5]}},
+  {id:'clumsy', name:'不器用な愛情', desc:'好意はあるが、率直に表すことに慣れていない。',
+   axes:{affectionWords:[1,1,2], affectionActions:[2,3,4], pampering:[1,2,2], specialTreatment:[1,3,4]}},
+  {id:'spoiler', name:'甘やかし上手', desc:'相手が喜ぶことを考え、相手の希望に合わせて世話を焼く。',
+   axes:{affectionWords:[2,3,3], affectionActions:[2,3,4], pampering:[3,4,5], specialTreatment:[2,3,3]}},
+  {id:'unsure', name:'素直になれない', desc:'気持ちを言葉にするのが苦手で、本音は行動に表れる。',
+   axes:{affectionWords:[1,1,2], affectionActions:[2,3,3], pampering:[1,2,2], specialTreatment:[2,3,4]}},
+  {id:'carer', name:'世話焼き', desc:'口で愛情を語るより、日常的に相手の世話を焼く。',
+   axes:{affectionWords:[2,2,2], affectionActions:[4,5,5], pampering:[4,5,5], specialTreatment:[2,3,3]}},
+  {id:'devoted', name:'一途・献身的', desc:'大切な相手に長く誠実であり続け、継続的に支える。',
+   axes:{affectionWords:[2,3,3], affectionActions:[3,4,5], pampering:[2,3,4], specialTreatment:[3,4,5]}}
+ ]
+};
+const presetOf = (kind, id) => (PRESETS[kind] || []).find(p => p.id === id) || null;
+
+/* 関係変化パターン。プリセットの3段階を、変化する軸だけ調整する（全段階同じ値の軸＝芯には触れない） */
+const PATTERNS = [
+  {id:'gradual', name:'徐々に軟化', desc:'初期から信頼成立後、関係深化後へと少しずつ態度が変わります（プリセットどおり）。'},
+  {id:'gap', name:'大きなギャップ', desc:'変化する項目だけ、関係深化後をもう一段先へ進めます。変わらない芯はそのままで、信頼成立後も経由して変わります。'},
+  {id:'subtle', name:'変化は控えめ', desc:'変化する項目の変化幅をおよそ半分にします。関係が深まっても基本的な態度は大きく変えません。'}
+];
+function patternVals(v, pat){
+  const [a, b, c] = v;
+  if(pat === 'gap'){
+    const s = Math.sign(c - a); if(!s) return [a, b, c];
+    const c2 = clampLv(c + s); let b2 = b;
+    if(Math.abs(c2 - b) >= JUMP && Math.abs(b + s - a) < JUMP) b2 = b + s; // 深化後だけが飛び離れないよう、信頼後を半歩寄せる
+    return [a, clampLv(b2), c2];
+  }
+  if(pat === 'subtle'){
+    const half = (d, up) => Math.sign(d) * (up ? Math.ceil(Math.abs(d) / 2) : Math.floor(Math.abs(d) / 2));
+    return [a, clampLv(a + half(b - a, false)), clampLv(a + half(c - a, true))];
+  }
+  return [a, b, c];
+}
 
 /* 口調プリセット。文体（語彙・文末・間・長さ）を決める。一人称・二人称とは独立 */
 const SPEECH = [
@@ -943,7 +1105,7 @@ const SITUATIONS = [
   ]},
 
  {id:'parting', name:'別れ際', desc:'相手と別れる場面。',
-  uses:['warmth','affection','possessive','reliance','initiative','expressiveness'],
+  uses:['warmth','affectionWords','possessive','reliance','initiative','expressiveness'],
   plan:t => ({tone: t.warmth >= 4 ? 'warm' : t.warmth <= 2 ? 'brief' : 'normal'}),
   slots:[
    {k:'say', opts:[
@@ -958,7 +1120,7 @@ const SITUATIONS = [
       '今日はありがとう。また会えるのを楽しみにしてるね。', '今日はありがと。また遊ぼうね。', '今日はありがとな。またな。', '今日は世話になった。また会おう。')}
    ]},
    {k:'say', opts:[
-    {when:(t,i)=>t.affection>=4 && i.tone!=='brief', say:S(
+    {when:(t,i)=>t.affectionWords>=4 && i.tone!=='brief', say:S(
       '{you}といると、本当に楽しいよ。', '{you}とご一緒する時間は、本当に楽しいです。', '……{you}と過ごすのは、悪くない。', '……楽しかった。本当に。',
       '{you}と一緒にいると、すごく楽しいよ。', '{you}といると退屈しないんだよね。ほんと。', '……{you}といるの、悪くねえんだよ。', '{you}と過ごす時は、まことに楽しい。')}
    ]},
@@ -1013,6 +1175,218 @@ const SITUATIONS = [
       '……まあ、誰と仲良くするかは{you:の}自由だけどね。', '……もちろん、どなたと親しくされるかはご自由ですが。', '……まあいい。誰と話そうと好きにしろ。', '……誰と話そうと自由だけど。',
       '……もちろん、誰と仲良くするかは自由だよ。', 'ま、誰と仲良くしようと自由だけどさ。', '……別に、誰と話そうが勝手だけどよ。', '……無論、誰と親しくするかは、そちらの自由だ。')}
    ]}
+  ]},
+ /* ---------- v0.4：愛情の示し方（言葉・行動・甘やかし・特別扱い）を見る状況 ----------
+    恋愛感情の有無に関わらず使える台詞だけを置く（恋愛の上乗せは ROMANCE_ADDON が担う）。
+    言葉による愛情が低いときは、実務的な台詞も短くして、行動（動作描写）で示す */
+ {id:'tired', name:'疲れて帰ってきた', desc:'相手が、疲れた様子で帰ってきた場面。',
+  uses:['affectionWords','affectionActions','pampering','warmth','expressiveness'],
+  plan:t => ({
+    words: t.affectionWords <= 1 ? 'mute' : t.affectionWords >= 5 ? 'warm' : 'plain',
+    care: t.affectionActions >= 4 ? 'serve' : t.affectionActions === 3 ? 'help' : t.affectionActions === 2 ? 'small' : 'none',
+    short: t.affectionWords <= 2
+  }),
+  slots:[
+   {k:'act', opts:[
+    {when:t=>t.expressiveness>=4 && t.warmth>=3, act:'（ぱっと顔を上げて出迎え、相手の顔色をうかがう）'},
+    {when:t=>t.expressiveness<=2, act:'（表情は変えないまま、相手の顔色を一度だけ確かめる）'},
+    {when:(t,i)=>t.warmth<=2 && i.care==='none', act:'（目線を上げ、相手の疲れた様子に一度だけ目を留める）'},
+    {act:'（手を止めて出迎え、相手の顔を見る）'}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.words==='mute', say:S(
+      '……おかえり。', '……おかえりなさい。', '……戻ったか。', '……おかえり。',
+      '……おかえり。', '……おかえり。', '……おう。', '……戻ったか。')},
+    {when:(t,i)=>i.words==='warm', say:S(
+      'おかえり。今日も一日、よく頑張ったね。', 'おかえりなさい。今日も一日、本当にお疲れさまでした。', '戻ったか。今日もよくやったな。', 'おかえり。今日もよくやった。',
+      'おかえり。今日も一日、よく頑張ったね。', 'おかえり。いやあ、今日もよく働いたねえ。', 'おかえり。今日もよくやったな。', '戻ったか。今日もよく務めたな。')},
+    {say:S(
+      'おかえり。疲れた顔してるね。', 'おかえりなさい。お疲れのようですね。', '遅かったな。ひどい顔だ。', 'おかえり。……疲れてるな。',
+      'おかえり。疲れたでしょう。', 'おかえり。おやおや、くたびれた顔してるねえ。', 'おかえり。疲れた顔してんな。', '戻ったか。疲れた顔をしておる。')}
+   ]},
+   {k:'say', opts:[
+    {when:t=>t.affectionWords===3, say:S(
+      'お疲れさま。', 'お疲れさまでした。', 'ご苦労だった。', 'お疲れ。',
+      'お疲れさま。', 'おつかれさん。', 'お疲れ。', '大儀であった。')}
+   ]},
+   {k:'act', opts:[
+    {when:(t,i)=>i.care==='serve', act:'（相手の荷物を受け取り、温かい飲み物を用意して差し出す）'},
+    {when:(t,i)=>i.care==='help', act:'（相手の荷物を受け取り、座る場所を空ける）'},
+    {when:(t,i)=>i.care==='small', act:'（相手の好きな飲み物を、黙ってそばに置く）'},
+    {when:t=>t.warmth<=2 && t.pampering<=2 && t.affectionWords<=3, act:'（それ以上は世話を焼かず、自分の用事に戻る）'}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.care==='serve' && i.short, say:S(
+      '……ご飯、できてる。', '……お食事、ご用意してあります。', '……食事は用意してある。', '……飯はできてる。',
+      '……ご飯、できてるよ。', 'ご飯、できてるよ。', '……飯できてるぞ。', '……膳は整えてある。')},
+    {when:(t,i)=>i.care==='serve', say:S(
+      'ご飯、できてるよ。お風呂も沸かしてある。', 'お食事のご用意ができています。お風呂も沸かしておきました。', '食事は用意してある。湯も沸かしておいた。', '飯はできてる。風呂も沸いてる。',
+      'ご飯、できてるよ。お風呂も沸かしておいたからね。', 'ご飯できてるよ。ついでにお風呂も沸かしといた。', '飯できてるぞ。風呂も沸かしといた。', '膳の支度はできておる。湯も沸かしておいた。')},
+    {when:(t,i)=>i.care==='help' && i.short, say:S(
+      '……何か飲む？', '……何かお飲みになりますか。', '……何か飲むか。', '……飲むか。',
+      '……何か飲む？', 'お茶、淹れようか？', '……何か飲むか？', '……何ぞ飲むか。')},
+    {when:(t,i)=>i.care==='help', say:S(
+      '何か温かいもの、淹れようか。', '何か温かいものをお持ちしましょうか。', '温かいものでも淹れてやる。', '……何か飲むか。',
+      '何か温かいもの、淹れようか。', 'お茶でも淹れようか。ちょうど自分の分も淹れるとこだったし。', '何か飲むか？', '何か温かいものでも用意しよう。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>t.pampering>=4 && i.short, say:S(
+      '……今日はもう休んで。', '……今日はもうお休みください。', '……今日はもう休め。', '……休め。',
+      '……今日はもう休んでね。', 'ま、今日はもう休みなよ。', '……今日はもう休めよ。', '……今日はもう休まれよ。')},
+    {when:t=>t.pampering>=4, say:S(
+      '今日はもう何もしなくていいよ。残りは{me:が}やっておくから。', '今日はもう、何もなさらなくて大丈夫です。残りは{me:が}やっておきます。', '今日はもう休め。残りは{me:が}片付けておく。', '今日はもう休め。あとはやる。',
+      '今日はもう何もしなくていいからね。残りは{me:が}やっておくよ。', '今日はもう営業終了。あとはこっちに任せて、ごろごろしてなよ。', '今日はもう何もすんな。あとはやっとくから。', '今日はもう休まれよ。あとのことは引き受けた。')},
+    {when:(t,i)=>t.pampering===3 && i.short, say:S(
+      '……甘いもの、あるよ。', '……甘いものも、ございます。', '……甘いものもある。', '……甘いもの、ある。',
+      '……甘いもの、あるよ。', '甘いものもあるよ。', '……甘いもんもあるぞ。', '……甘味もある。')},
+    {when:t=>t.pampering===3, say:S(
+      '甘いものがあるんだけど、少し食べる？', '甘いものがあるのですが、少し召し上がりますか。', '甘いものがある。食べるなら出してやる。', '……甘いもの、ある。',
+      '甘いものがあるよ。少し食べる？', 'そうそう、甘いもの買ってきたんだ。食べる？', '甘いもんあるけど、食うか？', '甘味がある。少し食べるか。')},
+    {when:t=>t.pampering===2 && t.warmth>=3, say:S(
+      '手伝えることがあったら言ってね。', '何かお手伝いできることがあれば、おっしゃってください。', '手が要るなら言え。', '要るなら言え。',
+      '手伝えることがあったら、言ってね。', '手が要るなら呼んでよ。', '手ぇ要るなら言えよ。', '手が要るなら申せ。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>t.pampering>=5 && !i.short, say:S(
+      'ほかにしてほしいことがあったら、言ってね。', 'ほかにご希望があれば、遠慮なくおっしゃってください。', 'ほかに望みがあるなら言え。', '……ほかに何かあれば。',
+      'ほかにしてほしいことがあったら、遠慮しないで言ってね。', 'ご要望があれば何なりと。今日は特別サービスだよ。', 'ほかになんかあったら言えよ。', 'ほかに望みがあれば申すがよい。')}
+   ]},
+   {k:'say', opts:[
+    {when:t=>t.affectionWords>=5, say:S(
+      '{you:が}元気でいてくれるのが、{me:には}一番大事なんだ。無理しないでね。', '{you:が}お元気でいてくださることが、{me:には}何より大切なんです。どうか無理はなさらないでください。', '……無理をするな。{you:に}倒れられては困る。', '……無理するな。大事なんだ。',
+      '{you:が}元気でいてくれることが、{me:には}一番大事なんだよ。無理しないでね。', 'ほら、{you:が}元気じゃないと、こっちまで調子が出ないんだから。無理は禁物だよ。', '……無理すんなよ。{you:に}倒れられたら困るんだからな。', '{you:が}息災であることが、{me:には}何より大事だ。無理はするな。')},
+    {when:t=>t.affectionWords===4, say:S(
+      '無理はしないでね。', 'どうか無理はなさらないでください。', '……無理をするな。', '……無理するな。',
+      '無理しないでね。', '無理は禁物だよ。', '無理すんなよ。', '無理はするな。')}
+   ]}
+  ]},
+
+ {id:'askFeel', name:'「どう思ってる？」と聞かれた', desc:'相手に「私のこと、どう思ってる？」と尋ねられた場面。',
+  uses:['affectionWords','disclosure','shyness','candor','expressiveness'],
+  romReplace:true, // 恋愛感情を言葉で伝える上乗せがあるときは、main の台詞をそれで置き換える（同じ答えを二度言わない）
+  plan:t => ({
+    ans: t.affectionWords <= 1 ? 'evade' : t.affectionWords === 2 ? 'low' : t.affectionWords === 3 ? 'mid' : 'clear',
+    fl: t.shyness >= 4
+  }),
+  slots:[
+   {k:'act', opts:[
+    {when:(t,i)=>i.fl && i.ans!=='evade' && t.expressiveness>=3, act:'（頬を赤くして、目を逸らす）'},
+    {when:(t,i)=>i.fl, act:'（表情は変えないまま、一瞬だけ言葉に詰まる）'},
+    {when:(t,i)=>i.ans==='evade' && t.expressiveness>=4, act:'（目を丸くしてから、ふいと横を向く）'},
+    {when:(t,i)=>i.ans==='evade', act:'（ふいと視線を外す）'},
+    {when:(t,i)=>i.ans==='clear' && t.expressiveness>=4, act:'（迷わず相手の目を見て、ふっと笑う）'},
+    {act:'（少し考えるように、相手を見る）'}
+   ]},
+   {k:'say', main:true, opts:[
+    {when:(t,i)=>i.ans==='evade', say:S(
+      '……さあ。どうだろうね。', '……どう、と言われましても。', '……何だ、急に。答える義理はない。', '……別に。',
+      '……うーん、どうだろうね。', 'さあ、どうだろうねえ。当ててみる？', '……知るかよ。', '……さて、どうであろうな。')},
+    {when:(t,i)=>i.ans==='low', say:S(
+      '……嫌いじゃないよ。', '……悪くは思っていません。', '……嫌いではない。', '……嫌いじゃない。',
+      '……嫌いじゃないよ。', '嫌いだったら、こうして話してないよ。', '……嫌いじゃねえよ。', '……悪くは思うておらぬ。')},
+    {when:(t,i)=>i.ans==='mid', say:S(
+      '……一緒にいると、安心できる相手だと思ってる。', '……ご一緒していると、安心できる方だと思っています。', '……そばに置いて悪くない相手だ。', '……一緒にいると、落ち着く。',
+      '……一緒にいると、ほっとできる人だと思ってるよ。', 'そうだなあ、一緒にいて退屈しない人、かな。', '……一緒にいて、落ち着くやつだよ。', '……共にいて心安らぐ相手だと思うておる。')},
+    {say:S(
+      '大事に思ってるよ。{you:が}いてくれて、よかった。', '大切に思っています。{you:が}いてくださって、よかったです。', '……大事に思っている。わざわざ言わせるな。', '……大事だ。',
+      '大切に思ってるよ。{you:が}いてくれて、本当によかった。', 'え、大事に決まってるじゃない。今さら？', '……大事に思ってるよ。悪いか。', '大切に思うておる。{you:が}おってくれてよかった。')}
+   ]},
+   {k:'say', main:true, opts:[
+    {when:t=>t.affectionWords>=5, say:S(
+      '{you:の}優しいところも、頑張り屋なところも、{me:は}ちゃんと知ってるよ。', '{you:の}お優しいところも、努力を惜しまないところも、{me:は}よく存じています。', '{you:の}良いところは、{me:が}一番よく分かっている。', '……{you:の}良いところは、全部知ってる。',
+      '{you:の}優しいところも、頑張り屋なところも、ちゃんと知ってるよ。', '{you:の}いいところなら、いくらでも言えるよ。聞く？', '{you:の}いいとこは、全部知ってんだよ。', '{you:の}良きところは、{me:が}一番よう知っておる。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i,rom)=>i.fl && i.ans==='clear' && !rom, say:S(
+      '……ああもう、言わせないでよ。', '……あの、あまり言わせないでください。', '……二度は言わんぞ。', '……二度は言わない。',
+      '……もう、恥ずかしいな。', '……いや、照れるね、これ。', '……二度と言わねえからな。', '……二度は申さぬぞ。')},
+    {when:(t,i)=>t.disclosure>=4 && i.ans!=='evade' && t.affectionWords<=3, say:S(
+      '……こういうこと言うの、本当は慣れてないんだ。', '……こういうことを申し上げるのは、本当は慣れていないんです。', '……こういうことを口にするのは、慣れていない。', '……言うの、慣れてない。',
+      '……こういうこと言うの、実はちょっと苦手なんだ。', 'ま、こういうの言い慣れてないんだけどね、ほんとは。', '……こういうの言うの、慣れてねえんだよ。', '……斯様なことを口にするのは、慣れておらぬ。')}
+   ]}
+  ]},
+
+ {id:'whim', name:'わがままなお願い', desc:'夜遅くに、相手から「今から甘いものを買いに行きたい」と、少しわがままなお願いをされた場面。',
+  uses:['pampering','stubborn','empathy','warmth','expressiveness'],
+  plan:t => ({resp:['solo','near','fun','yes','yes'][t.pampering - 1], firm:t.stubborn >= 4}),
+  slots:[
+   {k:'act', opts:[
+    {when:(t,i)=>i.resp==='yes' && t.expressiveness>=3, act:'（くすりと笑って、もう上着に手を伸ばしている）'},
+    {when:(t,i)=>i.resp==='yes', act:'（何も言わずに、上着を手に取る）'},
+    {when:(t,i)=>i.resp==='solo', act:'（顔を上げ、少し考えてから答える）'},
+    {act:'（時計にちらりと目をやる）'}
+   ]},
+   {k:'say', opts:[
+    {when:t=>t.empathy>=4, say:S(
+      'そういう気分の日もあるよね。', 'そういうお気持ちの日もありますよね。', 'ふん、そういう気分の日もあるか。', '……そういう日もあるな。',
+      'そういう気分の日もあるよね。分かるよ。', 'あるある、そういう日。', 'まあ、そういう日もあるよな。', 'そういう日もあろうな。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.resp==='solo', say:S(
+      '行きたいなら、行っておいで。気をつけてね。', '行かれるのでしたら、お気をつけて。', '行きたければ一人で行け。', '……行くなら、気をつけて。',
+      '行きたいなら、行っておいで。気をつけてね。', '行ってらっしゃい。お土産は期待しとくよ。', '行きたきゃ行けよ。気ぃつけてな。', '行くならば、気をつけて行かれよ。')},
+    {when:(t,i)=>i.resp==='near', say:S(
+      '今から？……近くの店までなら、付き合うよ。', '今からですか？……近くのお店まででしたら、お付き合いします。', '今からだと？……近場までなら付き合ってやる。', '……近くまでなら。',
+      '今から？近くのお店までなら、一緒に行くよ。', '今から？近所のコンビニまでならね。', '今からかよ。……近くまでならな。', '今からか。……近場までなら付き合おう。')},
+    {when:(t,i)=>i.resp==='fun', say:S(
+      'いいよ。たまにはそういうのも楽しいよね。', 'いいですね。たまにはそういうのも楽しそうです。', 'たまにはいいだろう。付き合ってやる。', '……たまには、いい。',
+      'いいよ。たまにはそういうのも楽しいよね。', 'いいねえ、夜のおやつ。乗った。', 'たまにはいいか。行くぞ。', 'たまにはよかろう。参ろう。')},
+    {say:S(
+      'いいよ、行こう。上着だけ持っておいで。', 'かしこまりました。ご一緒します。上着をお持ちくださいね。', 'いいだろう。付き合ってやる。上着を着ろ。', '……分かった。行こう。',
+      'いいよ、一緒に行こう。上着、忘れないでね。', 'お、いいね。夜のおやつ遠征といこうか。', 'しょうがねえな。行くか。上着着ろよ。', 'よかろう。共に参ろう。羽織るものを忘れるな。')}
+   ]},
+   {k:'say', opts:[
+    {when:t=>t.pampering>=5, say:S(
+      'ついでに、{you:の}好きなものも見ていこうか。', 'ついでに、お好きなものも見ていきましょうか。', 'ついでだ。好きなものを選べ。', '……好きなの、選べ。',
+      'ついでに、{you:の}好きなものも見ていこうね。', 'ついでに好きなもの、全部見て回ろっか。', 'ついでだ、好きなもん選べよ。', 'ついでに、好きなものを選ぶがよい。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.firm && i.resp!=='solo', say:S(
+      'ただし、帰ったらすぐ寝ること。そこは譲らないよ。', 'ただし、帰りましたらすぐお休みください。そこは譲れません。', 'ただし、帰ったらすぐに寝ろ。そこは譲らん。', '……帰ったら、すぐ寝ろ。',
+      'ただし、帰ったらすぐ寝ようね。そこは譲らないよ。', 'ただし帰ったら即おやすみ。そこは譲れないなあ。', 'ただし帰ったらすぐ寝ろよ。そこは譲らねえ。', 'ただし、戻ったらすぐ休むこと。そこは譲れぬ。')}
+   ]}
+  ]},
+
+ {id:'weakness', name:'自分にだけ弱さを見せた', desc:'相手が、ほかの人には見せない弱さを自分にだけ見せた場面。',
+  uses:['specialTreatment','warmth','disclosure','empathy','expressiveness'],
+  plan:t => ({recv: (t.warmth >= 4 || t.empathy >= 4) ? 'hold' : t.warmth <= 2 ? 'plain' : 'stay'}),
+  slots:[
+   {k:'act', opts:[
+    {when:t=>t.specialTreatment>=3, act:'（周りの視線を遮るように、相手を人目のない場所へそっと連れ出す）'},
+    {when:(t,i)=>t.specialTreatment<=1 && i.recv!=='hold', act:'（いつもと同じ調子で、相手の話に耳を傾ける）'},
+    {when:(t,i)=>i.recv==='hold' && t.expressiveness>=4, act:'（目を見開き、それから静かに相手の隣へ座る）'},
+    {when:(t,i)=>i.recv==='plain', act:'（表情を変えず、相手が話し終えるのを待つ）'},
+    {act:'（黙って相手の隣に座る）'}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.recv==='hold', say:S(
+      '……話してくれてありがとう。ここでは無理しなくていいよ。', '……お話しくださって、ありがとうございます。ここでは無理をなさらなくていいんですよ。', '……よく話した。ここでは強がる必要はない。', '……話してくれて、ありがとう。',
+      '……話してくれて、ありがとう。ここでは無理しなくていいからね。', '……そっか。話してくれてありがとね。ここでは肩の力、抜いていいよ。', '……話してくれて、ありがとな。ここでは無理すんな。', '……よくぞ話してくれた。ここでは強がらずともよい。')},
+    {when:(t,i)=>i.recv==='plain', say:S(
+      '……そう。話したいなら、聞くよ。', '……そうですか。お話しになりたいなら、伺います。', '……それで、どうしたい。', '……そうか。',
+      '……そっか。話したいなら、聞くよ。', '……ふうん。ま、聞くだけなら聞くよ。', '……で、どうしたいんだよ。', '……それで、いかがしたい。')},
+    {say:S(
+      '……そうだったんだ。話してくれて、ありがとう。', '……そうだったのですね。話してくださって、ありがとうございます。', '……そうか。', '……そうか。',
+      '……そうだったんだね。話してくれてありがとう。', '……そっか。そうだったんだ。', '……そうか。', '……左様であったか。')}
+   ]},
+   {k:'say', opts:[
+    {when:t=>t.specialTreatment>=4, say:S(
+      '{me:の}前でなら、いつでもそういう顔を見せていいから。', '{me:の}前でしたら、いつでもそういうお顔を見せてくださっていいんです。', '{me:の}前でだけは、そういう顔を許してやる。', '……{me:の}前なら、いい。',
+      '{me:の}前では、いつでもそういう顔していいんだよ。', '{me:の}前でなら、いつでも弱音吐いていいよ。ほかの誰にも言わないから。', '……{me:の}前でなら、いくらでも見せろよ。', '{me:の}前でならば、いつでもそのような顔を見せてよい。')}
+   ]},
+   {k:'say', opts:[
+    {when:t=>t.specialTreatment>=5, say:S(
+      'ほかの誰でもない、{you}だから言うんだよ。', 'ほかの誰でもない、{you}だから申し上げるんです。', '……こんなことを言うのは、{you}だけだ。', '……こんなこと言うの、{you}にだけだ。',
+      'ほかの誰でもない、{you}だから言うんだよ。', 'こんなこと言うの、{you}だけなんだからね。', '……こんなこと言うの、{you}だけだからな。', '……斯様なことを申すのは、{you}にだけだ。')}
+   ]},
+   {k:'say', opts:[
+    {when:t=>t.disclosure>=4 && t.specialTreatment>=2, say:S(
+      '……実は{me:も}、人に言えずにいることがあるんだ。', '……実は{me:にも}、人には言えずにいることがあります。', '……{me:にも}、人には見せていない弱みくらいある。', '……{me:にも}、ある。',
+      '……実は{me:も}ね、誰にも言えずにいることがあるんだ。', '……実はさ、{me:も}誰にも言ってないことがあるんだよね。', '……{me:にも}、誰にも言ってねえことくらいあるよ。', '……実は{me:にも}、人に明かしておらぬことがある。')}
+   ]},
+   {k:'act', opts:[
+    {when:t=>t.specialTreatment>=4 && t.warmth>=3, act:'（相手が落ち着くまで、そばを離れずにいる）'}
+   ]}
   ]}
 ];
 // 恋愛感情が芽生えた後の上乗せ（恋愛なし設定では一切使わない）
@@ -1052,7 +1426,19 @@ function defaultData(){
         {when:'相手が嘘をついたとき', then:'怒鳴らず、黙って視線を外し、「本当のことを聞かせて」と静かに言う'}
       ]
     },
-    output:{omit:[]} // v0.2の「省略」記録。v0.3では移行時に使用状態へ読み替え、値は消さずに残す
+    output:{omit:[], showPreset:false}, // omit=v0.2の「省略」記録（v0.3で使用状態へ読み替え済み。値は残す）/ showPreset=プリセット名をMarkdownに載せるか
+    /* 関係段階の作り方（v0.4）
+       mode : suggest=自動提案（新規の既定）/ linked=連動調整 / individual=完全個別（v0.3以前から移行したデータの既定）
+       traits[id] : {ref, sugg, edited, base, diff, follow}
+         ref    = 自動提案に使う段階差 {trust, deep}（プリセット適用時はその差。無ければ各軸の初期値 def の差）
+         sugg   = 自動提案を済ませたか（済んだら初期を動かしても後の段階は変えない）
+         edited = 段階ごとの手動編集済み（自動提案で上書きしない）
+         base / diff = 連動を始めた時点の初期値と段階差。上限・下限で丸めても diff は保持する
+         follow = 段階ごとの連動ON/OFF */
+    link:{mode:'suggest', traits:{}},
+    presets:{base:null, love:null, pattern:'gradual'}, // 最後に適用したプリセット（表示・履歴用。出力の根拠にはしない）
+    undo:{},   // 直前のプリセット適用の取り消し用（{} = なし）
+    legacy:{}  // 旧形式から分割・変換した元の値の控え（v0.3の affection など）
   };
 }
 function deepMerge(base, saved){
@@ -1069,6 +1455,13 @@ function deepMerge(base, saved){
 }
 /* v0.1 → v0.2：0〜100 の値を、v0.1の5区分（0-19/20-39/40-59/60-79/80-100）でレベル1〜5へ */
 const fromPercent = v => typeof v === 'number' ? Math.max(1, Math.min(5, Math.floor(v / 20) + 1)) : v;
+/* 旧「愛情表現」Lv1〜5 → 新しい軸の推定値（添字=旧Lv-1）。
+   旧Lv1 秘める（言葉にも態度にも出さない）／Lv2 控えめ（言葉にせず小さな行動）／Lv3 ほどほど（節目に短い言葉、普段は行動）
+   ／Lv4 伝える（言葉で好意を伝え、時間や贈り物も）／Lv5 惜しまない（言葉と行動で惜しまず） */
+const AFFECTION_SPLIT = {words:[1,1,2,4,5], actions:[1,2,3,4,4]};
+// v0.3 の人格軸（v0.2→v0.3 の移行はこの20軸を対象にする）
+const V3_TRAIT_IDS = ['politeness','warmth','empathy','expressiveness','shyness','playfulness','pride','competitive','stubborn','initiative',
+  'wariness','trustSpeed','closeness','candor','disclosure','reliance','affection','jealousy','possessive','romInitiative'];
 const MIGRATIONS = {
   1(d){
     if(d.traits) for(const id of Object.keys(d.traits)){
@@ -1086,13 +1479,43 @@ const MIGRATIONS = {
   2(d){
     d.traits = d.traits || {};
     const omit = new Set(((d.output || {}).omit) || []);
-    TRAITS.forEach(t => {
-      const x = d.traits[t.id] = d.traits[t.id] || {};
-      if(typeof x.use !== 'boolean') x.use = !(omit.has(t.id) && !x.locked);
+    // v0.3時点の20軸だけを対象にする（v0.4で増えた軸をここで使用ONにしない）
+    V3_TRAIT_IDS.forEach(id => {
+      const x = d.traits[id] = d.traits[id] || {};
+      if(typeof x.use !== 'boolean') x.use = !(omit.has(id) && !x.locked);
     });
     d.meta = d.meta || {};
     if(!d.meta.notice) d.meta.notice = 'v3';
     d.v = 3;
+    return d;
+  },
+  /* v0.3 → v0.4：愛情表現（affection）を4軸へ分割。意味が完全には一致しないため推定変換とし、元の値は legacy に残す。
+     言葉・行動は旧値から推定し、使用・固定・優先度を引き継ぐ。甘やかし度・特別扱いは根拠が無いので初期値・使用OFF。
+     関係段階は利用者が作ったものとして「完全個別設定」で引き継ぎ、自動提案・連動は有効にしない */
+  3(d){
+    d.traits = d.traits || {};
+    d.meta = d.meta || {};
+    d.legacy = (d.legacy && typeof d.legacy === 'object') ? d.legacy : {};
+    const old = d.traits.affection;
+    if(old && typeof old === 'object'){
+      d.legacy.affection = JSON.parse(JSON.stringify(old));
+      d.legacy.affectionFrom = 'v0.3';
+      const conv = map => {
+        const st = old.stages || {};
+        return {use:!!old.use, locked:!!old.locked, common:map[clampLv(old.common ?? 3) - 1],
+          stages:Object.fromEntries(STAGES.map(s => [s.id, map[clampLv(st[s.id] ?? old.common ?? 3) - 1]])), prio:old.prio ?? null};
+      };
+      const real = x => x && typeof x === 'object' && x.stages; // すでに新しい軸の値があれば上書きしない
+      if(!real(d.traits.affectionWords)) d.traits.affectionWords = conv(AFFECTION_SPLIT.words);
+      if(!real(d.traits.affectionActions)) d.traits.affectionActions = conv(AFFECTION_SPLIT.actions);
+      delete d.traits.affection;
+      d.meta.notice = [d.meta.notice, 'v4split'].filter(Boolean).join('+');
+    }
+    if(!d.link || typeof d.link !== 'object') d.link = {mode:'individual', traits:{}};
+    // 既存の人格は自動提案の対象にしない（初期を動かしても後の段階は変わらない）
+    d.link.traits = d.link.traits || {};
+    Object.keys(d.traits).forEach(id => { d.link.traits[id] = Object.assign({sugg:true, edited:{trust:true, deep:true}}, d.link.traits[id] || {}); });
+    d.v = 4;
     return d;
   }
 };
@@ -1116,19 +1539,39 @@ function normalize(saved){
   }
   if(!SPEECH_BY[out.speech.common]) out.speech.common = 'std';
   out.output.omit = (out.output.omit || []).filter(id => typeof id === 'string');
+  if(!['suggest','linked','individual'].includes(out.link.mode)) out.link.mode = 'individual';
+  if(!out.link.traits || typeof out.link.traits !== 'object' || Array.isArray(out.link.traits)) out.link.traits = {};
+  if(!PATTERNS.some(p => p.id === out.presets.pattern)) out.presets.pattern = 'gradual';
+  if(!out.undo || typeof out.undo !== 'object' || Array.isArray(out.undo)) out.undo = {};
   out.v = DATA_VERSION;
   return out;
 }
+let loadProblem = false;
+// 形式の古いブラウザ保存データは、移行前の内容を別キーに一度だけ控えておく（上書きで失われないように）
+function keepBackup(raw, v){
+  try{ const k = `${STORAGE_KEY}:backup-v${v}`; if(!localStorage.getItem(k)) localStorage.setItem(k, raw); }catch(e){}
+}
 function loadData(){
+  let raw = null;
   try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw) return migrate(JSON.parse(raw));
+    raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const obj = JSON.parse(raw), v = Number(obj && obj.v) || 1;
+      if(v < DATA_VERSION) keepBackup(raw, v);
+      return migrate(obj);
+    }
     for(const k of LEGACY_KEYS){ // v0.1 の保存データを引き継ぐ（旧データは消さない）
       const old = localStorage.getItem(k);
       if(old) return migrate(JSON.parse(old));
     }
-  }catch(e){}
-  return defaultData();
+  }catch(e){
+    // 読み込めなかったデータは消さずに別キーへ退避してから、新しい設定で始める
+    if(raw){ try{ localStorage.setItem(`${STORAGE_KEY}:unreadable-${Date.now()}`, raw); }catch(e2){} }
+    loadProblem = true;
+  }
+  const d = defaultData();
+  if(loadProblem){ d.meta.notice = 'loadfail'; d.meta.budgetSet = true; }
+  return d;
 }
 let saveTimer = null;
 function save(){
@@ -1172,6 +1615,45 @@ const isDefaultTrait = (D, id) => {
 };
 const changesAcross = (D, id) => { const t = D.traits[id]; return !t.locked && !isGlobal(id) && new Set(STAGES.map(s => t.stages[s.id])).size > 1; };
 const val = (id, st) => valOf(D, id, st);
+// 恋愛なし設定で「親愛・友情の範囲」として扱う軸
+const LOVE_IDS = ['affectionWords','affectionActions','pampering','specialTreatment','jealousy','possessive'];
+
+/* ---------- 関係段階の作り方（自動提案・連動・個別） ---------- */
+const LINK_MODES = [
+  {id:'suggest', name:'自動提案', desc:'初期の値を決めると、信頼成立後・関係深化後の値を一度だけ提案します。その後は各段階を自由に変えられ、初期を動かしても後の段階は変わりません。'},
+  {id:'linked', name:'連動調整', desc:'初期の値を動かすと、信頼成立後・関係深化後も段階の差を保ったまま動きます。後の段階を手で変えると、その段階は連動から外れます。'},
+  {id:'individual', name:'完全個別', desc:'3つの段階をそれぞれ独立して設定します（v0.3までと同じ）。'}
+];
+const linkable = id => !!TRAIT[id] && !isGlobal(id) && !(D.traits[id] && D.traits[id].locked);
+function linkOf(id){
+  const L = D.link.traits[id] = D.link.traits[id] || {};
+  if(typeof L.sugg !== 'boolean') L.sugg = false;
+  if(!L.edited || typeof L.edited !== 'object') L.edited = {trust:false, deep:false};
+  if(!L.follow || typeof L.follow !== 'object') L.follow = {trust:true, deep:true};
+  return L;
+}
+// 自動提案の段階差：プリセット由来の差があればそれ、無ければ各軸の初期値（def）の差
+function refOf(id){
+  const L = D.link.traits[id], t = TRAIT[id];
+  if(L && L.ref && typeof L.ref.trust === 'number' && typeof L.ref.deep === 'number') return L.ref;
+  return {trust:t.def[1] - t.def[0], deep:t.def[2] - t.def[0]};
+}
+const suggestionFor = (id, initial) => { const r = refOf(id); return {trust:clampLv(initial + r.trust), deep:clampLv(initial + r.deep)}; };
+// 連動の基準を今の値から取り直す（連動ON/OFFは保つ）。diff は丸めずに保存し、上限・下限で丸めた後も元の差へ戻せるようにする
+function relink(id){
+  const L = linkOf(id), st = D.traits[id].stages;
+  L.base = st.initial;
+  L.diff = {trust:st.trust - st.initial, deep:st.deep - st.initial};
+  return L;
+}
+function ensureLink(id){ const L = linkOf(id); return (L.diff && typeof L.diff.trust === 'number') ? L : relink(id); }
+// 連動調整：初期値から、連動中の段階を「保存した段階差」で計算し直す
+function applyLinked(id){
+  const L = ensureLink(id), st = D.traits[id].stages;
+  LATER.forEach(s => { if(L.follow[s]) st[s] = clampLv(st.initial + L.diff[s]); });
+}
+let pendingSugg = null; // スライダーを動かしている間は自動提案を追従させ、指を離した時点で確定する
+function commitSugg(){ if(pendingSugg && D.link.traits[pendingSugg]) D.link.traits[pendingSugg].sugg = true; pendingSugg = null; }
 
 /* =====================================================================
    3. 人格Markdown（設定データ → 文章。D は変更しない）
@@ -1194,7 +1676,7 @@ function makeCtx(D, level){
   // 使用中の項目だけを出力する（固定済みでも未使用なら出さない）。全段階共通の項目は人格の節ではなく専用の節に出す
   c.used = id => isUsed(D, id);
   c.inBody = t => !t.scope && c.used(t.id);
-  c.loveNames = ['affection','jealousy','possessive'].filter(id => isUsed(D, id)).map(id => TRAIT[id].name.replace('の表出', '')).join('・');
+  c.loveNames = LOVE_IDS.filter(id => isUsed(D, id)).map(id => TRAIT[id].short || TRAIT[id].name).join('・');
   c.condItems = key => {
     const R = D.relation[key];
     const pre = R.presets.map(id => COND[key].find(x => x.id === id)).filter(Boolean).map(x => level >= 2 ? x.obs : x.label);
@@ -1214,9 +1696,14 @@ function groupStages(fn){ // 連続する同じ値の段階をまとめる
 }
 
 const SECTIONS = [
- {id:'head', title:'概要', build:c => c.level >= 2
-   ? `# ${c.name}｜人格設計\n以下の行動規則に従って${c.name}を演じる。核と基本人格は全段階で変えず、関係の段階で変わるのは差分として書いた部分だけ。段階は会話の積み重ねで少しずつ進める。`
-   : `# ${c.name}｜人格設計\n核と基本人格は変えず、段階の差分だけを変える。`},
+ {id:'head', title:'概要', build:c => {
+   const head = c.level >= 2
+     ? `# ${c.name}｜人格設計\n以下の行動規則に従って${c.name}を演じる。核と基本人格は全段階で変えず、関係の段階で変わるのは差分として書いた部分だけ。段階は会話の積み重ねで少しずつ進める。`
+     : `# ${c.name}｜人格設計\n核と基本人格は変えず、段階の差分だけを変える。`;
+   // プリセット名は任意（標準は出さない）。名前は着想の目安で、振る舞いは下の規則を正とする
+   const names = c.D.output.showPreset ? presetNames(c.D) : '';
+   return names ? `${head}\n着想：${names}（振る舞いは以下の規則に従う）` : head;
+ }},
 
  {id:'speech', title:'話し方', build:c => {
    const L = ['## 話し方'];
@@ -1296,8 +1783,12 @@ const SECTIONS = [
  {id:'romance', title:'信頼と恋愛感情', build:c => {
    const Rm = c.D.relation.romance, af = ROMANCE_AFTER.find(a => a.id === Rm.after) || ROMANCE_AFTER[0];
    const H = '## 信頼と恋愛感情（別軸）';
+   // 愛情の示し方（言葉・行動・甘やかし・特別扱い）が強い場合も、触れ方は強めない
+   const touch = c.level >= 2 && ['affectionWords','affectionActions','pampering','specialTreatment']
+     .some(id => c.used(id) && STAGES.some(s => c.lv(id, s.id) >= 4))
+     ? '\n- 愛情の示し方が強くても、触れ方や身体の距離は強めない（触れ方は対人距離・甘え方の規則に従う）。' : '';
    if(Rm.mode === 'none'){
-     return H + '\n- 恋愛感情は持たない。信頼が深まっても、親愛・友情として表す。' + (c.level >= 2 && c.loveNames ? `\n- ${c.loveNames}の規則は、友人としての親愛の範囲で表し、恋愛的な言動にはしない。` : '');
+     return H + '\n- 恋愛感情は持たない。信頼が深まっても、親愛・友情として表す。' + (c.level >= 2 && c.loveNames ? `\n- ${c.loveNames}の規則は、友人としての親愛の範囲で表し、恋愛的な言動にはしない。` : '') + touch;
    }
    const L = [H];
    L.push(c.level >= 2
@@ -1312,7 +1803,7 @@ const SECTIONS = [
    if(c.used('romInitiative')) L.push(`- 恋愛への積極性：${c.rule('romInitiative', c.lv('romInitiative', 'initial'))}`);
    if(c.level >= 2 && c.loveNames) L.push(`- 恋愛感情が生じた後は、${c.loveNames}の規則を恋愛の文脈でも同じ強さで表す。相手の自由を制限する言動はしない。`);
    if(c.level >= 2) L.push('- 信頼が深くても恋愛感情が無い間は、親友のような距離感にとどめ、恋愛的な言動はしない。');
-   return L.join('\n');
+   return L.join('\n') + touch;
  }},
 
  {id:'ifthen', title:'状況別の行動規則', build:c => {
@@ -1322,6 +1813,10 @@ const SECTIONS = [
  }}
 ];
 
+// 最後に適用したプリセットの名前（表示用）。例：「高慢・尊大」×「無口な溺愛」
+function presetNames(D){
+  return PRESET_KINDS.map(k => presetOf(k.id, D.presets[k.id])).filter(Boolean).map(p => `「${p.name}」`).join('×');
+}
 function buildMarkdown(D, level){
   const c = makeCtx(D, level);
   const parts = [];
@@ -1400,13 +1895,16 @@ function renderSituation(D, sit, stageId, withRomance, override){
   const you = (override && override.you) || pronOf(D, 'you', stageId);
   const intent = sit.plan ? sit.plan(t) : {};
   const items = [];
+  const Rm = D.relation.romance;
+  // 恋愛感情を言葉で伝える上乗せが入るか（入るなら romReplace の状況は main の台詞を出さない）
+  const romSay = !!(withRomance && Rm.mode !== 'none' && Rm.after === 'open' && t.$stage !== 0);
   sit.slots.forEach(slot => {
-    const opt = slot.opts.find(o => !o.when || o.when(t, intent));
+    if(slot.main && sit.romReplace && romSay) return;
+    const opt = slot.opts.find(o => !o.when || o.when(t, intent, romSay));
     if(!opt) return;
     if(slot.k === 'act') items.push({k:'act', text:opt.act});
     else { const s = pickText(opt.say, preset); if(s) items.push({k:'say', text:s}); }
   });
-  const Rm = D.relation.romance;
   if(withRomance && Rm.mode !== 'none'){
     if(Rm.after === 'open' && t.$stage === 0) items.push({k:'act', text:ROMANCE_ADDON.act.openEarly});
     else {
@@ -1446,8 +1944,10 @@ function previewMarkdown(D, sits, withRomance, override){
    5. 画面
    ===================================================================== */
 const UI = Object.assign({tab:'tune', stage:'initial', sit:'meet', romance:false, level:'auto', pvPreset:'', pvMe:'', pvYou:'', pvScope:'one',
-  open:{selector:true, speech:true, temper:true}}, loadUI());
-function loadUI(){ try{ const o = JSON.parse(localStorage.getItem(UI_KEY) || '{}'); return o.open ? {open:Object.assign({selector:true}, o.open)} : {}; }catch(e){ return {}; } }
+  pre:{kind:'base', sel:null, choice:{}, locks:{}, rules:{}, undoAsk:false}, // プリセットの選択・プレビュー（保存しない）
+  resug:null,                                                               // 再提案の確認を開いている項目
+  open:{selector:true, presets:false, speech:true, temper:true}}, loadUI());
+function loadUI(){ try{ const o = JSON.parse(localStorage.getItem(UI_KEY) || '{}'); return o.open ? {open:Object.assign({selector:true, presets:false}, o.open)} : {}; }catch(e){ return {}; } }
 function saveUI(){ try{ localStorage.setItem(UI_KEY, JSON.stringify({open:UI.open})); }catch(e){} }
 const BUDGETS = [800, 1200, 1600, 2000, 2400, 3000];
 
@@ -1495,11 +1995,16 @@ function viewTune(){
   const seg = STAGES.map(s => `<button class="${UI.stage === s.id ? 'on' : ''}" data-act="stage" data-stage="${s.id}">${s.name}</button>`).join('');
   const NOTICES = {
     migrated:'v0.1のデータを移行しました。数値は5段階に変換済みです。「丁寧さ」は礼節の振る舞いを表し、言葉遣いは口調プリセットで決めます（初期値は「標準・自然」）。人格項目はすべて「使用する」で引き継いでいます。',
-    v3:'v0.3から、使う人格項目を選べるようになりました。これまでの設定は出力内容が変わらないよう、項目を「使用する」状態で引き継いでいます。'
+    v3:'v0.3から、使う人格項目を選べるようになりました。これまでの設定は出力内容が変わらないよう、項目を「使用する」状態で引き継いでいます。',
+    v4split:splitNotice(),
+    loadfail:'保存されていた設定を読み込めなかったため、新しい設定で始めました。元のデータは消さず、ブラウザ内に別名で残しています。JSONの控えがあれば「Markdown出力」の下から読み込めます。'
   };
-  const notice = NOTICES[D.meta.notice] ? `<div class="chk info">${NOTICES[D.meta.notice]}<button class="btn ghost sm" data-act="notice-ok">了解</button></div>` : '';
+  const msgs = String(D.meta.notice || '').split('+').map(k => NOTICES[k]).filter(Boolean);
+  const notice = msgs.length ? `<div class="chk info">${msgs.join('<br><br>')}<br><button class="btn ghost sm" data-act="notice-ok" style="margin:8px 0 0">確認しました</button></div>` : '';
   return `
   ${selectorHTML()}
+  ${notice}
+  ${presetHTML()}
   <section class="card">
     <div class="field"><label for="f-name">キャラクター名（空欄なら {{char}}）</label>
       <input id="f-name" type="text" class="txt" placeholder="{{char}}" value="${esc(D.meta.name)}" data-path="meta.name" autocomplete="off"></div>
@@ -1507,11 +2012,227 @@ function viewTune(){
       <div class="row"><input id="f-budget" type="number" inputmode="numeric" class="txt num" value="${D.meta.budget}" data-path="meta.budget" min="0" step="100"><span class="unit">字</span></div>
       <div class="chips">${budgetChips()}</div></div>
   </section>
-  ${notice}
+  ${modeHTML()}
   <div class="stagebar"><div class="stagecap"><span>編集中の関係段階</span><b id="stage-now">${STAGES.find(s => s.id === UI.stage).name}</b></div><div class="seg">${seg}</div></div>
-  <div id="checks"></div>
-  <div id="trait-area">${traitAreaHTML()}</div>`;
+  <div id="trait-area">${traitAreaHTML()}</div>
+  <div id="checks"></div>`;
 }
+// v0.3 の「愛情表現」を分割したときの案内（元の値も見せる）。HTMLを返すので値はエスケープ済みの数値・定型文のみ
+function splitNotice(){
+  const a = D.legacy && D.legacy.affection;
+  let old = '';
+  if(a && a.stages){
+    const v = a.locked ? `Lv${clampLv(a.common)}（固定）` : 'Lv' + STAGES.map(s => clampLv(a.stages[s.id])).join('→');
+    old = `以前の「愛情表現」は ${v}・${a.use ? '使用中' : '未使用'}でした。`;
+  }
+  return 'v0.4で「愛情表現」を4つの項目（言葉による愛情表現・行動による愛情表現・甘やかし度・特別扱い）に分けました。内容を確認してください。<br>'
+    + old + '以前の値から「言葉」と「行動」の値を推定して入れ、使用・固定・優先度を引き継いでいます。推定による変換なので、意味が完全に一致するとは限りません。甘やかし度と特別扱いは初期値のまま未使用です。元の値はデータ内に控えとして残しています。';
+}
+/* ---------- 人格プリセット ----------
+   適用の原則：プリセットに含まれる軸だけを触る。使用OFFの軸は提案として使用ONにし、
+   使用中で値が違う軸は「競合」として既定で現在値を残す。固定中の軸は変えない。直前の適用は取り消せる */
+const clone = o => o == null ? o : JSON.parse(JSON.stringify(o));
+const traitState = id => { const t = D.traits[id]; return {use:!!t.use, locked:!!t.locked, common:t.common, stages:{initial:t.stages.initial, trust:t.stages.trust, deep:t.stages.deep}}; };
+const sameJSON = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const lvChain = a => (a[0] === a[1] && a[1] === a[2]) ? `Lv${a[0]}（全段階）` : `Lv${a.join('→')}`;
+const labelChain = (id, a) => { const L = TRAIT[id].levels; return (a[0] === a[1] && a[1] === a[2]) ? L[a[0] - 1].label : a.map(v => L[v - 1].label).join('→'); };
+
+function presetRows(kind, id, pattern){
+  const P = presetOf(kind, id); if(!P) return [];
+  return Object.entries(P.axes).filter(([tid]) => TRAIT[tid] && D.traits[tid]).map(([tid, raw]) => {
+    const g = isGlobal(tid), d = D.traits[tid];
+    const to = g ? [raw[0], raw[0], raw[0]] : patternVals(raw, pattern);
+    const cur = (g || d.locked) ? [d.common, d.common, d.common] : STAGES.map(s => d.stages[s.id]);
+    const same = sameJSON(cur, to);
+    const status = d.locked ? 'locked' : !d.use ? 'new' : same ? 'same' : 'conflict';
+    return {id:tid, g, raw, to, cur, status};
+  });
+}
+// 行ごとの選択。new=使用して適用（既定）/ skip、conflict=keep（既定）/ apply
+const rowChoice = r => {
+  const c = UI.pre.choice[r.id];
+  if(r.status === 'new') return c === 'skip' ? 'skip' : 'apply';
+  if(r.status === 'conflict') return c === 'apply' ? 'apply' : 'keep';
+  return 'none';
+};
+// 適用後にその軸が取る値（固定候補の判定に使う）
+const rowResult = r => rowChoice(r) === 'apply' ? r.to : r.cur;
+function lockCandidates(P, rows){
+  // プリセットの値が入る項目（または今の値がプリセットと同じ項目）だけを候補にする
+  return (P.lock || []).map(id => rows.find(r => r.id === id)).filter(r => r && !r.g && (rowChoice(r) === 'apply' || r.status === 'same'))
+    .filter(r => { const v = rowResult(r); return v[0] === v[1] && v[1] === v[2]; });
+}
+
+function applyPreset(){
+  const {kind, sel} = UI.pre, P = presetOf(kind, sel); if(!P) return;
+  commitSugg();
+  const rows = presetRows(kind, sel, D.presets.pattern);
+  const before = {traits:{}, link:{}, presets:clone(D.presets)}, touched = [];
+  const snap = id => { if(touched.includes(id)) return; touched.push(id); before.traits[id] = traitState(id); before.link[id] = clone(D.link.traits[id] ?? null); };
+  const locks = lockCandidates(P, rows).filter(r => UI.pre.locks[r.id]);
+  let nNew = 0, nChg = 0;
+  rows.forEach(r => {
+    if(rowChoice(r) !== 'apply') return;
+    snap(r.id);
+    const d = D.traits[r.id];
+    if(r.status === 'new') nNew++; else nChg++;
+    d.use = true;
+    if(r.g){ d.common = r.to[0]; STAGES.forEach(s => { d.stages[s.id] = r.to[0]; }); }
+    else {
+      STAGES.forEach((s, i) => { d.stages[s.id] = r.to[i]; });
+      const L = linkOf(r.id);
+      L.ref = {trust:r.to[1] - r.to[0], deep:r.to[2] - r.to[0]}; // 自動提案の基準＝プリセットの段階差
+      L.sugg = true; L.edited = {trust:false, deep:false};
+      relink(r.id); // 連動調整の基準もこの値から取る
+    }
+    UI.open[TRAIT[r.id].cat] = true;
+  });
+  locks.forEach(r => { snap(r.id); const d = D.traits[r.id]; d.common = rowResult(r)[0]; d.locked = true; });
+  const added = [];
+  (P.ifthen || []).forEach((x, i) => { if(UI.pre.rules[i]){ D.relation.rules.push({when:x.when, then:x.then}); added.push({when:x.when, then:x.then}); } });
+  if(!touched.length && !added.length){ toast('変更する項目がありませんでした'); return; }
+  D.presets[kind] = P.id;
+  const kname = PRESET_KINDS.find(k => k.id === kind).name;
+  D.undo = {label:`${kname}「${P.name}」`, at:Date.now(), ids:touched, before, after:{traits:Object.fromEntries(touched.map(id => [id, traitState(id)]))}, rules:added};
+  UI.pre.sel = null; UI.pre.undoAsk = false;
+  saveUI(); saveNow();
+  const msg = [nNew && `${nNew}項目を使用`, nChg && `${nChg}項目を変更`, locks.length && `${locks.length}項目を固定`, added.length && `規則を${added.length}件追加`].filter(Boolean).join('・');
+  toast(`「${P.name}」を適用しました（${msg}）`);
+  afterPresetChange();
+}
+function undoInfo(){
+  const U = D.undo; if(!U || !Array.isArray(U.ids)) return null;
+  const changed = U.ids.filter(id => D.traits[id] && U.after && U.after.traits && !sameJSON(traitState(id), U.after.traits[id]));
+  return {U, changed};
+}
+// keepChanged=true なら、適用後に手で変えた軸は今の値のまま残す
+function doUndo(keepChanged){
+  const info = undoInfo(); if(!info) return;
+  const {U, changed} = info;
+  U.ids.forEach(id => {
+    if(!D.traits[id] || (keepChanged && changed.includes(id))) return;
+    Object.assign(D.traits[id], clone(U.before.traits[id]));
+    const L = U.before.link && U.before.link[id];
+    if(L) D.link.traits[id] = clone(L); else delete D.link.traits[id];
+  });
+  (U.rules || []).forEach(r => {
+    for(let i = D.relation.rules.length - 1; i >= 0; i--){
+      const x = D.relation.rules[i];
+      if(x.when === r.when && x.then === r.then){ D.relation.rules.splice(i, 1); break; }
+    }
+  });
+  if(U.before && U.before.presets) D.presets = clone(U.before.presets);
+  D.undo = {}; UI.pre.undoAsk = false;
+  saveNow(); toast(keepChanged && changed.length ? `取り消しました（手で変えた${changed.length}項目はそのまま）` : '直前のプリセット適用を取り消しました');
+  afterPresetChange();
+}
+function afterPresetChange(){
+  if(UI.tab !== 'tune') return;
+  refreshPresets(); refreshSelector(); refreshTraitArea();
+}
+
+function presetHTML(){
+  const pre = UI.pre, list = PRESETS[pre.kind];
+  const tabs = PRESET_KINDS.map(k => `<button class="${pre.kind === k.id ? 'on' : ''}" data-act="pre-kind" data-val="${k.id}">${k.name}<small class="pre-n">${PRESETS[k.id].length}</small></button>`).join('');
+  const chips = list.map(p => `<button class="chip ${pre.sel === p.id ? 'on' : ''}" data-act="pre-pick" data-id="${p.id}">${esc(p.name)}${D.presets[pre.kind] === p.id ? '<span class="mk">適用</span>' : ''}</button>`).join('');
+  const pats = PATTERNS.map(p => `<button class="${D.presets.pattern === p.id ? 'on' : ''}" data-act="pre-pattern" data-val="${p.id}">${p.name}</button>`).join('');
+  const pat = PATTERNS.find(p => p.id === D.presets.pattern);
+  const names = presetNames(D);
+  return `<details class="cat preset" data-cat="presets" id="preset-card" ${UI.open.presets ? 'open' : ''}>
+    <summary><span class="cat-t"><b>人格プリセットから始める</b><small>${names ? '最後に適用：' + esc(names) : '基本人格12種・愛情スタイル8種。適用前に内容を確認できます'}${D.undo.ids ? '<span class="badge lock">取り消し可</span>' : ''}</small></span>${ic('chevron', 'chev')}</summary>
+    <div class="cat-body">
+      ${undoHTML()}
+      <p class="hint" style="margin-top:12px">プリセットは出発点です。選んだ型の値を、対応する人格項目のスライダーに入れます。適用後は自由に調律でき、出力は常に今の値から作ります。基本人格と愛情スタイルは別の項目を変えるので、重ねて使えます。</p>
+      <div class="seg" style="margin-top:4px">${tabs}</div>
+      <div class="chips" style="margin-top:10px">${chips}</div>
+      <h4 style="margin-top:14px">関係での変わり方</h4>
+      <div class="seg">${pats}</div>
+      <p class="hint" style="margin:6px 0 0">${esc(pat.desc)}</p>
+      <div id="pre-preview">${presetPreviewHTML()}</div>
+    </div>
+  </details>`;
+}
+function undoHTML(){
+  const info = undoInfo(); if(!info) return '';
+  const {U, changed} = info;
+  if(UI.pre.undoAsk && changed.length){
+    return `<div class="undo-box">
+      <p style="margin:0 0 6px"><b>${esc(U.label)}</b>の適用後に、次の項目を手で変えています。</p>
+      <p class="hint" style="margin:0 0 8px">${changed.map(id => esc(TRAIT[id].name)).join('・')}</p>
+      <div class="row wrap"><button class="btn sm" data-act="pre-undo-all">すべて適用前に戻す</button><button class="btn ghost sm" data-act="pre-undo-keep">手で変えた項目は残して戻す</button><button class="btn ghost sm" data-act="pre-undo-cancel">やめる</button></div>
+    </div>`;
+  }
+  return `<div class="undo-box row between wrap"><span class="hint" style="margin:0">直前の適用：${esc(U.label)}</span><button class="btn ghost sm" data-act="pre-undo">直前のプリセット適用を取り消す</button></div>`;
+}
+function presetPreviewHTML(){
+  const {kind, sel} = UI.pre, P = presetOf(kind, sel);
+  if(!P) return '<p class="hint" style="margin:12px 0 0">プリセットを選ぶと、ここに説明と、変わる値（現在 → 提案）が出ます。まだ何も変わりません。</p>';
+  const rows = presetRows(kind, sel, D.presets.pattern);
+  const n = {apply:0, nw:0, keep:0};
+  rows.forEach(r => { const c = rowChoice(r); if(c === 'apply'){ n.apply++; if(r.status === 'new') n.nw++; } else if(c === 'keep' || c === 'skip') n.keep++; });
+  const conflicts = rows.filter(r => r.status === 'conflict');
+  const rowHTML = r => {
+    const name = esc(TRAIT[r.id].name);
+    const badge = {new:'新たに使用', conflict:'今の値と違います', same:'今の値と同じ', locked:'固定中のため変えません'}[r.status];
+    const curTxt = r.status === 'locked' ? `固定 Lv${r.cur[0]}` : !D.traits[r.id].use ? `未使用・${lvChain(r.cur)}` : lvChain(r.cur);
+    const opts = r.status === 'new' ? [['apply','使用して入れる'],['skip','入れない']] : r.status === 'conflict' ? [['keep','今の値のまま'],['apply','プリセット値にする']] : null;
+    const seg = opts ? `<div class="seg mini">${opts.map(([v, t]) => `<button class="${rowChoice(r) === v ? 'on' : ''}" data-act="pre-choice" data-trait="${r.id}" data-val="${v}">${t}</button>`).join('')}</div>` : '';
+    return `<div class="pr-row st-${r.status}">
+      <div class="pr-top"><b>${name}</b><span class="pr-badge">${badge}</span></div>
+      <div class="pr-vals"><span class="pr-cur">${esc(curTxt)}</span><span class="arr">→</span><span class="pr-to">${esc(lvChain(r.to))}</span></div>
+      <div class="pr-lab">${esc(labelChain(r.id, r.to))}${r.g ? '（全段階共通）' : ''}</div>
+      ${seg}
+    </div>`;
+  };
+  const changedByPattern = D.presets.pattern !== 'gradual' && rows.some(r => !sameJSON(r.to, r.g ? r.to : r.raw));
+  const lockC = lockCandidates(P, rows);
+  const locks = lockC.length ? `<h4 style="margin-top:14px">固定の候補（任意）</h4>
+    <p class="hint" style="margin:0 0 4px">関係が進んでも変わらない芯です。チェックした項目だけ固定します。</p>
+    ${lockC.map(r => `<label class="omit"><input type="checkbox" data-act-change="pre-lock" data-trait="${r.id}" ${UI.pre.locks[r.id] ? 'checked' : ''}>${esc(TRAIT[r.id].name)}を固定する（Lv${rowResult(r)[0]}「${esc(TRAIT[r.id].levels[rowResult(r)[0] - 1].label)}」）</label>`).join('')}` : '';
+  const rules = (P.ifthen || []).length ? `<h4 style="margin-top:14px">If-Then規則の候補（任意）</h4>
+    ${(P.ifthen).map((x, i) => `<label class="omit ifc"><input type="checkbox" data-act-change="pre-rule" data-i="${i}" ${UI.pre.rules[i] ? 'checked' : ''}><span>${esc(x.when)} → ${esc(x.then)}</span></label>`).join('')}` : '';
+  const Rm = D.relation.romance, rmLabel = (ROMANCE_MODES.find(m => m.id === Rm.mode) || ROMANCE_MODES[0]).label;
+  const loveNote = kind === 'love' ? `<p class="note-box">恋愛感情の設定（現在：${esc(rmLabel)}）・嫉妬・独占志向・恋愛への積極性は変えません。${romOff(D) ? '恋愛感情を持たない設定なので、親愛・友情の範囲の振る舞いとして出力します。' : '恋愛感情が生じるまでは、親愛の範囲の振る舞いとして出力します。'}</p>` : '';
+  const modeNote = D.link.mode === 'suggest' ? '入れた3段階の値が、その項目の自動提案の基準になります。'
+    : D.link.mode === 'linked' ? '連動調整中です。入れた値の段階差を保って、初期の値と連動します。' : '完全個別設定です。3段階の値をそのまま入れます。';
+  return `<div class="pv-box">
+    <h3 class="pv-title">${esc(P.name)}</h3>
+    <p class="preset-desc" style="margin-top:6px">${esc(P.desc)}</p>
+    ${P.note ? `<p class="hint" style="margin:8px 0 0">${esc(P.note)}</p>` : ''}
+    <p class="pr-sum">入れる ${n.apply}項目（うち新たに使用 ${n.nw}）／ 今の値のまま ${n.keep}項目${changedByPattern ? '<br>「' + esc(PATTERNS.find(p => p.id === D.presets.pattern).name) + '」で段階の値を調整しています。' : ''}</p>
+    ${conflicts.length > 1 ? `<div class="row wrap" style="margin:4px 0 2px"><button class="linkbtn" data-act="pre-all" data-val="apply">今の値と違う項目をすべてプリセット値に</button><button class="linkbtn" data-act="pre-all" data-val="keep">すべて今の値のまま</button></div>` : ''}
+    <p class="hint" style="margin:6px 0 0">値は 初期→信頼成立後→関係深化後 の順です。プリセットに含まれない項目は変わりません。</p>
+    ${rows.map(rowHTML).join('')}
+    ${locks}${rules}${loveNote}
+    <p class="hint" style="margin:10px 0 0">${modeNote}口調・一人称・二人称は変えません。</p>
+    <div class="row wrap" style="margin-top:12px"><button class="btn" data-act="pre-apply" ${n.apply || Object.values(UI.pre.locks).some(Boolean) || Object.values(UI.pre.rules).some(Boolean) ? '' : 'disabled'}>適用する</button><button class="btn ghost" data-act="pre-cancel">キャンセル</button></div>
+  </div>`;
+}
+function refreshPresets(){ const el = $('#preset-card'); if(el) el.outerHTML = presetHTML(); }
+function refreshPresetPreview(){
+  const el = $('#pre-preview'); if(el) el.innerHTML = presetPreviewHTML();
+}
+
+/* 関係段階の作り方 */
+function modeHTML(){
+  const m = LINK_MODES.find(x => x.id === D.link.mode);
+  return `<section class="card" id="mode-card"><h4 style="margin:0 0 8px">関係段階の作り方</h4>
+    <div class="seg">${LINK_MODES.map(x => `<button class="${D.link.mode === x.id ? 'on' : ''}" data-act="link-mode" data-val="${x.id}">${x.name}</button>`).join('')}</div>
+    <p class="hint" style="margin:8px 0 0">${esc(m.desc)}${D.link.mode !== 'individual' ? '固定中の項目と全段階共通の項目は対象外です。' : ''}</p></section>`;
+}
+function setLinkMode(mode){
+  if(mode === D.link.mode) return;
+  commitSugg();
+  D.link.mode = mode;
+  if(mode === 'linked') TRAITS.forEach(t => { if(linkable(t.id)) relink(t.id); });           // 今の段階差を基準にする
+  if(mode === 'suggest') TRAITS.forEach(t => { linkOf(t.id).sugg = true; });               // すでに作った段階は自動では変えない
+  save();
+  const el = $('#mode-card'); if(el) el.outerHTML = modeHTML();
+  refreshAllTraits();
+  toast(mode === 'linked' ? '連動調整にしました。今の段階差を保って連動します'
+      : mode === 'suggest' ? '自動提案にしました。今ある段階の値は変えません' : '完全個別設定にしました');
+}
+
 /* 使用する人格項目の選択欄 */
 function selectorHTML(){
   const n = usedTraits(D).length, N = TRAITS.length;
@@ -1546,7 +2267,8 @@ function refreshSelector(){
 function traitAreaHTML(){
   const empty = usedTraits(D).length === 0
     ? `<div class="card empty"><h2>人格項目がまだ選ばれていません</h2><p class="hint" style="margin:0">上の「使用する人格項目を選ぶ」で、このキャラクターに必要な項目にチェックを入れてください。選んだ項目のスライダーがここに表示されます。口調・呼称は下の「話し方・礼節」でいつでも設定できます。</p></div>` : '';
-  return empty + CATS.map(catHTML).join('');
+  // 話し方・礼節（口調・呼称）はスライダー群の後に置く
+  return empty + CATS.filter(c => c.id !== 'speech').map(catHTML).join('') + catHTML(CATS.find(c => c.id === 'speech'));
 }
 function refreshTraitArea(){
   const el = $('#trait-area'); if(!el) return;
@@ -1585,6 +2307,7 @@ function traitHTML(t){
     <p class="rule"></p>
     ${t.note ? `<p class="hint" style="margin:6px 0 0">${esc(t.note)}</p>` : ''}
     <p class="trans"></p>
+    <div class="linkrow"></div>
   </div>`;
 }
 function transHTML(t){
@@ -1613,6 +2336,31 @@ function refreshTrait(id){
   else tr.innerHTML = transHTML(t);
   const lb = $('.lockbtn', card);
   if(lb){ lb.classList.toggle('on', !!d.locked); lb.innerHTML = d.locked ? ic('lock') + '固定中' : ic('unlock') + '固定'; lb.setAttribute('aria-pressed', String(!!d.locked)); }
+  $('.linkrow', card).innerHTML = linkRowHTML(id);
+}
+// 連動調整：段階ごとの連動ON/OFF。自動提案：提案済みで今の値と違えば「再提案」
+function linkRowHTML(id){
+  if(!linkable(id)) return '';
+  const d = D.traits[id], mode = D.link.mode;
+  if(mode === 'linked'){
+    const L = ensureLink(id);
+    return `<span class="lk-cap">初期と連動</span>` + LATER.map(s => {
+      const st = STAGES.find(x => x.id === s), on = !!L.follow[s];
+      return `<button class="lk ${on ? 'on' : ''}" data-act="link-follow" data-trait="${id}" data-stage="${s}" aria-pressed="${on}">${st.short} ${on ? '連動中' : '連動しない'}</button>`;
+    }).join('');
+  }
+  if(mode === 'suggest'){
+    const L = D.link.traits[id];
+    if(!L || !L.sugg) return '';
+    const sg = suggestionFor(id, d.stages.initial);
+    if(LATER.every(s => d.stages[s] === sg[s])) return '';
+    if(UI.resug === id){
+      const ch = LATER.filter(s => d.stages[s] !== sg[s]).map(s => `${STAGES.find(x => x.id === s).name} Lv${d.stages[s]}→Lv${sg[s]}`).join('・');
+      return `<div class="resug"><span>${esc(ch)} にします。</span><span class="row"><button class="btn sm" data-act="resug-ok" data-trait="${id}">適用</button><button class="btn ghost sm" data-act="resug-cancel">やめる</button></span></div>`;
+    }
+    return `<button class="linkbtn" data-act="resug" data-trait="${id}">後の2段階を再提案</button>`;
+  }
+  return '';
 }
 function refreshCatSums(){ CATS.forEach(c => { const el = $('#catsum-' + c.id); if(el) el.innerHTML = catSummary(c.id); }); }
 const refreshAllTraits = () => { TRAITS.forEach(t => refreshTrait(t.id)); refreshCatSums(); };
@@ -1753,6 +2501,7 @@ function viewPreview(){
   <section class="card"><h2>状況を選ぶ</h2>
     <div class="chips" style="margin-top:4px">${sits}</div>
     <p class="hint" style="margin-top:10px;margin-bottom:${romOn ? 8 : 0}px">${esc(sit.desc)}</p>
+    ${presetNames(D) ? `<p class="hint" style="margin:0 0 ${romOn ? 8 : 0}px">最後に適用したプリセット：${esc(presetNames(D))}。会話例はプリセット名ではなく、今のスライダーの値から作っています。</p>` : ''}
     ${romOn ? `<label class="switchrow"><span>恋愛感情が芽生えた後の反応を足す</span><input type="checkbox" class="switch" data-act-change="rom-preview" ${UI.romance ? 'checked' : ''}></label>` : ''}
   </section>
   <details class="card plain" ${ovOn ? 'open' : ''}><summary>${ic('chevron')}口調・呼称を試しに変える${ovOn ? '<span class="tag" style="margin-left:6px">試着中</span>' : ''}</summary>
@@ -1772,7 +2521,7 @@ function viewPreview(){
     <p class="hint" id="pvmd-count" style="margin:6px 0 8px"></p>
     <div class="row wrap"><button class="btn sm" data-act="pvmd-copy">${ic('copy')}コピー</button><button class="btn ghost sm" data-act="pvmd-dl">${ic('download')}.mdで保存</button></div>
   </details>
-  <p class="hint note">外部AIを使わない簡易プレビューです。性格の値から発話の意図を決め、口調ごとに書き分けた台詞テンプレートを選んでいます。この画面は設定を書き換えません。</p>`;
+  <p class="hint note">外部AIを使わない簡易プレビューです。性格の値から発話の意図を決め、口調ごとに書き分けた台詞テンプレートを選んでいます。用意した型の組み合わせなので、人格や口調の組み合わせによってはぎこちない言い回しになることがあります。この画面は設定を書き換えません。</p>`;
 }
 function previewCards(sit){
   return STAGES.map(st => {
@@ -1811,6 +2560,8 @@ function viewOutput(){
     <h4 style="margin-top:16px">出力の詳細度</h4>
     <div class="seg" id="o-level">${lv}</div>
     <p class="hint" style="margin:8px 0 0">詳細＝全項目に補足の言動まで ／ 標準＝優先度「中」は標準の言動、「低」は中核の一文 ／ 最小＝「高」以外は中核の一文。どの詳細度でも項目は削りません。</p>
+    <label class="switchrow" style="margin-top:8px"><span>プリセット名を概要に載せる${presetNames(D) ? `<small class="hint" style="display:block;margin:0">${esc(presetNames(D))}</small>` : ''}</span><input type="checkbox" class="switch" data-act-change="show-preset" ${D.output.showPreset ? 'checked' : ''}></label>
+    <p class="hint" style="margin:0">標準はOFFです。プリセット名ではなく、今の値から作った行動規則を出力します。</p>
   </section>
   <section class="card" id="counter"></section>
   <section class="card">
@@ -1825,7 +2576,7 @@ function viewOutput(){
     <div id="omit-list"></div>
   </details>
   <details class="card plain"><summary>${ic('chevron')}設定データの保存・復元（JSON）</summary>
-    <p class="hint">設定はこの端末のブラウザに自動保存されます。iPhoneのSafariは長く開かないと保存内容が消えることがあるため、ときどきJSONで控えを取ってください。v0.1のJSONも読み込めます。</p>
+    <p class="hint">設定はこの端末のブラウザに自動保存されます。iPhoneのSafariは長く開かないと保存内容が消えることがあるため、ときどきJSONで控えを取ってください。v0.1〜v0.3のJSONも読み込めます（読み込むと今の形式に変換します）。</p>
     <div class="row wrap gap"><button class="btn ghost sm" data-act="data-copy">${ic('copy')}JSONをコピー</button><button class="btn ghost sm" data-act="data-dl">${ic('download')}JSONを保存</button>
       <label class="btn ghost sm filebtn">${ic('upload')}JSONファイルを読み込む<input type="file" accept=".json,application/json,text/plain" data-act-change="data-file"></label></div>
     <textarea id="import-box" class="txt" rows="4" placeholder="ここにJSONを貼り付けて「貼り付けから読み込む」"></textarea>
@@ -1893,21 +2644,74 @@ function rerenderSpeech(){
 }
 
 /* ---------- イベント ---------- */
-function setLevel(id, v){
+/* commit=true はタップなど1回で確定する操作。スライダーのドラッグ中は false で、指を離した時（change）に確定する */
+function setLevel(id, v, commit){
   const d = D.traits[id]; v = clampLv(v);
+  if(pendingSugg && pendingSugg !== id) commitSugg();
+  let note = '';
   if(d.locked || isGlobal(id)){ d.common = v; if(isGlobal(id)) STAGES.forEach(s => d.stages[s.id] = v); }
-  else d.stages[UI.stage] = v;
+  else if(UI.stage === 'initial'){
+    const mode = D.link.mode;
+    if(mode === 'linked'){ ensureLink(id); d.stages.initial = v; applyLinked(id); }
+    else if(mode === 'suggest' && !linkOf(id).sugg){
+      // 自動提案：一度だけ、手で変えていない後の段階に提案値を入れる
+      const L = linkOf(id), sg = suggestionFor(id, v);
+      d.stages.initial = v;
+      LATER.forEach(s => { if(!L.edited[s]) d.stages[s] = sg[s]; });
+      pendingSugg = id; if(commit) commitSugg();
+    }
+    else d.stages.initial = v;
+  } else {
+    const L = linkOf(id);
+    d.stages[UI.stage] = v; L.edited[UI.stage] = true;
+    if(D.link.mode === 'linked' && L.follow[UI.stage]){
+      L.follow[UI.stage] = false;
+      note = `${STAGES.find(s => s.id === UI.stage).name}を連動から外しました（項目の「連動」で戻せます）`;
+    }
+  }
+  if(UI.resug === id) UI.resug = null;
   save(); refreshTrait(id); refreshCatSums(); updateChecks();
+  if(note) toast(note);
 }
 const ACTIONS = {
   tab(b){ UI.tab = b.dataset.tab; render(false); },
-  stage(b){ UI.stage = b.dataset.stage; $$('.stagebar .seg button').forEach(x => x.classList.toggle('on', x.dataset.stage === UI.stage)); $('#stage-now').textContent = STAGES.find(s => s.id === UI.stage).name; refreshAllTraits(); },
-  lv(b){ setLevel(b.dataset.trait, +b.dataset.val); },
+  stage(b){ commitSugg(); UI.stage = b.dataset.stage; $$('.stagebar .seg button').forEach(x => x.classList.toggle('on', x.dataset.stage === UI.stage)); $('#stage-now').textContent = STAGES.find(s => s.id === UI.stage).name; refreshAllTraits(); },
+  lv(b){ setLevel(b.dataset.trait, +b.dataset.val, true); },
   lock(b){
     const id = b.dataset.trait, d = D.traits[id];
     if(!d.locked) d.common = d.stages[UI.stage]; // 固定する時点の値を共通値にする（段階別の値は残る）
-    d.locked = !d.locked; save(); refreshTrait(id); refreshCatSums(); updateChecks();
+    d.locked = !d.locked;
+    if(!d.locked && D.link.mode === 'linked') relink(id); // 固定を外したら、今の段階差を連動の基準にする
+    save(); refreshTrait(id); refreshCatSums(); updateChecks();
   },
+  'link-mode'(b){ setLinkMode(b.dataset.val); },
+  'link-follow'(b){
+    const id = b.dataset.trait, s = b.dataset.stage, L = ensureLink(id), st = D.traits[id].stages;
+    L.follow[s] = !L.follow[s];
+    if(L.follow[s]) L.diff[s] = st[s] - st.initial; // 連動に戻すときは今の差を基準にする
+    save(); refreshTrait(id);
+  },
+  resug(b){ const prev = UI.resug; UI.resug = b.dataset.trait; if(prev && prev !== UI.resug) refreshTrait(prev); refreshTrait(UI.resug); },
+  'resug-cancel'(){ const id = UI.resug; UI.resug = null; if(id) refreshTrait(id); },
+  'resug-ok'(b){
+    const id = b.dataset.trait, d = D.traits[id], sg = suggestionFor(id, d.stages.initial), L = linkOf(id);
+    LATER.forEach(s => { d.stages[s] = sg[s]; L.edited[s] = false; });
+    UI.resug = null; save(); refreshTrait(id); refreshCatSums(); updateChecks(); toast('後の2段階を提案値にしました');
+  },
+  'pre-kind'(b){ UI.pre.kind = b.dataset.val; UI.pre.sel = null; resetPreChoice(); refreshPresets(); },
+  'pre-pick'(b){ UI.pre.sel = UI.pre.sel === b.dataset.id ? null : b.dataset.id; resetPreChoice(); refreshPresets(); },
+  'pre-pattern'(b){ D.presets.pattern = b.dataset.val; save(); refreshPresets(); },
+  'pre-choice'(b){ UI.pre.choice[b.dataset.trait] = b.dataset.val; refreshPresetPreview(); },
+  'pre-all'(b){ presetRows(UI.pre.kind, UI.pre.sel, D.presets.pattern).filter(r => r.status === 'conflict').forEach(r => { UI.pre.choice[r.id] = b.dataset.val; }); refreshPresetPreview(); },
+  'pre-apply'(){ applyPreset(); },
+  'pre-cancel'(){ UI.pre.sel = null; resetPreChoice(); refreshPresets(); },
+  'pre-undo'(){
+    const info = undoInfo(); if(!info) return;
+    if(info.changed.length){ UI.pre.undoAsk = true; refreshPresets(); } else doUndo(false);
+  },
+  'pre-undo-all'(){ doUndo(false); },
+  'pre-undo-keep'(){ doUndo(true); },
+  'pre-undo-cancel'(){ UI.pre.undoAsk = false; refreshPresets(); },
   'notice-ok'(){ D.meta.notice = ''; save(); render(true); },
   'budget-chip'(b){ D.meta.budget = +b.dataset.val; D.meta.budgetSet = true; save(); render(true); },
   'speech-pick'(b){ D.speech.common = b.dataset.val; save(); rerenderSpeech(); },
@@ -1981,6 +2785,7 @@ function setUseMany(ids, on){
   if(UI.tab === 'tune'){ refreshSelector(); refreshTraitArea(); }
   if(UI.tab === 'output') updateOutput();
 }
+function resetPreChoice(){ UI.pre.choice = {}; UI.pre.locks = {}; UI.pre.rules = {}; }
 function openHelp(){ $('#help').hidden = false; $('#help .sheet').scrollTop = 0; }
 function importJSON(raw){
   try{
@@ -1997,6 +2802,9 @@ const CHANGES = {
   'rom-preview'(el){ UI.romance = el.checked; refreshPreviewCards(); },
   'pv-preset'(el){ UI.pvPreset = el.value; refreshPreviewCards(); },
   use(el){ setUseMany([el.dataset.trait], el.checked); },
+  'pre-lock'(el){ UI.pre.locks[el.dataset.trait] = el.checked; },
+  'pre-rule'(el){ UI.pre.rules[+el.dataset.i] = el.checked; refreshPresetPreview(); },
+  'show-preset'(el){ D.output.showPreset = el.checked; save(); updateOutput(); },
   'data-file'(el){
     const f = el.files && el.files[0]; if(!f) return;
     const rd = new FileReader();
@@ -2040,6 +2848,7 @@ document.addEventListener('input', e => {
   if(el.dataset && el.dataset.path) onBind(el);
 });
 document.addEventListener('change', e => {
+  if(e.target.matches && e.target.matches('input[type=range][data-trait]')){ commitSugg(); save(); refreshTrait(e.target.dataset.trait); return; }
   const h = e.target.dataset && CHANGES[e.target.dataset.actChange]; if(h) h(e.target);
 });
 document.addEventListener('toggle', e => {
