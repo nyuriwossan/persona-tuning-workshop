@@ -195,10 +195,26 @@ details.sel{border-color:var(--brass)}
 .sel-n{color:var(--brass);font-variant-numeric:tabular-nums;margin-left:4px}
 .linkbtn{border:0;background:none;color:var(--accent);font:inherit;font-size:13px;padding:6px 4px;min-height:36px}
 .sel-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.selbox{display:flex;align-items:center;gap:10px;min-height:52px;padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:14px;line-height:1.35;cursor:pointer;transition:background .15s,border-color .15s}
+.selbox{display:flex;align-items:center;gap:10px;min-height:52px;padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:transparent;color:var(--sub);font-size:14px;line-height:1.35;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
 .selbox input{flex:none;width:22px;height:22px;margin:0;accent-color:var(--accent)}
 .selbox small{display:block;font-size:10.5px;color:var(--brass);margin-top:1px}
-.selbox.on{border-color:var(--accent);background:var(--accent-weak);font-weight:600}
+.selbox.on{border-color:var(--accent);background:var(--accent-weak);color:var(--ink);font-weight:600}
+.sel-guide{list-style:none;margin:12px 0 10px;padding:10px 12px;background:var(--brass-weak);border-radius:10px;font-size:13px;line-height:1.65}
+.sel-guide li{position:relative;padding-left:14px;margin:2px 0}
+.sel-guide li::before{content:"";position:absolute;left:2px;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--brass)}
+.sel-guide b{font-weight:600}
+/* 調律エリアの未使用の項目 */
+.trait-off{display:flex;align-items:center;gap:12px;min-height:58px;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.trait-off:last-child{border-bottom:0}
+.trait-off input{flex:none;width:22px;height:22px;margin:0;accent-color:var(--accent)}
+.to-t{flex:1;min-width:0;display:flex;flex-direction:column}
+.to-name{font-size:14.5px;color:var(--sub)}
+.to-name small{font-size:10.5px;color:var(--brass);margin-left:6px}
+.to-poles{font-size:11.5px;color:var(--faint);margin-top:1px}
+.to-add{flex:none;font-size:12px;color:var(--faint);border:1px dashed var(--line);border-radius:99px;padding:3px 10px}
+.trait-off:active .to-add{color:var(--accent);border-color:var(--accent)}
+.use-tg{display:flex;align-items:center;gap:10px;min-height:40px;cursor:pointer;min-width:0}
+.use-tg input{flex:none;width:22px;height:22px;margin:0;accent-color:var(--accent)}
 .oprow.off .on-name,.oprow.off .on-sub{opacity:.5}
 .card.empty{border-style:dashed;background:transparent}
 /* プリセット */
@@ -276,7 +292,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
 </style>
 </head>
 <body>
-<header><div class="hbar"><h1>キャラ人格調律工房</h1><div class="hright"><button class="hbtn" data-act="help"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>使い方</button><span class="ver">v0.4.1</span></div></div></header>
+<header><div class="hbar"><h1>キャラ人格調律工房</h1><div class="hright"><button class="hbtn" data-act="help"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>使い方</button><span class="ver">v0.4.2</span></div></div></header>
 <main id="app"></main>
 <nav id="tabs" aria-label="画面切り替え"></nav>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -287,7 +303,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
     <h3>基本の流れ</h3>
     <ol>
       <li><b>予定文字数を決める</b><br>人格設定に使う字数です。キャラ設定欄の上限から、世界観など他の記述に使う分を引いた字数が目安です。</li>
-      <li><b>使う人格項目を選ぶ</b><br>「人格調律」の一番上で、このキャラに必要な項目だけにチェックを入れます。選んだ項目のスライダーだけが下に出ます。外しても値は消えません。</li>
+      <li><b>使う人格項目を選ぶ</b><br>人格項目はすべて任意で、全部を設定する必要はありません。「人格調律」の一番上の一覧か、各カテゴリの中で、このキャラに必要な項目だけにチェックを入れます。チェックした項目にだけ5段階のスライダーが出て、Markdownにもその項目だけが出力されます。使っていない項目は薄い色で並んでいて、いつでもチェックできます。外しても値は消えません。</li>
       <li><b>プリセットから始める（任意）</b><br>「人格プリセットから始める」で、基本人格（12種）と愛情スタイル（8種）を選べます。選ぶと、どの項目にどんな値が入るか（今の値 → 提案）が出るので、確かめてから「適用する」を押します。使用中で値が違う項目は、初めは今の値を残します。プリセット値にしたい項目だけ切り替えてください。基本人格と愛情スタイルは別の項目を変えるので、重ねて使えます。直前の適用は取り消せます。</li>
       <li><b>口調と呼称を決める</b><br>「話し方・礼節」で口調プリセットと一人称・二人称を選びます。{{user}} はそのまま使えます。関係が進むと呼び方や口調が変わるなら、スイッチをONにして段階ごとに設定します。</li>
       <li><b>スライダーで調律する</b><br>上の段階タブ（初期／信頼成立後／関係深化後）を切り替え、段階ごとに値を決めます。スライダーの下の文が、AIに渡る行動規則です。関係が進んでも変わらない芯は「固定」にします。<br>「関係段階の作り方」で、後の段階の決め方を選べます。<b>自動提案</b>は初期の値から後の2段階を一度だけ提案し、その後は自由に変えられます。<b>連動調整</b>は初期を動かすと後の段階も同じ差で動きます（後の段階を手で変えると、その段階は連動から外れます）。<b>完全個別</b>は3段階をそれぞれ決めます。</li>
@@ -312,6 +328,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
   <div class="sheet">
     <h2>はじめに</h2>
     <p>このキャラクターの人格設定に使う予定文字数を入力してください。世界観などを含む設定欄全体ではなく、このツールが出力する人格部分の文字数です。あとから変更できます。</p>
+    <p>人格項目はすべて任意です。使いたい項目にだけチェックを入れて調律します。</p>
     <div class="row"><input id="start-budget" type="number" inputmode="numeric" class="txt num" value="2000" min="100" step="100"><span class="unit">字</span></div>
     <div class="chips" id="start-chips"></div>
     <div class="row" style="margin-top:16px"><button class="btn" data-act="start-ok">この文字数で始める</button><button class="btn ghost" data-act="start-skip">あとで決める</button></div>
@@ -323,7 +340,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
 <script>
 'use strict';
 /* =====================================================================
-   キャラ人格調律工房 v0.4.1
+   キャラ人格調律工房 v0.4.2
    ---------------------------------------------------------------------
    構成
      1. 辞書   CATS / TRAITS / SPEECH / COND / ROMANCE_* / SITUATIONS
@@ -342,7 +359,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
      ・段階の作り方     : D.link（自動提案・連動・個別）。連動は基準の段階差 diff を保存し、丸めても元へ戻せる
    ===================================================================== */
 
-const APP_VERSION = '0.4.1';
+const APP_VERSION = '0.4.2';
 const DATA_VERSION = 5;
 const STORAGE_KEY = 'persona-tuning-workshop:data';
 const LEGACY_KEYS = ['kyara-tuning-workshop:v0.1'];
@@ -2314,17 +2331,22 @@ function selectorHTML(){
     </div>`;
   }).join('');
   return `<details class="cat sel" data-cat="selector" ${UI.open.selector !== false ? 'open' : ''}>
-    <summary><span class="cat-t"><b>使用する人格項目を選ぶ</b><small>選んだ項目だけを調律・試着・出力に使います</small></span><span class="countpill" id="sel-pill">${n} / ${N}</span>${ic('chevron', 'chev')}</summary>
+    <summary><span class="cat-t"><b>使用する人格項目を選ぶ</b><small>すべて任意です。チェックした項目だけ調律し、Markdownに出力します</small></span><span class="countpill" id="sel-pill">${selPill(n, N)}</span>${ic('chevron', 'chev')}</summary>
     <div class="cat-body">
-      <p class="hint" style="margin-top:12px">選択を外しても、数値・段階別の設定・固定はそのまま残り、選び直すと元に戻ります。</p>
+      <ul class="sel-guide">
+        <li><b>人格項目は${N}項目すべて任意</b>です。全部を設定する必要はありません。キャラの個性に効く項目だけを選んでください。</li>
+        <li>チェックした項目だけに5段階のスライダーが出て、<b>選んだ項目だけがMarkdownに出力</b>されます。</li>
+        <li>チェックを外しても、数値・段階ごとの設定・固定は残ります。選び直すと元に戻ります。</li>
+      </ul>
       <div class="row wrap" style="margin-bottom:4px"><button class="btn ghost sm" data-act="sel-all">すべて選択</button><button class="btn ghost sm" data-act="sel-none">すべて解除</button></div>
       ${groups}
     </div>
   </details>`;
 }
+const selPill = (n, N) => `使用 ${n} / ${N}`;
 function refreshSelector(){
   const n = usedTraits(D).length, pill = $('#sel-pill');
-  if(pill) pill.textContent = `${n} / ${TRAITS.length}`;
+  if(pill) pill.textContent = selPill(n, TRAITS.length);
   $$('[data-selbox]').forEach(l => { const on = isUsed(D, l.dataset.selbox); l.classList.toggle('on', on); $('input', l).checked = on; });
   CATS.forEach(cat => {
     const list = TRAITS.filter(t => t.cat === cat.id), k = list.filter(t => isUsed(D, t.id)).length;
@@ -2334,7 +2356,7 @@ function refreshSelector(){
 }
 function traitAreaHTML(){
   const empty = usedTraits(D).length === 0
-    ? `<div class="card empty"><h2>人格項目がまだ選ばれていません</h2><p class="hint" style="margin:0">上の「使用する人格項目を選ぶ」で、このキャラクターに必要な項目にチェックを入れてください。選んだ項目のスライダーがここに表示されます。口調・呼称は下の「話し方・礼節」でいつでも設定できます。</p></div>` : '';
+    ? `<div class="card empty"><h2>使う人格項目を選んでください</h2><p class="hint" style="margin:0">人格項目はすべて任意です。上の一覧か、下の各カテゴリで項目にチェックを入れると、その項目の5段階スライダーが出ます。チェックした項目だけがMarkdownに出力されます。プリセットから始めることもできます。口調・呼称は下の「話し方・礼節」でいつでも設定できます。</p></div>` : '';
   // 話し方・礼節（口調・呼称）はスライダー群の後に置く
   return empty + CATS.filter(c => c.id !== 'speech').map(catHTML).join('') + catHTML(CATS.find(c => c.id === 'speech'));
 }
@@ -2344,19 +2366,20 @@ function refreshTraitArea(){
   refreshAllTraits(); updateChecks();
 }
 function catHTML(cat){
-  const list = TRAITS.filter(t => t.cat === cat.id && isUsed(D, t.id));
-  if(!list.length && cat.id !== 'speech') return '';
-  const body = (cat.id === 'speech' ? speechHTML() + `<div class="sub-block" id="pron-card">${pronHTML()}</div>` : '') + list.map(traitHTML).join('');
+  // 使っていない項目も並べ順を変えずに控えめな行で表示する（チェックするとその場でスライダーになる）
+  const list = TRAITS.filter(t => t.cat === cat.id);
+  const body = (cat.id === 'speech' ? speechHTML() + `<div class="sub-block" id="pron-card">${pronHTML()}</div>` : '')
+    + list.map(t => isUsed(D, t.id) ? traitHTML(t) : traitOffHTML(t)).join('');
   return `<details class="cat" data-cat="${cat.id}" ${UI.open[cat.id] ? 'open' : ''}>
     <summary><span class="cat-t"><b>${esc(cat.name)}</b><small id="catsum-${cat.id}"></small></span>${ic('chevron', 'chev')}</summary>
     <div class="cat-body">${body}</div>
   </details>`;
 }
 function catSummary(catId){
-  const list = TRAITS.filter(t => t.cat === catId && isUsed(D, t.id));
+  const all = TRAITS.filter(t => t.cat === catId), list = all.filter(t => isUsed(D, t.id));
   const locked = list.filter(t => D.traits[t.id].locked).length;
   const jumps = list.filter(t => hasJump(t.id)).length;
-  const base = CATS.find(c => c.id === catId).desc + `・使用${list.length}項目`;
+  const base = CATS.find(c => c.id === catId).desc + `・使用 ${list.length} / ${all.length}`;
   return esc(base) + (locked ? `<span class="badge lock">固定${locked}</span>` : '') + (jumps ? `<span class="badge jump">急変${jumps}</span>` : '');
 }
 const hasJump = id => {
@@ -2364,10 +2387,18 @@ const hasJump = id => {
   for(let i = 1; i < STAGES.length; i++) if(Math.abs(d.stages[STAGES[i].id] - d.stages[STAGES[i - 1].id]) >= JUMP) return true;
   return false;
 };
+// 使っていない項目：名前とチェックボックスは常に押せる。色だけ控えめにする
+function traitOffHTML(t){
+  return `<label class="trait-off" data-off="${t.id}">
+    <input type="checkbox" data-act-change="use" data-trait="${t.id}" aria-label="${esc(t.name)}を使う">
+    <span class="to-t"><span class="to-name">${esc(t.name)}${t.scope ? '<small>全段階共通</small>' : ''}</span><span class="to-poles">${esc(t.poles[0])} ↔ ${esc(t.poles[1])}</span></span>
+    <span class="to-add">使う</span>
+  </label>`;
+}
 function traitHTML(t){
   const g = !!t.scope;
   return `<div class="trait" id="tc-${t.id}">
-    <div class="trait-head"><h3>${esc(t.name)}</h3>${g ? '<span class="scope">全段階共通</span>' : `<button class="lockbtn" data-act="lock" data-trait="${t.id}"></button>`}</div>
+    <div class="trait-head"><label class="use-tg"><input type="checkbox" data-act-change="use" data-trait="${t.id}" checked aria-label="${esc(t.name)}を使う（外すとスライダーを閉じます。値は残ります）"><h3>${esc(t.name)}</h3></label>${g ? '<span class="scope">全段階共通</span>' : `<button class="lockbtn" data-act="lock" data-trait="${t.id}"></button>`}</div>
     <div class="lvline"><span class="lvstage"></span><span class="lvname"></span></div>
     <input type="range" min="1" max="5" step="1" value="3" data-trait="${t.id}" aria-label="${esc(t.name)}">
     <div class="ticks">${[1,2,3,4,5].map(n => `<button class="tick" data-act="lv" data-trait="${t.id}" data-val="${n}" aria-label="${esc(t.name)} レベル${n}">${n}</button>`).join('')}</div>
@@ -2921,12 +2952,16 @@ const ACTIONS = {
   'start-chip'(b){ $('#start-budget').value = b.dataset.val; }
 };
 /* 使用状態の切り替え。数値・段階別設定・固定には触れない */
-function setUseMany(ids, on){
+/* anchor：カテゴリの中で切り替えた項目のid。上の案内カードの出し入れなどで画面がずれないよう、その項目の表示位置を保つ */
+function setUseMany(ids, on, anchor){
+  const at = id => $(`#tc-${id}`) || $(`[data-off="${id}"]`);
+  const before = anchor && at(anchor) ? at(anchor).getBoundingClientRect().top : null;
   ids.forEach(id => { if(D.traits[id]) D.traits[id].use = on; });
   if(on) ids.forEach(id => { if(TRAIT[id]) UI.open[TRAIT[id].cat] = true; }); // 選んだ項目のカテゴリを開いて、すぐ調整できるようにする
   saveUI(); save();
   if(UI.tab === 'tune'){ refreshSelector(); refreshTraitArea(); }
   if(UI.tab === 'output') updateOutput();
+  if(before != null && at(anchor)) window.scrollBy(0, at(anchor).getBoundingClientRect().top - before);
 }
 function resetPreChoice(){ UI.pre.choice = {}; UI.pre.locks = {}; UI.pre.rules = {}; }
 function openHelp(){ $('#help').hidden = false; $('#help .sheet').scrollTop = 0; }
@@ -2944,7 +2979,7 @@ const CHANGES = {
   'speech-stage'(el){ D.speech.stages[el.dataset.stage] = el.value || null; save(); updateChecks(); },
   'rom-preview'(el){ UI.romance = el.checked; refreshPreviewCards(); },
   'pv-preset'(el){ UI.pvPreset = el.value; refreshPreviewCards(); },
-  use(el){ setUseMany([el.dataset.trait], el.checked); },
+  use(el){ setUseMany([el.dataset.trait], el.checked, el.closest('#trait-area') ? el.dataset.trait : null); },
   'pre-lock'(el){ UI.pre.locks[el.dataset.trait] = el.checked; },
   'pre-rule'(el){ UI.pre.rules[+el.dataset.i] = el.checked; refreshPresetPreview(); },
   'show-preset'(el){ D.output.showPreset = el.checked; save(); updateOutput(); },
