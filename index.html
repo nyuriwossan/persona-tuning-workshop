@@ -180,6 +180,31 @@ details.plain[open] summary{margin-bottom:10px}
 .row.gap{gap:8px;margin:10px 0}
 .filebtn{position:relative;overflow:hidden}
 .filebtn input{position:absolute;inset:0;opacity:0;font-size:0;cursor:pointer}
+.hright{display:flex;align-items:center;gap:8px}
+.hbtn{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:transparent;color:var(--sub);border-radius:99px;padding:4px 12px 4px 9px;font:inherit;font-size:12.5px;min-height:34px}
+.hbtn svg.ic{width:16px;height:16px}
+details.sel{border-color:var(--brass)}
+.countpill{font-size:13px;font-weight:600;color:var(--brass);background:var(--brass-weak);border-radius:99px;padding:3px 11px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sel-group{padding:12px 0 4px;border-top:1px dashed var(--line);margin-top:12px}
+.sel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.sel-head h4{margin:0}
+.sel-n{color:var(--brass);font-variant-numeric:tabular-nums;margin-left:4px}
+.linkbtn{border:0;background:none;color:var(--accent);font:inherit;font-size:13px;padding:6px 4px;min-height:36px}
+.sel-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.selbox{display:flex;align-items:center;gap:10px;min-height:52px;padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:14px;line-height:1.35;cursor:pointer;transition:background .15s,border-color .15s}
+.selbox input{flex:none;width:22px;height:22px;margin:0;accent-color:var(--accent)}
+.selbox small{display:block;font-size:10.5px;color:var(--brass);margin-top:1px}
+.selbox.on{border-color:var(--accent);background:var(--accent-weak);font-weight:600}
+.oprow.off .on-name,.oprow.off .on-sub{opacity:.5}
+.card.empty{border-style:dashed;background:transparent}
+#help{z-index:70}
+.sheet.help{max-height:88vh;overflow:auto;-webkit-overflow-scrolling:touch}
+.help h3{font:600 15px/1.5 var(--serif);margin:16px 0 6px;letter-spacing:.05em}
+.help ol,.help ul{padding-left:1.3em;margin:4px 0}
+.help li{margin-bottom:9px;font-size:14px;line-height:1.7}
+.help li b{color:var(--ink)}
+.help p{color:var(--ink);font-size:14px;margin:4px 0 8px}
+.help .hint{color:var(--sub)}
 nav#tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
 nav#tabs button{flex:1;border:0;background:none;padding:8px 0 7px;color:var(--faint);font:inherit;font-size:10.5px;letter-spacing:.03em;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:56px;position:relative}
 nav#tabs svg.ic{width:23px;height:23px;stroke-width:1.6}
@@ -194,10 +219,35 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
 </style>
 </head>
 <body>
-<header><div class="hbar"><h1>キャラ人格調律工房</h1><span class="ver">v0.2</span></div></header>
+<header><div class="hbar"><h1>キャラ人格調律工房</h1><div class="hright"><button class="hbtn" data-act="help"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>使い方</button><span class="ver">v0.3</span></div></div></header>
 <main id="app"></main>
 <nav id="tabs" aria-label="画面切り替え"></nav>
 <div id="toast" role="status" aria-live="polite"></div>
+<div id="help" class="modal" hidden>
+  <div class="sheet help" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <div class="row between"><h2 id="help-title" style="margin:0">使い方</h2><button class="btn ghost sm" data-act="help-close">閉じる</button></div>
+    <p>AIチャットのキャラクター設定に貼る「人格の行動規則」を、スライダーで作るツールです。性格を形容詞ではなく、AIが演じやすい具体的な言動に変えて書き出します。</p>
+    <h3>基本の流れ</h3>
+    <ol>
+      <li><b>予定文字数を決める</b><br>人格設定に使う字数です。キャラ設定欄の上限から、世界観など他の記述に使う分を引いた字数が目安です。</li>
+      <li><b>使う人格項目を選ぶ</b><br>「人格調律」の一番上で、このキャラに必要な項目だけにチェックを入れます。選んだ項目のスライダーだけが下に出ます。外しても値は消えません。</li>
+      <li><b>口調と呼称を決める</b><br>「話し方・礼節」で口調プリセットと一人称・二人称を選びます。{{user}} はそのまま使えます。関係が進むと呼び方や口調が変わるなら、スイッチをONにして段階ごとに設定します。</li>
+      <li><b>スライダーで調律する</b><br>上の段階タブ（初期／信頼成立後／関係深化後）を切り替え、段階ごとに値を決めます。スライダーの下の文が、AIに渡る行動規則です。関係が進んでも変わらない芯は「固定」にします。</li>
+      <li><b>関係・反応を決める</b><br>信頼が成立する・深まる・後退する条件、恋愛感情の扱い（信頼とは別）、「もし〜なら〜する」の規則を設定します。</li>
+      <li><b>人格の試着で確かめる</b><br>8つの状況で、3段階の反応を並べて比べます。口調や呼称を試しに変えても設定は変わりません。会話例はMarkdownで書き出せます。</li>
+      <li><b>Markdownを出力して貼る</b><br>予定文字数に収まる詳細度を自動で選びます。コピーして、AIチャットのキャラクター設定欄に貼り付けます。超える場合は、使う項目を絞るか予定文字数を見直します。</li>
+      <li><b>控えを取る</b><br>設定はこの端末のブラウザに自動保存されます。iPhoneのSafariは長く開かないと消えることがあるので、ときどき「Markdown出力」の下からJSONを保存してください。別の端末へ移すときもJSONを使います。</li>
+    </ol>
+    <h3>うまく作るコツ</h3>
+    <ul>
+      <li>最初は、キャラの個性に効く5〜8項目くらいから始めると、短く濃い設定になります（目安です）。</li>
+      <li>関係で変化させる項目は数個にとどめ、ほかは固定か全段階同じ値にすると、急に別人になりにくくなります。隣の段階と2段階以上離れると「急変」の表示が出ます。</li>
+      <li>文字数が厳しいときは、出力画面で大事な項目の優先度を「高」にすると、短い詳細度でも丁寧に書かれます。</li>
+    </ul>
+    <h3>注意</h3>
+    <p class="hint">創作支援のためのツールで、心理検査ではありません。試着の会話例は外部AIを使わず、テンプレートを組み合わせた簡易プレビューです。</p>
+  </div>
+</div>
 <div id="start" class="modal" hidden>
   <div class="sheet">
     <h2>はじめに</h2>
@@ -205,6 +255,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
     <div class="row"><input id="start-budget" type="number" inputmode="numeric" class="txt num" value="2000" min="100" step="100"><span class="unit">字</span></div>
     <div class="chips" id="start-chips"></div>
     <div class="row" style="margin-top:16px"><button class="btn" data-act="start-ok">この文字数で始める</button><button class="btn ghost" data-act="start-skip">あとで決める</button></div>
+    <p class="hint" style="margin:14px 0 0">はじめての方は <button class="linkbtn" data-act="help" style="padding:0;min-height:0;font-size:inherit">使い方</button> をどうぞ。</p>
   </div>
 </div>
 <noscript>このツールはJavaScriptを使います。</noscript>
@@ -212,7 +263,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
 <script>
 'use strict';
 /* =====================================================================
-   キャラ人格調律工房 v0.2
+   キャラ人格調律工房 v0.3
    ---------------------------------------------------------------------
    構成
      1. 辞書   CATS / TRAITS / SPEECH / COND / ROMANCE_* / SITUATIONS
@@ -226,10 +277,11 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
      ・口調を追加       : SPEECH に1件。試着テンプレートは未定義なら「標準」で代替
      ・出力節を追加     : SECTIONS に {id,title,build(c)}
      ・試着の状況を追加 : SITUATIONS に1件（plan で意図を決め、slots で台詞を選ぶ）
+     ・使用状態         : D.traits[id].use。未使用の項目は出力せず、試着では Lv3 として扱う
    ===================================================================== */
 
-const APP_VERSION = '0.2';
-const DATA_VERSION = 2;
+const APP_VERSION = '0.3';
+const DATA_VERSION = 3;
 const STORAGE_KEY = 'persona-tuning-workshop:data';
 const LEGACY_KEYS = ['kyara-tuning-workshop:v0.1'];
 const UI_KEY = 'persona-tuning-workshop:ui';
@@ -974,8 +1026,9 @@ const ROMANCE_ADDON = {
 /* =====================================================================
    2. 設定データ D
    ===================================================================== */
+// use = この人格項目を使うか（出力・調律エリア・試着の対象）。新規作成は全項目OFFから始める
 function defaultTrait(t){
-  return {locked:false, common:t.def[0], stages:{initial:t.def[0], trust:t.def[1], deep:t.def[2]}, prio:null};
+  return {use:false, locked:false, common:t.def[0], stages:{initial:t.def[0], trust:t.def[1], deep:t.def[2]}, prio:null};
 }
 function defaultData(){
   const traits = {};
@@ -999,7 +1052,7 @@ function defaultData(){
         {when:'相手が嘘をついたとき', then:'怒鳴らず、黙って視線を外し、「本当のことを聞かせて」と静かに言う'}
       ]
     },
-    output:{omit:[]}
+    output:{omit:[]} // v0.2の「省略」記録。v0.3では移行時に使用状態へ読み替え、値は消さずに残す
   };
 }
 function deepMerge(base, saved){
@@ -1026,6 +1079,20 @@ const MIGRATIONS = {
     d.meta = d.meta || {};
     d.meta.notice = 'migrated';
     d.v = 2;
+    return d;
+  },
+  /* v0.2 → v0.3：使用状態を追加。出力内容を変えないよう全項目ONにし、
+     v0.2で利用者が「省略」していた項目（固定していないもの）だけOFFにする */
+  2(d){
+    d.traits = d.traits || {};
+    const omit = new Set(((d.output || {}).omit) || []);
+    TRAITS.forEach(t => {
+      const x = d.traits[t.id] = d.traits[t.id] || {};
+      if(typeof x.use !== 'boolean') x.use = !(omit.has(t.id) && !x.locked);
+    });
+    d.meta = d.meta || {};
+    if(!d.meta.notice) d.meta.notice = 'v3';
+    d.v = 3;
     return d;
   }
 };
@@ -1094,6 +1161,8 @@ const speechOf = (D, stage) => {
   return SPEECH_BY[v] ? v : 'std';
 };
 const romOff = D => D.relation.romance.mode === 'none';
+const isUsed = (D, id) => !!(D.traits[id] && D.traits[id].use);
+const usedTraits = D => TRAITS.filter(t => isUsed(D, t.id));
 const prioOf = (D, id) => (D.traits[id] && D.traits[id].locked) ? 'high' : ((D.traits[id] && D.traits[id].prio) || (TRAIT[id] && TRAIT[id].prio) || 'normal');
 const isDefaultTrait = (D, id) => {
   const t = D.traits[id], d = defaultTrait(TRAIT[id]);
@@ -1113,7 +1182,7 @@ const DETAIL = {3:{high:'full', normal:'full', low:'full'}, 2:{high:'full', norm
 const PRIO_NAMES = {high:'高', normal:'中', low:'低'};
 
 function makeCtx(D, level){
-  const c = {D, level, name:(D.meta.name || '').trim() || '{{char}}', omit:new Set(D.output.omit || [])};
+  const c = {D, level, name:(D.meta.name || '').trim() || '{{char}}'};
   c.lv = (id, st) => valOf(D, id, st);
   c.pron = (kind, st) => pronOf(D, kind, st);
   c.rule = (id, l) => {
@@ -1122,8 +1191,10 @@ function makeCtx(D, level){
     if(mode === 'r') return lv.r;
     return firstSentence(lv.r);
   };
-  // 人格の節に載せる軸：全段階共通・恋愛専用・利用者が省略を選んだもの（固定は除く）は対象外
-  c.inBody = t => !t.scope && !(c.omit.has(t.id) && !D.traits[t.id].locked);
+  // 使用中の項目だけを出力する（固定済みでも未使用なら出さない）。全段階共通の項目は人格の節ではなく専用の節に出す
+  c.used = id => isUsed(D, id);
+  c.inBody = t => !t.scope && c.used(t.id);
+  c.loveNames = ['affection','jealousy','possessive'].filter(id => isUsed(D, id)).map(id => TRAIT[id].name.replace('の表出', '')).join('・');
   c.condItems = key => {
     const R = D.relation[key];
     const pre = R.presets.map(id => COND[key].find(x => x.id === id)).filter(Boolean).map(x => level >= 2 ? x.obs : x.label);
@@ -1170,7 +1241,7 @@ const SECTIONS = [
  }},
 
  {id:'core', title:'核', build:c => {
-   const locked = TRAITS.filter(t => !t.scope && c.D.traits[t.id] && c.D.traits[t.id].locked);
+   const locked = TRAITS.filter(t => c.inBody(t) && c.D.traits[t.id].locked);
    if(!locked.length) return null;
    return '## 核（全段階で不変）\n' + locked.map(t => `- ${t.name}：${c.rule(t.id, c.lv(t.id, 'initial'))}`).join('\n');
  }},
@@ -1210,9 +1281,11 @@ const SECTIONS = [
    L.push(c.fmtList(`${STAGES[0].name}→${STAGES[1].name}の条件`, c.condItems('trust'), none));
    L.push(c.fmtList(`${STAGES[1].name}→${STAGES[2].name}の条件`, c.condItems('deepen'), none));
    L.push(c.fmtList('後退する条件', c.condItems('regress'), none));
-   L.push(`- 信頼形成の速さ：${c.rule('trustSpeed', c.lv('trustSpeed', 'initial'))}`);
+   const ts = c.used('trustSpeed');
+   if(ts) L.push(`- 信頼形成の速さ：${c.rule('trustSpeed', c.lv('trustSpeed', 'initial'))}`);
    if(c.level >= 2){
-     L.push('- 進め方：関係が深まる条件にも同じ速さを当てはめる。1回の出来事で2段階以上は動かさない。');
+     L.push(ts ? '- 進め方：関係が深まる条件にも同じ速さを当てはめる。1回の出来事で2段階以上は動かさない。'
+               : '- 進め方：条件は1回で満たしたとみなさず、同種の出来事が重なって初めて次の段階へ進める。1回の出来事で2段階以上は動かさない。');
      L.push('- 後退時：一段階だけ前の振る舞いと呼称に戻す。核と基本人格は変えず、突き放すこともしない。相手が誠実に対応し続ければ、再び条件を積み重ねて進める。');
    } else {
      L.push('- 1回の出来事で2段階以上は動かさない。後退時は一段階前に戻し、核は変えない。');
@@ -1224,7 +1297,7 @@ const SECTIONS = [
    const Rm = c.D.relation.romance, af = ROMANCE_AFTER.find(a => a.id === Rm.after) || ROMANCE_AFTER[0];
    const H = '## 信頼と恋愛感情（別軸）';
    if(Rm.mode === 'none'){
-     return H + '\n- 恋愛感情は持たない。信頼が深まっても、親愛・友情として表す。' + (c.level >= 2 ? '\n- 愛情表現・嫉妬・独占志向の規則は、友人としての親愛の範囲で表し、恋愛的な言動にはしない。' : '');
+     return H + '\n- 恋愛感情は持たない。信頼が深まっても、親愛・友情として表す。' + (c.level >= 2 && c.loveNames ? `\n- ${c.loveNames}の規則は、友人としての親愛の範囲で表し、恋愛的な言動にはしない。` : '');
    }
    const L = [H];
    L.push(c.level >= 2
@@ -1236,8 +1309,8 @@ const SECTIONS = [
      L.push('- 最初から相手に惹かれている。ただし信頼が低い間は、その気持ちを押し出さない。');
    }
    L.push(`- ${Rm.mode === 'conditional' ? '芽生えた後' : '気持ちの表れ方'}：${c.level >= 2 ? af.text : af.short}`);
-   L.push(`- 恋愛への積極性：${c.rule('romInitiative', c.lv('romInitiative', 'initial'))}`);
-   if(c.level >= 2) L.push('- 恋愛感情が生じた後は、愛情表現・嫉妬・独占志向の規則を恋愛の文脈でも同じ強さで表す。相手の自由を制限する言動はしない。');
+   if(c.used('romInitiative')) L.push(`- 恋愛への積極性：${c.rule('romInitiative', c.lv('romInitiative', 'initial'))}`);
+   if(c.level >= 2 && c.loveNames) L.push(`- 恋愛感情が生じた後は、${c.loveNames}の規則を恋愛の文脈でも同じ強さで表す。相手の自由を制限する言動はしない。`);
    if(c.level >= 2) L.push('- 信頼が深くても恋愛感情が無い間は、親友のような距離感にとどめ、恋愛的な言動はしない。');
    return L.join('\n');
  }},
@@ -1270,15 +1343,15 @@ function chooseOutput(D, mode){
   }
   return {...last, auto:true};
 }
-// 省略できる項目と、省略した場合に減る文字数
-function omitCandidates(D, level){
+// 各項目を「使う／使わない」に切り替えたときの文字数の増減（使用中なら減る量、未使用なら増える量）
+function useImpact(D, level){
   const base = countChars(buildMarkdown(D, level).text);
-  return TRAITS.filter(t => !t.scope && !D.traits[t.id].locked).map(t => {
-    const omitted = (D.output.omit || []).includes(t.id);
-    const copy = {...D, output:{omit: omitted ? D.output.omit.filter(x => x !== t.id) : [...(D.output.omit || []), t.id]}};
+  return TRAITS.map(t => {
+    const used = isUsed(D, t.id);
+    const copy = {...D, traits:{...D.traits, [t.id]:{...D.traits[t.id], use:!used}}};
     const other = countChars(buildMarkdown(copy, level).text);
-    return {id:t.id, omitted, saves: omitted ? other - base : base - other,
-            suggested: prioOf(D, t.id) === 'low' && isDefaultTrait(D, t.id)};
+    return {id:t.id, used, delta:Math.abs(other - base),
+            suggested: used && !D.traits[t.id].locked && prioOf(D, t.id) === 'low' && isDefaultTrait(D, t.id)};
   });
 }
 
@@ -1287,7 +1360,8 @@ function omitCandidates(D, level){
    ===================================================================== */
 function traitCtx(D, stageId){
   const t = {};
-  TRAITS.forEach(x => { t[x.id] = valOf(D, x.id, stageId); });
+  // 未使用の項目は試着では標準（Lv3）として扱う
+  TRAITS.forEach(x => { t[x.id] = isUsed(D, x.id) ? valOf(D, x.id, stageId) : 3; });
   if(romOff(D)) TRAITS.forEach(x => { if(x.romance) t[x.id] = null; });
   t.$stage = STAGES.findIndex(s => s.id === stageId);
   t.$rom = D.relation.romance.mode;
@@ -1372,8 +1446,8 @@ function previewMarkdown(D, sits, withRomance, override){
    5. 画面
    ===================================================================== */
 const UI = Object.assign({tab:'tune', stage:'initial', sit:'meet', romance:false, level:'auto', pvPreset:'', pvMe:'', pvYou:'', pvScope:'one',
-  open:{speech:true, temper:true}}, loadUI());
-function loadUI(){ try{ const o = JSON.parse(localStorage.getItem(UI_KEY) || '{}'); return {open:o.open || {speech:true, temper:true}}; }catch(e){ return {}; } }
+  open:{selector:true, speech:true, temper:true}}, loadUI());
+function loadUI(){ try{ const o = JSON.parse(localStorage.getItem(UI_KEY) || '{}'); return o.open ? {open:Object.assign({selector:true}, o.open)} : {}; }catch(e){ return {}; } }
 function saveUI(){ try{ localStorage.setItem(UI_KEY, JSON.stringify({open:UI.open})); }catch(e){} }
 const BUDGETS = [800, 1200, 1600, 2000, 2400, 3000];
 
@@ -1419,8 +1493,13 @@ function budgetChips(){
 }
 function viewTune(){
   const seg = STAGES.map(s => `<button class="${UI.stage === s.id ? 'on' : ''}" data-act="stage" data-stage="${s.id}">${s.name}</button>`).join('');
-  const notice = D.meta.notice === 'migrated' ? `<div class="chk info">v0.1のデータを移行しました。数値は5段階に変換済みです。v0.2では「丁寧さ」が礼節の振る舞いを表し、言葉遣いは口調プリセットで決めます（初期値は「標準・自然」）。<button class="btn ghost sm" data-act="notice-ok">了解</button></div>` : '';
+  const NOTICES = {
+    migrated:'v0.1のデータを移行しました。数値は5段階に変換済みです。「丁寧さ」は礼節の振る舞いを表し、言葉遣いは口調プリセットで決めます（初期値は「標準・自然」）。人格項目はすべて「使用する」で引き継いでいます。',
+    v3:'v0.3から、使う人格項目を選べるようになりました。これまでの設定は出力内容が変わらないよう、項目を「使用する」状態で引き継いでいます。'
+  };
+  const notice = NOTICES[D.meta.notice] ? `<div class="chk info">${NOTICES[D.meta.notice]}<button class="btn ghost sm" data-act="notice-ok">了解</button></div>` : '';
   return `
+  ${selectorHTML()}
   <section class="card">
     <div class="field"><label for="f-name">キャラクター名（空欄なら {{char}}）</label>
       <input id="f-name" type="text" class="txt" placeholder="{{char}}" value="${esc(D.meta.name)}" data-path="meta.name" autocomplete="off"></div>
@@ -1431,10 +1510,52 @@ function viewTune(){
   ${notice}
   <div class="stagebar"><div class="stagecap"><span>編集中の関係段階</span><b id="stage-now">${STAGES.find(s => s.id === UI.stage).name}</b></div><div class="seg">${seg}</div></div>
   <div id="checks"></div>
-  ${CATS.map(catHTML).join('')}`;
+  <div id="trait-area">${traitAreaHTML()}</div>`;
+}
+/* 使用する人格項目の選択欄 */
+function selectorHTML(){
+  const n = usedTraits(D).length, N = TRAITS.length;
+  const groups = CATS.map(cat => {
+    const list = TRAITS.filter(t => t.cat === cat.id), k = list.filter(t => isUsed(D, t.id)).length;
+    return `<div class="sel-group">
+      <div class="sel-head"><h4>${esc(cat.name)} <span class="sel-n" data-catn="${cat.id}">${k}/${list.length}</span></h4>
+        <button class="linkbtn" data-act="sel-cat" data-cat="${cat.id}">${k === list.length ? 'まとめて解除' : 'まとめて選択'}</button></div>
+      <div class="sel-grid">${list.map(t => `<label class="selbox ${isUsed(D, t.id) ? 'on' : ''}" data-selbox="${t.id}">
+        <input type="checkbox" data-act-change="use" data-trait="${t.id}" ${isUsed(D, t.id) ? 'checked' : ''}><span>${esc(t.name)}${t.scope ? '<small>全段階共通</small>' : ''}</span></label>`).join('')}</div>
+    </div>`;
+  }).join('');
+  return `<details class="cat sel" data-cat="selector" ${UI.open.selector !== false ? 'open' : ''}>
+    <summary><span class="cat-t"><b>使用する人格項目を選ぶ</b><small>選んだ項目だけを調律・試着・出力に使います</small></span><span class="countpill" id="sel-pill">${n} / ${N}</span>${ic('chevron', 'chev')}</summary>
+    <div class="cat-body">
+      <p class="hint" style="margin-top:12px">選択を外しても、数値・段階別の設定・固定はそのまま残り、選び直すと元に戻ります。</p>
+      <div class="row wrap" style="margin-bottom:4px"><button class="btn ghost sm" data-act="sel-all">すべて選択</button><button class="btn ghost sm" data-act="sel-none">すべて解除</button></div>
+      ${groups}
+    </div>
+  </details>`;
+}
+function refreshSelector(){
+  const n = usedTraits(D).length, pill = $('#sel-pill');
+  if(pill) pill.textContent = `${n} / ${TRAITS.length}`;
+  $$('[data-selbox]').forEach(l => { const on = isUsed(D, l.dataset.selbox); l.classList.toggle('on', on); $('input', l).checked = on; });
+  CATS.forEach(cat => {
+    const list = TRAITS.filter(t => t.cat === cat.id), k = list.filter(t => isUsed(D, t.id)).length;
+    const el = $(`[data-catn="${cat.id}"]`); if(el) el.textContent = `${k}/${list.length}`;
+    const b = $(`[data-act="sel-cat"][data-cat="${cat.id}"]`); if(b) b.textContent = k === list.length ? 'まとめて解除' : 'まとめて選択';
+  });
+}
+function traitAreaHTML(){
+  const empty = usedTraits(D).length === 0
+    ? `<div class="card empty"><h2>人格項目がまだ選ばれていません</h2><p class="hint" style="margin:0">上の「使用する人格項目を選ぶ」で、このキャラクターに必要な項目にチェックを入れてください。選んだ項目のスライダーがここに表示されます。口調・呼称は下の「話し方・礼節」でいつでも設定できます。</p></div>` : '';
+  return empty + CATS.map(catHTML).join('');
+}
+function refreshTraitArea(){
+  const el = $('#trait-area'); if(!el) return;
+  el.innerHTML = traitAreaHTML();
+  refreshAllTraits(); updateChecks();
 }
 function catHTML(cat){
-  const list = TRAITS.filter(t => t.cat === cat.id);
+  const list = TRAITS.filter(t => t.cat === cat.id && isUsed(D, t.id));
+  if(!list.length && cat.id !== 'speech') return '';
   const body = (cat.id === 'speech' ? speechHTML() + `<div class="sub-block" id="pron-card">${pronHTML()}</div>` : '') + list.map(traitHTML).join('');
   return `<details class="cat" data-cat="${cat.id}" ${UI.open[cat.id] ? 'open' : ''}>
     <summary><span class="cat-t"><b>${esc(cat.name)}</b><small id="catsum-${cat.id}"></small></span>${ic('chevron', 'chev')}</summary>
@@ -1442,10 +1563,10 @@ function catHTML(cat){
   </details>`;
 }
 function catSummary(catId){
-  const list = TRAITS.filter(t => t.cat === catId);
+  const list = TRAITS.filter(t => t.cat === catId && isUsed(D, t.id));
   const locked = list.filter(t => D.traits[t.id].locked).length;
   const jumps = list.filter(t => hasJump(t.id)).length;
-  const base = CATS.find(c => c.id === catId).desc + `・${list.length}項目`;
+  const base = CATS.find(c => c.id === catId).desc + `・使用${list.length}項目`;
   return esc(base) + (locked ? `<span class="badge lock">固定${locked}</span>` : '') + (jumps ? `<span class="badge jump">急変${jumps}</span>` : '');
 }
 const hasJump = id => {
@@ -1497,7 +1618,9 @@ function refreshCatSums(){ CATS.forEach(c => { const el = $('#catsum-' + c.id); 
 const refreshAllTraits = () => { TRAITS.forEach(t => refreshTrait(t.id)); refreshCatSums(); };
 
 function checks(){
-  const out = [], free = TRAITS.filter(t => !t.scope && !D.traits[t.id].locked), lockedN = TRAITS.filter(t => D.traits[t.id].locked).length;
+  const used = usedTraits(D);
+  if(!used.length) return [];
+  const out = [], free = used.filter(t => !t.scope && !D.traits[t.id].locked), lockedN = used.filter(t => D.traits[t.id].locked).length;
   if(lockedN === 0) out.push({k:'info', t:'固定している項目がありません。関係が進んでも変わらない芯を1〜3項目固定すると、別人化を防げます。'});
   if(lockedN >= 8) out.push({k:'info', t:'固定が多いため、関係が進んでも振る舞いの変化が小さくなります。'});
   free.forEach(t => {
@@ -1515,6 +1638,7 @@ function checks(){
 }
 function speechConflicts(){
   const msgs = [];
+  if(!isUsed(D, 'politeness')) return msgs;
   groupStages(st => speechOf(D, st) + '|' + valOf(D, 'politeness', st)).forEach(g => {
     const [pid, pl] = g.v.split('|'), p = SPEECH_BY[pid];
     if(p.clash && p.clash.lv.includes(+pl)){
@@ -1639,6 +1763,7 @@ function viewPreview(){
     <div class="row wrap"><button class="btn ghost sm" data-act="pv-apply" ${ovOn ? '' : 'disabled'}>この口調・呼称を設定に反映</button><button class="btn ghost sm" data-act="pv-clear">試着を解除</button></div>
   </details>
   <div id="pv-cards">${previewCards(sit)}</div>
+  ${sit.uses.some(id => !isUsed(D, id)) ? `<p class="hint note">この状況に関わる項目のうち、使用していない項目（${sit.uses.filter(id => !isUsed(D, id)).map(id => esc(TRAIT[id].name)).join('・')}）は標準（Lv3）として扱っています。</p>` : ''}
   ${nRules ? `<p class="note-box">関係・反応のIf-Then規則（${nRules}件）は、この会話例には反映されていません。人格設定のMarkdownには含まれます。</p>` : ''}
   <details class="card plain" id="pvmd-box"><summary>${ic('chevron')}会話例をMarkdownで出力</summary>
     <p class="hint">人格設定のMarkdownとは別の書き出しです。キャラクターの「会話例」欄などに使えます。</p>
@@ -1653,7 +1778,7 @@ function previewCards(sit){
   return STAGES.map(st => {
     const r = renderSituation(D, sit, st.id, UI.romance, pvOverride());
     const body = r.merged.map(m => `<p class="${m.k}">${esc(m.k === 'say' ? `「${m.text}」` : m.text)}</p>`).join('') || '<p class="act">（この状況の反応がありません）</p>';
-    const tags = sit.uses.filter(id => D.traits[id] && !(TRAIT[id].romance && romOff(D))).map(id => `<span class="tag">${esc(TRAIT[id].name)}：${esc(TRAIT[id].levels[val(id, st.id) - 1].label)}</span>`).join('');
+    const tags = sit.uses.filter(id => isUsed(D, id) && !(TRAIT[id].romance && romOff(D))).map(id => `<span class="tag">${esc(TRAIT[id].name)}：${esc(TRAIT[id].levels[val(id, st.id) - 1].label)}</span>`).join('');
     return `<section class="card pv">
       <div class="pv-head"><h3>${st.name}</h3><button class="btn ghost sm" data-act="copy-ex" data-stage="${st.id}">${ic('copy')}コピー</button></div>
       <div class="pv-meta">一人称 <b>${esc(r.me)}</b> ／ 二人称 <b>${esc(r.you)}</b> ／ 口調 <b>${esc(SPEECH_BY[r.preset].name)}</b></div>
@@ -1694,9 +1819,9 @@ function viewOutput(){
     <div class="row wrap" style="margin-top:10px"><button class="btn" data-act="copy-md">${ic('copy')}コピー</button><button class="btn ghost" data-act="dl-md">${ic('download')}.mdで保存</button></div>
     <ul class="bd" id="breakdown"></ul>
   </section>
-  <details class="card plain" id="omit-box"><summary>${ic('chevron')}項目ごとの出力設定（優先度・省略）<span class="tag" id="omit-count" style="margin-left:6px"></span></summary>
-    <p class="hint">優先度は詳細度ごとの書き方に効きます。「省略する」は利用者が選んだ項目だけを出力から外し、設定データは消しません。<span class="cand">候補</span>は優先度「低」で初期値のままの項目です。固定した核は省略できません。</p>
-    <div class="row wrap" style="margin-bottom:6px"><button class="btn ghost sm" data-act="omit-suggested">候補をまとめて省略</button><button class="btn ghost sm" data-act="omit-clear">省略をすべて解除</button></div>
+  <details class="card plain" id="omit-box"><summary>${ic('chevron')}項目ごとの出力設定（使用・優先度）<span class="tag" id="omit-count" style="margin-left:6px"></span></summary>
+    <p class="hint">「使用する」は人格調律の「使用する人格項目を選ぶ」と同じ設定です。外しても数値や固定は消えません。優先度は詳細度ごとの書き方に効きます（使用するかどうかとは別の設定です）。<span class="cand">外す候補</span>は優先度「低」で初期値のままの項目です。</p>
+    <div class="row wrap" style="margin-bottom:6px"><button class="btn ghost sm" data-act="unuse-suggested">候補をまとめて外す</button></div>
     <div id="omit-list"></div>
   </details>
   <details class="card plain"><summary>${ic('chevron')}設定データの保存・復元（JSON）</summary>
@@ -1717,34 +1842,37 @@ function updateOutput(){
   let msg, action = '';
   if(cls === 'na') msg = '予定文字数を入力すると、収まるように詳細度を自動で選びます。';
   else if(cls === 'over'){
-    msg = `予定文字数を${-rem}字超えています。` + (r.auto && r.level === 1 ? '最小の詳細度でも収まりませんでした。' : '') + '設定データは削除していません。省略する項目を選ぶか、条件・If-Thenを減らすか、予定文字数を見直してください。';
-    action = '<button class="btn sm" data-act="open-omit" style="margin-top:8px">省略する項目を確認する</button>';
+    msg = `予定文字数を${-rem}字超えています。` + (r.auto && r.level === 1 ? '最小の詳細度でも収まりませんでした。' : '') + '設定データは削除していません。使う人格項目を絞るか、条件・If-Thenを減らすか、予定文字数を見直してください。';
+    action = '<button class="btn sm" data-act="open-omit" style="margin-top:8px">出力する項目を確認する</button>';
   }
   else if(cls === 'near') msg = `上限に近づいています（残り${rem}字）。`;
   else msg = '予定文字数に収まっています。';
+  if(!usedTraits(D).length) msg += '（人格項目が選ばれていないため、話し方と関係の規則だけを出力しています）';
   const modeTxt = r.auto ? `自動選択：${LEVEL_NAMES[r.level]}` : `手動：${LEVEL_NAMES[r.level]}`;
-  const nOmit = (D.output.omit || []).filter(id => TRAIT[id] && !D.traits[id].locked).length;
+  const nUse = usedTraits(D).length;
   counter.innerHTML = `
     <div class="meter"><div class="bar ${cls}" style="width:${Math.min(100, ratio * 100)}%"></div></div>
     <div class="nums"><div><small>指定</small><b>${budget || '—'}</b></div><div><small>実際</small><b id="used-n">${used}</b></div><div><small>残り</small><b class="${rem < 0 && budget > 0 ? 'neg' : ''}">${budget > 0 ? rem : '—'}</b></div></div>
     <div class="msg ${cls}">${esc(msg)}${action}</div>
-    <p class="hint" style="margin:8px 0 0">詳細度（${esc(modeTxt)}）${nOmit ? `／ 省略中 ${nOmit}項目` : ''} ／ 改行・記号も1字として数えています。</p>`;
+    <p class="hint" style="margin:8px 0 0">詳細度（${esc(modeTxt)}）／ 使用中の人格項目 ${nUse} / ${TRAITS.length} ／ 改行・記号も1字として数えています。</p>`;
   $('#md').value = r.text;
   $('#breakdown').innerHTML = r.parts.map(p => `<li><span>${esc(p.title)}</span><span>${p.chars}字</span></li>`).join('');
   updateOmitList(r.level);
 }
 function updateOmitList(level){
   const box = $('#omit-list'); if(!box) return;
-  const cands = omitCandidates(D, level);
-  const byId = Object.fromEntries(cands.map(c => [c.id, c]));
-  $('#omit-count').textContent = `省略 ${cands.filter(c => c.omitted).length}件`;
-  box.innerHTML = TRAITS.filter(t => !t.scope).map(t => {
-    const d = D.traits[t.id], c = byId[t.id], p = prioOf(D, t.id);
-    const stateTxt = d.locked ? '核（固定）' : changesAcross(D, t.id) ? STAGES.map(s => TRAIT[t.id].levels[d.stages[s.id] - 1].label).join('→') : t.levels[d.stages.initial - 1].label;
-    const seg = d.locked ? '<span class="hint" style="grid-column:1 / -1;margin:0">固定した核は常に優先度「高」で出力します。</span>'
+  const imp = useImpact(D, level);
+  const byId = Object.fromEntries(imp.map(c => [c.id, c]));
+  $('#omit-count').textContent = `使用 ${imp.filter(c => c.used).length} / ${TRAITS.length}`;
+  box.innerHTML = TRAITS.map(t => {
+    const d = D.traits[t.id], c = byId[t.id], p = prioOf(D, t.id), used = isUsed(D, t.id);
+    const lvText = isGlobal(t.id) ? t.levels[d.common - 1].label + '（全段階共通）' : changesAcross(D, t.id) ? STAGES.map(s => t.levels[d.stages[s.id] - 1].label).join('→') : t.levels[(d.locked ? d.common : d.stages.initial) - 1].label;
+    const stateTxt = (d.locked ? '核（固定）・' : '') + lvText;
+    const seg = !used ? '' : d.locked ? '<span class="hint" style="grid-column:1 / -1;margin:0">固定した核は常に優先度「高」で出力します。</span>'
       : `<div class="seg">${['high','normal','low'].map(k => `<button class="${p === k ? 'on' : ''}" data-act="prio" data-trait="${t.id}" data-val="${k}">優先度 ${PRIO_NAMES[k]}</button>`).join('')}</div>`;
-    const omit = d.locked ? '' : `<label class="omit"><input type="checkbox" data-act-change="omit" data-trait="${t.id}" ${c && c.omitted ? 'checked' : ''}>省略する${c ? `（${c.omitted ? '+' : '−'}${c.saves}字）` : ''}</label>`;
-    return `<div class="oprow"><div><div class="on-name">${esc(t.name)}${c && c.suggested ? '<span class="cand">候補</span>' : ''}</div><div class="on-sub">${esc(stateTxt)}</div></div>${omit}${seg}</div>`;
+    const delta = c && c.delta ? `（${used ? '−' : '+'}${c.delta}字）` : '';
+    const box = `<label class="omit"><input type="checkbox" data-act-change="use" data-trait="${t.id}" ${used ? 'checked' : ''}>使用する${delta}</label>`;
+    return `<div class="oprow ${used ? '' : 'off'}"><div><div class="on-name">${esc(t.name)}${c && c.suggested ? '<span class="cand">外す候補</span>' : ''}</div><div class="on-sub">${esc(stateTxt)}</div></div>${box}${seg}</div>`;
   }).join('');
 }
 
@@ -1815,12 +1943,19 @@ const ACTIONS = {
   'dl-md'(){ download(`${fileBase()}_人格設定.md`, $('#md').value, 'text/markdown'); },
   'open-omit'(){ const d = $('#omit-box'); d.open = true; d.scrollIntoView({behavior:'smooth', block:'start'}); },
   prio(b){ D.traits[b.dataset.trait].prio = b.dataset.val; save(); updateOutput(); },
-  'omit-suggested'(){
-    const add = omitCandidates(D, lastOutput ? lastOutput.level : 2).filter(c => c.suggested).map(c => c.id);
-    D.output.omit = Array.from(new Set([...(D.output.omit || []), ...add])); save(); updateOutput();
-    toast(add.length ? `${add.length}項目を省略に追加しました` : '候補はありません');
+  'unuse-suggested'(){
+    const ids = useImpact(D, lastOutput ? lastOutput.level : 2).filter(c => c.suggested).map(c => c.id);
+    ids.forEach(id => { D.traits[id].use = false; }); save(); updateOutput();
+    toast(ids.length ? `${ids.length}項目を使用から外しました（設定は保持）` : '候補はありません');
   },
-  'omit-clear'(){ D.output.omit = []; save(); updateOutput(); },
+  'sel-all'(){ setUseMany(TRAITS.map(t => t.id), true); },
+  'sel-none'(){ setUseMany(TRAITS.map(t => t.id), false); },
+  'sel-cat'(b){
+    const ids = TRAITS.filter(t => t.cat === b.dataset.cat).map(t => t.id);
+    setUseMany(ids, !ids.every(id => isUsed(D, id)));
+  },
+  help(){ openHelp(); },
+  'help-close'(){ $('#help').hidden = true; },
   'data-copy'(){ copyText(JSON.stringify(D)); },
   'data-dl'(){ saveNow(); download(`${fileBase()}_persona.json`, JSON.stringify(D, null, 2), 'application/json'); },
   'data-import'(){
@@ -1838,6 +1973,15 @@ const ACTIONS = {
   'start-skip'(){ D.meta.budgetSet = true; save(); closeStart(); },
   'start-chip'(b){ $('#start-budget').value = b.dataset.val; }
 };
+/* 使用状態の切り替え。数値・段階別設定・固定には触れない */
+function setUseMany(ids, on){
+  ids.forEach(id => { if(D.traits[id]) D.traits[id].use = on; });
+  if(on) ids.forEach(id => { if(TRAIT[id]) UI.open[TRAIT[id].cat] = true; }); // 選んだ項目のカテゴリを開いて、すぐ調整できるようにする
+  saveUI(); save();
+  if(UI.tab === 'tune'){ refreshSelector(); refreshTraitArea(); }
+  if(UI.tab === 'output') updateOutput();
+}
+function openHelp(){ $('#help').hidden = false; $('#help .sheet').scrollTop = 0; }
 function importJSON(raw){
   try{
     const obj = JSON.parse(raw);
@@ -1852,11 +1996,7 @@ const CHANGES = {
   'speech-stage'(el){ D.speech.stages[el.dataset.stage] = el.value || null; save(); updateChecks(); },
   'rom-preview'(el){ UI.romance = el.checked; refreshPreviewCards(); },
   'pv-preset'(el){ UI.pvPreset = el.value; refreshPreviewCards(); },
-  omit(el){
-    const id = el.dataset.trait, set = new Set(D.output.omit || []);
-    if(el.checked) set.add(id); else set.delete(id);
-    D.output.omit = Array.from(set); save(); updateOutput();
-  },
+  use(el){ setUseMany([el.dataset.trait], el.checked); },
   'data-file'(el){
     const f = el.files && el.files[0]; if(!f) return;
     const rd = new FileReader();
@@ -1889,6 +2029,7 @@ function onBind(el){
 function closeStart(){ $('#start').hidden = true; }
 
 document.addEventListener('click', e => {
+  if(e.target.id === 'help'){ e.target.hidden = true; return; } // 背景をタップで閉じる
   const b = e.target.closest('[data-act]'); if(!b || b.disabled) return;
   const h = ACTIONS[b.dataset.act]; if(h) h(b, e);
 });
@@ -1906,6 +2047,7 @@ document.addEventListener('toggle', e => {
   UI.open[d.dataset.cat] = d.open; saveUI();
 }, true);
 document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && !$('#help').hidden){ $('#help').hidden = true; return; }
   if(e.key === 'Enter' && e.target.id && e.target.id.startsWith('add-')){ e.preventDefault(); addCustom(e.target.id.slice(4)); }
 });
 window.addEventListener('pagehide', saveNow);
