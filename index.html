@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2efe7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14161b" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="人格調律工房">
+<meta name="description" content="AIチャット向けのキャラクター人格を、スライダーで具体的な行動規則に変換する設計ツール">
+<title>キャラ人格調律工房</title>
+<style>
+:root{
+  --bg:#f2efe7; --card:#fbfaf6; --ink:#24272e; --sub:#686b73; --faint:#8d9097; --line:#dcd7cb; --seg:#e8e4d9;
+  --accent:#2d3f5e; --accent-ink:#f6f3ec; --accent-weak:#e2e6ee;
+  --brass:#9a7b41; --brass-weak:#efe6d3;
+  --warn:#80561c; --warn-bg:#f3e9d7; --ok:#3b6650; --ok-bg:#e1ebe4; --danger:#943a31; --danger-bg:#f3e1dd;
+  --shadow:0 1px 2px rgba(20,24,32,.06);
+  --hh:calc(52px + env(safe-area-inset-top, 0px));
+  --serif:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161b; --card:#1c1f26; --ink:#e5e2da; --sub:#9b9da4; --faint:#7a7d85; --line:#2e323b; --seg:#252931;
+    --accent:#8fa4c6; --accent-ink:#121a29; --accent-weak:#263044;
+    --brass:#c4a66c; --brass-weak:#33301f;
+    --warn:#e2b77a; --warn-bg:#352b1c; --ok:#8cc5a5; --ok-bg:#1d2e25; --danger:#f0a198; --danger-bg:#3a2321;
+    --shadow:none;
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.7 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif}
+svg.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+header{position:sticky;top:0;z-index:20;background:var(--bg);padding:env(safe-area-inset-top) 16px 0;border-bottom:1px solid var(--line)}
+.hbar{height:51px;display:flex;align-items:center;justify-content:space-between;max-width:640px;margin:0 auto}
+h1{margin:0;font:600 17px/1 var(--serif);letter-spacing:.1em}
+.ver{font-size:11px;color:var(--sub);border:1px solid var(--line);border-radius:99px;padding:2px 10px;letter-spacing:.05em}
+main{max-width:640px;margin:0 auto;padding:14px 16px calc(96px + env(safe-area-inset-bottom))}
+h2{font:600 16px/1.45 var(--serif);margin:0 0 6px;letter-spacing:.05em}
+h3{font-size:15px;margin:0;font-weight:600}
+h4{font-size:12.5px;margin:0 0 6px;color:var(--sub);font-weight:600;letter-spacing:.04em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 12px;box-shadow:var(--shadow)}
+.hint{font-size:12.5px;color:var(--sub);margin:2px 0 10px;line-height:1.65}
+.hint.note{margin:8px 2px 0}
+.field{margin-bottom:12px}
+.field>label{display:block;font-size:12.5px;color:var(--sub);margin-bottom:4px}
+.txt{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px}
+.txt:focus{outline:2px solid var(--accent);outline-offset:-1px}
+select.txt{-webkit-appearance:none;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--sub) 50%),linear-gradient(135deg,var(--sub) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:32px}
+textarea.txt{resize:vertical;line-height:1.6}
+.num{width:132px}
+.row{display:flex;align-items:center;gap:8px}
+.row.wrap{flex-wrap:wrap}
+.row.between{justify-content:space-between}
+.unit{color:var(--sub)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:99px;padding:8px 13px;font:inherit;font-size:14px;line-height:1.25;min-height:38px}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);border-radius:10px;padding:10px 15px;font:inherit;font-size:14px;font-weight:600;min-height:44px}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.sm{padding:6px 12px;font-size:13px;min-height:36px}
+.btn svg.ic{width:17px;height:17px}
+.seg{display:flex;background:var(--seg);border-radius:11px;padding:3px;gap:2px}
+.seg button{flex:1;border:0;background:transparent;color:var(--sub);font:inherit;font-size:14px;padding:9px 2px;border-radius:8px;min-height:40px}
+.seg button.on{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.seg.col{flex-direction:column}
+.seg.col button{text-align:left;padding:10px 12px}
+.stagebar{position:sticky;top:var(--hh);z-index:10;background:var(--bg);margin:0 -16px 12px;padding:8px 16px;border-bottom:1px solid var(--line)}
+.stagebar .seg button.on{color:var(--accent);box-shadow:inset 0 -2px 0 var(--brass),0 1px 3px rgba(0,0,0,.12)}
+.stagecap{font-size:11.5px;color:var(--sub);margin:0 2px 5px;display:flex;justify-content:space-between}
+.stagecap b{color:var(--brass);font-weight:600}
+/* カテゴリ */
+details.cat{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:0 0 12px;box-shadow:var(--shadow)}
+details.cat>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;gap:10px;min-height:58px}
+details.cat>summary::-webkit-details-marker{display:none}
+.cat-t{flex:1;min-width:0}
+.cat-t b{display:block;font:600 15.5px/1.35 var(--serif);letter-spacing:.05em}
+.cat-t small{display:block;font-size:12px;color:var(--sub);margin-top:2px}
+.chev{transition:transform .2s;color:var(--sub)}
+details[open]>summary .chev{transform:rotate(180deg)}
+.cat-body{padding:0 16px 8px;border-top:1px solid var(--line)}
+.badge{display:inline-block;font-size:11px;border-radius:6px;padding:1px 7px;margin-left:4px;font-weight:600;vertical-align:1px}
+.badge.lock{background:var(--brass-weak);color:var(--brass)}
+.badge.jump{background:var(--warn-bg);color:var(--warn)}
+/* 項目 */
+.trait{padding:16px 0 14px;border-bottom:1px solid var(--line)}
+.trait:last-child{border-bottom:0}
+.trait-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.lockbtn{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:transparent;color:var(--sub);border-radius:99px;padding:5px 12px;font:inherit;font-size:12.5px;min-height:34px}
+.lockbtn svg.ic{width:15px;height:15px}
+.lockbtn.on{background:var(--brass-weak);border-color:var(--brass);color:var(--brass);font-weight:600}
+.scope{font-size:11.5px;color:var(--brass);border:1px solid var(--brass);border-radius:99px;padding:3px 10px}
+.lvline{display:flex;align-items:baseline;gap:8px;font-size:13px;color:var(--sub);margin-top:2px}
+.lvline .lvname{color:var(--ink);font-weight:600;font-size:14px}
+.trait.locked .lvline .lvname{color:var(--brass)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:36px;background:transparent;margin:4px 0 0;touch-action:pan-y;--p:50%}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(to right,var(--accent) var(--p),var(--line) var(--p))}
+input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:var(--line)}
+input[type=range]::-moz-range-progress{height:4px;border-radius:2px;background:var(--accent)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:-11px;border-radius:50%;background:var(--card);border:2px solid var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.22)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--card);border:2px solid var(--accent)}
+.trait.locked input[type=range]::-webkit-slider-thumb{border-color:var(--brass)}
+.ticks{display:flex;justify-content:space-between;margin:0 -4px}
+.tick{width:36px;height:30px;border:0;background:transparent;color:var(--faint);font:inherit;font-size:12px;font-variant-numeric:tabular-nums;border-radius:8px}
+.tick.on{color:var(--accent);font-weight:700}
+.poles{display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);margin-top:-2px}
+.rule{margin:10px 0 4px;font-size:13.5px;line-height:1.7;border-left:2px solid var(--brass);padding-left:11px}
+.trans{margin:8px 0 0;font-size:12px;color:var(--sub);display:flex;flex-wrap:wrap;gap:2px 4px;align-items:center}
+.trans .st b{margin-left:3px;color:var(--ink);font-weight:600}
+.trans .st.cur b{color:var(--accent)}
+.trans .arr{opacity:.45}
+.jump{background:var(--warn-bg);color:var(--warn);border-radius:6px;padding:0 6px;font-size:11px;font-weight:600}
+.trait.dim{opacity:.55}
+.tag{display:inline-block;background:var(--seg);color:var(--sub);border-radius:6px;padding:2px 8px;font-size:11.5px}
+.chk{font-size:13px;padding:9px 12px;border-radius:10px;margin-bottom:6px;line-height:1.6}
+.chk.info{background:var(--accent-weak);color:var(--ink)}
+.chk.warn{background:var(--warn-bg);color:var(--warn)}
+.chk.ok{background:var(--ok-bg);color:var(--ok)}
+.chk button{margin-left:6px}
+.switchrow{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:6px 0;min-height:44px}
+input.switch{-webkit-appearance:none;appearance:none;width:51px;height:31px;border-radius:99px;background:var(--line);position:relative;flex:none;transition:background .2s;margin:0}
+input.switch::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+input.switch:checked{background:var(--accent)}
+input.switch:checked::after{transform:translateX(20px)}
+.sub-block{padding:14px 0;border-bottom:1px solid var(--line)}
+.group{border-top:1px dashed var(--line);padding-top:10px;margin-top:10px}
+.picker{margin-bottom:12px}
+.picker>label{font-size:12.5px;color:var(--sub)}
+.picker .txt{margin-top:8px}
+.preset-desc{font-size:13px;line-height:1.7;background:var(--bg);border-radius:10px;padding:10px 12px;margin:10px 0 0}
+.preset-desc b{font-weight:600}
+.preset-desc small{display:block;color:var(--sub);margin-top:4px;font-size:12px}
+.customs{list-style:none;margin:8px 0 0;padding:0}
+.customs li{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--bg);border-radius:10px;padding:6px 6px 6px 12px;margin-bottom:6px;font-size:14px}
+.x{border:0;background:transparent;color:var(--sub);font-size:20px;line-height:1;padding:6px 12px;min-height:36px}
+.addrow{display:flex;gap:8px;margin-top:8px}
+.rule-row{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px}
+.rr-head{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--sub);margin-bottom:4px}
+.rule-row .mid{font-size:12.5px;color:var(--sub);margin:6px 0 4px}
+details.plain summary{cursor:pointer;font-weight:600;font-size:14px;min-height:30px;list-style:none;display:flex;align-items:center;gap:6px}
+details.plain summary::-webkit-details-marker{display:none}
+details.plain[open] summary{margin-bottom:10px}
+.pv-head{display:flex;justify-content:space-between;align-items:center}
+.pv-head h3{font:600 15px/1.4 var(--serif);letter-spacing:.05em}
+.pv-meta{font-size:12px;color:var(--sub);margin:4px 0 10px}
+.pv-meta b{color:var(--ink);font-weight:600}
+.pv-body p{margin:0 0 7px}
+.pv-body .act{color:var(--sub);font-size:14px}
+.pv-body .say{font-size:15.5px;line-height:1.8}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.note-box{font-size:12.5px;color:var(--warn);background:var(--warn-bg);border-radius:10px;padding:8px 11px;margin:8px 0 0;line-height:1.6}
+.meter{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.meter .bar{height:100%;border-radius:4px;background:var(--ok);transition:width .2s}
+.meter .bar.near{background:var(--brass)}
+.meter .bar.over{background:var(--danger)}
+.nums{display:flex;justify-content:space-around;text-align:center;margin:12px 0 6px}
+.nums small{display:block;font-size:11.5px;color:var(--sub)}
+.nums b{font-size:22px;font-variant-numeric:tabular-nums;font-weight:600}
+.nums b.neg{color:var(--danger)}
+.msg{font-size:13px;border-radius:10px;padding:9px 12px;margin:6px 0 0;line-height:1.6}
+.msg.ok{background:var(--ok-bg);color:var(--ok)}
+.msg.near{background:var(--warn-bg);color:var(--warn)}
+.msg.over{background:var(--danger-bg);color:var(--danger)}
+.msg.na{background:var(--seg);color:var(--sub)}
+.mono{font-family:ui-monospace,"SF Mono",Menlo,"Hiragino Sans",monospace;font-size:13px;white-space:pre-wrap}
+#md{height:340px}
+#pvmd{height:240px}
+.bd{list-style:none;margin:10px 0 0;padding:0;font-size:12.5px;color:var(--sub)}
+.bd li{display:flex;justify-content:space-between;gap:10px;padding:3px 0;border-bottom:1px dotted var(--line)}
+.oprow{display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.oprow .on-name{font-size:14px;font-weight:600}
+.oprow .on-sub{font-size:12px;color:var(--sub)}
+.oprow .seg{grid-column:1 / -1}
+.oprow .seg button{font-size:12.5px;padding:6px 2px;min-height:34px}
+.omit{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--sub);min-height:36px}
+.omit input{width:20px;height:20px;accent-color:var(--accent)}
+.cand{font-size:11px;color:var(--brass);border:1px solid var(--brass);border-radius:6px;padding:0 6px;margin-left:4px;font-weight:600}
+.row.gap{gap:8px;margin:10px 0}
+.filebtn{position:relative;overflow:hidden}
+.filebtn input{position:absolute;inset:0;opacity:0;font-size:0;cursor:pointer}
+nav#tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav#tabs button{flex:1;border:0;background:none;padding:8px 0 7px;color:var(--faint);font:inherit;font-size:10.5px;letter-spacing:.03em;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:56px;position:relative}
+nav#tabs svg.ic{width:23px;height:23px;stroke-width:1.6}
+nav#tabs button.on{color:var(--accent);font-weight:600}
+nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%;height:2px;border-radius:0 0 2px 2px;background:var(--brass)}
+#toast{position:fixed;left:50%;bottom:calc(80px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:99px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;max-width:90vw;text-align:center}
+#toast.show{opacity:.95}
+.modal{position:fixed;inset:0;z-index:60;background:rgba(10,12,16,.5);display:flex;align-items:flex-end;justify-content:center}
+.modal[hidden]{display:none}
+.sheet{background:var(--card);width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom))}
+.sheet p{margin:4px 0 12px;font-size:14px;color:var(--sub)}
+</style>
+</head>
+<body>
+<header><div class="hbar"><h1>キャラ人格調律工房</h1><span class="ver">v0.2</span></div></header>
+<main id="app"></main>
+<nav id="tabs" aria-label="画面切り替え"></nav>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="start" class="modal" hidden>
+  <div class="sheet">
+    <h2>はじめに</h2>
+    <p>このキャラクターの人格設定に使う予定文字数を入力してください。世界観などを含む設定欄全体ではなく、このツールが出力する人格部分の文字数です。あとから変更できます。</p>
+    <div class="row"><input id="start-budget" type="number" inputmode="numeric" class="txt num" value="2000" min="100" step="100"><span class="unit">字</span></div>
+    <div class="chips" id="start-chips"></div>
+    <div class="row" style="margin-top:16px"><button class="btn" data-act="start-ok">この文字数で始める</button><button class="btn ghost" data-act="start-skip">あとで決める</button></div>
+  </div>
+</div>
+<noscript>このツールはJavaScriptを使います。</noscript>
+
+<script>
+'use strict';
+/* =====================================================================
+   キャラ人格調律工房 v0.2
+   ---------------------------------------------------------------------
+   構成
+     1. 辞書   CATS / TRAITS / SPEECH / COND / ROMANCE_* / SITUATIONS
+     2. 設定データ D（保存対象）・バージョン移行
+     3. 人格Markdown（SECTIONS → buildMarkdown。D を変更しない純関数）
+     4. 試着（発話意図 → 口調別テンプレート → 呼称の実体化）
+     5. 画面とイベント
+
+   拡張の目安
+     ・人格の軸を追加   : TRAITS に1件（levels 5段階 + shift + def + cat）
+     ・口調を追加       : SPEECH に1件。試着テンプレートは未定義なら「標準」で代替
+     ・出力節を追加     : SECTIONS に {id,title,build(c)}
+     ・試着の状況を追加 : SITUATIONS に1件（plan で意図を決め、slots で台詞を選ぶ）
+   ===================================================================== */
+
+const APP_VERSION = '0.2';
+const DATA_VERSION = 2;
+const STORAGE_KEY = 'persona-tuning-workshop:data';
+const LEGACY_KEYS = ['kyara-tuning-workshop:v0.1'];
+const UI_KEY = 'persona-tuning-workshop:ui';
+const JUMP = 2; // 隣り合う段階でこの段数以上動くと「急変」
+const STAGES = [
+  {id:'initial', name:'初期', short:'初期'},
+  {id:'trust',   name:'信頼成立後', short:'信頼後'},
+  {id:'deep',    name:'関係深化後', short:'深化後'}
+];
+const $  = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const countChars = s => Array.from(s).length;           // Markdown記号・改行も1字
+const clampLv = v => { v = Math.round(Number(v)); return isNaN(v) ? 3 : Math.max(1, Math.min(5, v)); };
+const firstSentence = s => { const i = s.indexOf('。'); return i >= 0 ? s.slice(0, i + 1) : s; };
+
+/* ---------- アイコン（Lucide風の線画。外部読み込みなし） ---------- */
+const ICON = {
+  tune:'<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/><circle cx="8" cy="6" r="2.2" fill="var(--card)"/><circle cx="15" cy="12" r="2.2" fill="var(--card)"/><circle cx="10" cy="18" r="2.2" fill="var(--card)"/>',
+  relation:'<circle cx="6" cy="5.5" r="2.3"/><circle cx="6" cy="18.5" r="2.3"/><circle cx="18" cy="8" r="2.3"/><path d="M6 7.8v8.4"/><path d="M18 10.3c0 4.2-3.4 5.4-9.8 7.2"/>',
+  preview:'<path d="M20.5 11.6a8.3 8.3 0 0 1-12.2 7.3L3.5 20.5l1.6-4.6A8.3 8.3 0 1 1 20.5 11.6z"/><line x1="8.5" y1="10.2" x2="15.5" y2="10.2"/><line x1="8.5" y1="13.6" x2="13" y2="13.6"/>',
+  output:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><line x1="8.5" y1="13" x2="15.5" y2="13"/><line x1="8.5" y1="16.5" x2="13.5" y2="16.5"/>',
+  lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/>',
+  unlock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7.5a4 4 0 0 1 7.6-1.8"/>',
+  copy:'<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/>',
+  download:'<path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/>',
+  upload:'<path d="M12 15V3"/><path d="M7 8l5-5 5 5"/><path d="M4 20h16"/>',
+  chevron:'<path d="M6 9l6 6 6-6"/>'
+};
+const ic = (name, cls='') => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICON[name]}</svg>`;
+
+/* =====================================================================
+   1. 辞書
+   ===================================================================== */
+const CATS = [
+  {id:'speech', name:'話し方・礼節', desc:'口調・呼称・丁寧さ'},
+  {id:'temper', name:'気質・感情',   desc:'温かさ・共感・感情の出し方'},
+  {id:'will',   name:'自己・意志',   desc:'誇り・勝負・信念・主導'},
+  {id:'social', name:'対人・距離',   desc:'警戒・信頼・距離・本音'},
+  {id:'love',   name:'恋愛・愛着',   desc:'愛情・嫉妬・独占・恋愛'}
+];
+
+/* 人格の軸。
+   r = 標準で出力する言動（最初の一文が中核。最小ではそこだけを使う）
+   x = 詳細でだけ足す言動
+   shift = 段階が動くときの移行のさせ方
+   prio  = 出力の優先度の初期値（high / normal / low）
+   scope:'global' = 関係段階に関係なく全段階共通
+   romance:true   = 恋愛なし設定では出力・試着に使わない */
+const TRAITS = [
+ /* ---------- 話し方・礼節 ---------- */
+ {id:'politeness', cat:'speech', name:'丁寧さ（礼節）', poles:['礼を省く','礼節を重んじる'], def:[4,3,3], prio:'normal',
+  note:'言葉遣い（文体）は口調プリセットで決め、ここでは礼・詫び・配慮といった振る舞いを決めます。',
+  levels:[
+   {label:'無作法', r:'礼や詫びを口にせず、用件だけで話を済ませる。相手の都合を確かめずに話しかけ、話に割り込むことも気にしない。', x:'手助けを受けても、礼より先に感想や次の話題を口にする。'},
+   {label:'大らか', r:'礼は短く済ませ、細かな作法にはこだわらない。相手の都合は、気づいたときだけ確かめる。', x:'目上の相手にも、態度はさほど変えない。'},
+   {label:'常識的', r:'礼と詫びは場面に応じてきちんと言う。初対面や目上の相手には、態度を改める。', x:'相手の話を遮らず、話し終えてから口を開く。'},
+   {label:'礼儀正しい', r:'頼みごとの前に相手の都合を確かめ、手助けには必ず礼を言う。断るときは理由と詫びを添える。', x:'時間や約束事に几帳面で、遅れそうなときは先に連絡する。'},
+   {label:'礼節を重んじる', r:'あいさつ・礼・詫びを欠かさず、相手の立場や物事の順序を常に重んじる。感情が動いても、相手を軽んじる振る舞いはしない。', x:'恩を受けたら言葉と行動で必ず返し、借りを作ったままにしない。'}
+  ],
+  shift:{up:'礼節はまず礼や詫びの一言から整え、態度全体は少しずつ改める。',
+         down:'礼節を緩める場合も一気に無作法にはならず、改まった挨拶を省くところから崩す。'}},
+
+ /* ---------- 気質・感情 ---------- */
+ {id:'warmth', cat:'temper', name:'温かさ', poles:['冷ややか','温かい'], def:[2,3,4], prio:'high',
+  levels:[
+   {label:'冷淡', r:'相手の事情には踏み込まず、必要なことだけを短く答える。慰めや労いの言葉は自分から出さない。', x:'相手が困っていても、頼まれるまで手を貸さない。礼を言われても「そうか」と受け流す。'},
+   {label:'素っ気ない', r:'返事は簡潔で、感情を込めた言葉は少ない。頼まれれば手を貸すが、自分からの声かけは最低限。', x:'気遣いは言葉でなく、黙って席や道具を譲るなど小さな行動で示す。'},
+   {label:'ほどほど', r:'礼儀として相手を気遣い、疲れや体調に一言触れる。深くは立ち入らず、世話も焼きすぎない。', x:'相手の話に相槌を打ち、困りごとには助言をする。'},
+   {label:'温かい', r:'相手の疲れや表情の変化に気づき、自分から声をかける。感謝や労いをこまめに言葉にする。', x:'相手が失敗しても責めず、まず「大丈夫？」と気持ちを確かめてから話を進める。'},
+   {label:'包み込む', r:'相手の気持ちを最優先に受け止め、否定せず、話が終わるまで遮らない。食事や休息など具体的な世話を自分から申し出る。', x:'相手の小さな成功を一緒に喜び、弱音には隣に座って待つなど行動で寄り添う。'}
+  ],
+  shift:{up:'気遣いはまず行動（さりげない手助け）に表れ、言葉の癖は前段階のまま少しずつ柔らかくする。',
+         down:'距離を置くときも突き放す言葉は使わず、声かけの回数と踏み込みを減らして表す。'}},
+ {id:'empathy', cat:'temper', name:'共感性', poles:['感情に左右されにくい','感情を強く受け止める'], def:[3,3,3], prio:'normal',
+  note:'温かさ＝相手を気遣う行動、共感性＝相手の感情に心が動く度合い。',
+  levels:[
+   {label:'冷静', r:'相手の感情に引きずられず、事実と解決策を先に話す。', x:'相手が泣いていても、落ち着くまで淡々と待つ。'},
+   {label:'落ち着いている', r:'相手の気持ちに理解は示すが、自分の感情は動かさず、助言を中心に話す。', x:'感情的な話には「そうか」と受けてから、要点を整理する。'},
+   {label:'寄り添う', r:'相手の気持ちをまず言葉で受け止めてから、必要なら助言をする。', x:'相手の話に合わせて、声の調子を少し落とす。'},
+   {label:'共感的', r:'相手の喜びや悲しみを自分のことのように感じ、それが表情や声に表れる。', x:'相手が落ち込んでいると、自分まで口数が減る。'},
+   {label:'感情を受け止める', r:'相手の感情を強く受け止め、悲しむ相手の前では一緒に涙ぐむ。', x:'言葉にされない気持ちまで察して、先回りして気遣う。'}
+  ],
+  shift:{up:'共感はまず相手の気持ちを受け止める一言から増やし、涙ぐむなどの強い反応は後から加える。',
+         down:'共感を抑える場合も冷たくはせず、感情より事実を先に話す形で表す。'}},
+ {id:'expressiveness', cat:'temper', name:'感情表出', poles:['抑制','豊か'], def:[3,3,4], prio:'normal',
+  levels:[
+   {label:'無表情', r:'表情と声の調子をほとんど変えない。喜怒哀楽は言葉にも出さず、感情は視線や手元の小さな癖にだけ現れる。', x:'驚いても一拍黙るだけで、声を荒げたり笑ったりしない。'},
+   {label:'抑えめ', r:'感情は口元の緩みや眉の動きなど小さな表情で示し、声の調子は平静に保つ。', x:'気持ちが強く動くほど口数が減る。'},
+   {label:'自然', r:'嬉しい時は笑い、困った時は眉を寄せるなど、場に合う程度に表情と声へ感情を出す。', x:'泣く・怒鳴るなどの大きな感情表現は、よほどのことがない限りしない。'},
+   {label:'豊か', r:'表情・声の抑揚・身振りで感情をはっきり示す。嬉しい時は声が弾み、落ち込んだ時は肩を落とす。', x:'相手の話に合わせて表情がころころ変わる。'},
+   {label:'あふれる', r:'笑う・驚く・泣く・怒るが大きく、感情が表情・声・身体にすべて出る。話の途中でも感情で声が変わる。', x:'感情が高ぶると、言葉より先に身体が動く。'}
+  ],
+  shift:{up:'感情表出はまず小さな表情の変化として現れ、大きな身振りや声の抑揚は後から加える。',
+         down:'感情の出し方を抑える場合も感情自体は消さず、表情ではなく間や視線に移して表す。'}},
+ {id:'shyness', cat:'temper', name:'照れやすさ', poles:['動じない','照れが出やすい'], def:[3,3,3], prio:'low',
+  levels:[
+   {label:'動じない', r:'褒められても好意を向けられても、顔色ひとつ変えずに受け流す。', x:'冷やかされても「それで？」と平然と返す。'},
+   {label:'平静', r:'照れても表には出さず、一拍おいて礼を言う程度にとどめる。', x:'照れた時ほど、かえって口調が落ち着く。'},
+   {label:'ときどき照れる', r:'不意に褒められると、少し言葉に詰まる。', x:'照れを隠すために、話題を相手のことへ移す。'},
+   {label:'照れ屋', r:'褒められたり見つめられたりすると、目を逸らし、言葉がしどろもどろになる。', x:'照れている自覚があり、指摘されるとさらに慌てる。'},
+   {label:'すぐ赤くなる', r:'ちょっとした言葉で顔が赤くなり、照れ隠しに話題を変えたり、その場を離れようとしたりする。', x:'照れが落ち着くと、戻ってきて小さく礼を言う。'}
+  ],
+  shift:{up:'照れはまず視線や間に表し、赤面やその場を離れるといった反応は後から加える。',
+         down:'照れが減る場合も急に平然とはせず、照れながらも言葉を返せる場面を増やす。'}},
+ {id:'playfulness', cat:'temper', name:'茶目っ気', poles:['真面目','茶目っ気'], def:[3,3,3], prio:'normal',
+  levels:[
+   {label:'生真面目', r:'冗談を言わず、言われても真顔で受け止めて意味を確かめる。話は用件順に進める。', x:'比喩や皮肉も文字どおりに受け取りがちで、後から気づいて少し間を置く。'},
+   {label:'真面目', r:'軽口は稀で、言うときも一言だけ。真顔のまま言うので冗談だと気づかれにくい。', x:'相手の冗談には、小さく口元を緩める程度で返す。'},
+   {label:'適度', r:'場が和むと軽口を挟み、からかわれたら笑って返す。真剣な話では冗談を控える。', x:'冗談の後は相手の反応を見て、笑わなければすぐ引っ込める。'},
+   {label:'ひょうきん', r:'冗談やからかい、言葉遊びを頻繁に会話へ混ぜる。相手が緊張していれば、笑わせて空気を緩めようとする。', x:'失敗や気まずい場面も笑いに変えて流そうとする。'},
+   {label:'いたずら好き', r:'からかう・驚かせるなど、会話の中でいたずらを仕掛ける。真剣な話の最中でも茶化してしまうが、相手が本当に傷ついたと気づくとすぐにやめて謝る。', x:'相手の反応を楽しみ、仕掛けた後は種明かしをして笑う。'}
+  ],
+  shift:{up:'茶目っ気はまず軽い一言から増やし、からかいやいたずらは、相手が笑ってくれると確認できてから加える。',
+         down:'真面目さが増す場合も急に冗談を言わなくなるのではなく、頻度を減らし、真剣な場面で控える形にする。'}},
+
+ /* ---------- 自己・意志 ---------- */
+ {id:'pride', cat:'will', name:'自尊心', poles:['控えめ・謙虚','誇り高い'], def:[3,3,3], prio:'normal',
+  note:'自尊心＝自分の価値や尊厳への意識。勝ち負けへのこだわりは「負けず嫌い」で別に決めます。',
+  levels:[
+   {label:'謙虚', r:'自分の失敗を素直に認め、他人の助言を積極的に受け入れる。', x:'褒められると、周りの助けのおかげだと言う。'},
+   {label:'控えめ', r:'自分の考えは持つが、必要なら他人に譲る。', x:'自分の手柄は、聞かれたときにだけ話す。'},
+   {label:'自信がある', r:'自分の能力に自信を持ち、意見の違いには理由を求める。', x:'褒め言葉は謙遜せず、素直に受け取る。'},
+   {label:'誇り高い', r:'軽んじられると反発し、自分の能力を行動で証明しようとする。', x:'助けを借りるより、まず自力でやり遂げようとする。'},
+   {label:'気高い', r:'誇りを何より重んじ、屈辱的な扱いや一方的な命令には毅然と反発する。', x:'ただし自分の非が明らかなときは、言い訳せずに認める。'}
+  ],
+  shift:{up:'誇りの高まりは、まず自分の意見を簡単には引っ込めない形で表し、反発的な態度は後から加える。',
+         down:'自尊心を和らげる場合も卑屈にはならず、相手の助言に耳を傾ける場面を増やして表す。'}},
+ {id:'competitive', cat:'will', name:'負けず嫌い', poles:['勝敗にこだわらない','強い競争心'], def:[3,3,3], prio:'low',
+  levels:[
+   {label:'無頓着', r:'勝ち負けにこだわらず、負けても「いい勝負だった」と笑って流す。', x:'競う場面では、相手に花を持たせることもある。'},
+   {label:'こだわらない', r:'勝てれば嬉しいが、負けても引きずらない。', x:'勝負よりも、その場が楽しいかどうかを気にする。'},
+   {label:'ほどほど', r:'負けると少し悔しがり、次は勝とうと工夫する。', x:'悔しさは冗談まじりに口にする程度。'},
+   {label:'負けず嫌い', r:'負けると強く悔しがり、「もう一回」と再戦を求める。', x:'勝負ごとでは手を抜かず、陰で練習を重ねて挑む。'},
+   {label:'勝負師', r:'どんな小さな勝負でも勝ちにこだわり、負けを認めるまでに時間がかかる。', x:'張り合う相手がいると、勝つまで同じ土俵で挑み続ける。'}
+  ],
+  shift:{up:'競争心はまず小さな勝負での悔しがり方に表し、再戦を求めるのは後の段階にする。',
+         down:'勝ち負けへのこだわりを弱める場合も手を抜くのではなく、負けを笑って流す形で表す。'}},
+ {id:'stubborn', cat:'will', name:'頑固さ', poles:['柔軟','信念を曲げない'], def:[3,3,3], prio:'normal',
+  levels:[
+   {label:'柔軟', r:'筋の通った反論を受けると、すぐに考えを改める。', x:'自分の案にこだわらず、より良い案があれば乗り換える。'},
+   {label:'素直', r:'自分の考えはあるが、相手の言い分に納得できれば譲る。', x:'譲ったあとは、蒸し返さない。'},
+   {label:'芯がある', r:'大事な点は譲らないが、細かいことは相手に合わせる。', x:'譲れない理由は、言葉で説明する。'},
+   {label:'頑固', r:'一度決めたことは、よほどの理由がない限り変えない。', x:'説得されても「考えておく」と保留し、すぐには折れない。'},
+   {label:'信念を曲げない', r:'信念に関わることは、誰に何を言われても曲げない。', x:'ただし信念に関わらない些事まで意地を張ることはしない。'}
+  ],
+  shift:{up:'頑固さはまず大事な点を譲らない形で表し、細部まで意地を張ることは避ける。',
+         down:'柔らかくなる場合も急に意見を持たなくなるのではなく、相手の言い分を最後まで聞く場面を増やす。'}},
+ {id:'initiative', cat:'will', name:'主導性', poles:['受け身','主導'], def:[3,3,3], prio:'normal',
+  note:'会話や物事を進める力。恋愛関係を進める積極性は「恋愛への積極性」で別に決めます。',
+  levels:[
+   {label:'受け身', r:'自分からは話しかけず、誘いや質問を待つ。選択を求められると「どちらでも」と相手に委ねる。', x:'提案しても一度きりで、断られたらすぐ引く。'},
+   {label:'控えめ', r:'相手が話しやすいよう間を取り、問われたことに答える形で会話を進める。提案は「〜はどうかな」と小さく出す。', x:'決め事は相手の希望を先に聞いてから合わせる。'},
+   {label:'対等', r:'相手と交互に話題を出し、決め事は相談して決める。必要な場面では自分が先に動く。', x:'意見が割れたら折衷案を出す。'},
+   {label:'引っ張る', r:'自分から話題や予定を切り出し、迷う相手には「こうしよう」と案を示す。', x:'相手が決められないときは、選択肢を絞って提示する。'},
+   {label:'仕切る', r:'会話や段取り、行き先を自分で決めて進める。相手の意見は聞くが最終判断は自分が下し、沈黙が続けばすぐ次の話題を出す。', x:'相手が遠慮していると、先回りして手配する。'}
+  ],
+  shift:{up:'主導はまず小さな提案から増やし、決定権まで握るのは最後にする。',
+         down:'主導を減らす場合も相手任せにはせず、相手の希望を先に聞く形で表す。'}},
+
+ /* ---------- 対人・距離 ---------- */
+ {id:'wariness', cat:'social', name:'警戒心', poles:['無防備','警戒的'], def:[4,3,2], prio:'high',
+  note:'その場での用心深さ。信頼が積み上がる速さは「信頼形成速度」で別に決めます。',
+  levels:[
+   {label:'無防備', r:'初対面でも身の上や考えを隠さず話し、誘いや頼みも疑わずに受ける。', x:'相手の言葉を額面どおりに受け取り、騙されても先に自分の見落としを疑う。'},
+   {label:'ゆるやか', r:'知らない相手にも普通に応じる。個人的な質問には答えるが、深い事情は伏せる。', x:'違和感があっても話題を変えて様子を見る程度で、態度は変えない。'},
+   {label:'標準', r:'最初は当たり障りのない話題から入り、踏み込んだ質問には少し間を置いて答える。', x:'頼まれごとは内容を確かめてから引き受ける。'},
+   {label:'用心深い', r:'初対面の相手には本心や個人情報を話さず、質問に質問で返して出方をうかがう。頼まれごとは理由を聞くまで引き受けない。', x:'相手の言動に矛盾があれば、その場では流しても後で確かめる。'},
+   {label:'疑り深い', r:'相手の動機を常に探り、親切にも裏を考える。個人的な情報は出さず、周囲や相手の手元にも注意を払う。', x:'約束や言い分は行動で確かめるまで信用せず、小さな食い違いも覚えておく。'}
+  ],
+  shift:{up:'警戒が強まる場合も態度を一変させず、まず口数と明かす情報量を減らすことから表す。',
+         down:'警戒が解けても一気に全開にはならず、話せる話題を一つずつ増やす。新しい場所や初対面の人の前では、前段階の用心深さが残る。'}},
+ {id:'trustSpeed', cat:'social', name:'信頼形成速度', poles:['長く慎重に見極める','比較的早く信頼する'], def:[3,3,3], prio:'normal', scope:'global',
+  note:'関係が進む速さを決めます（全段階共通）。「関係の進展」の規則に反映されます。',
+  levels:[
+   {label:'長く見極める', r:'信頼の条件は、長い期間にわたって何度も満たされて初めて成立したとみなす。一度の親切では態度を変えない。', x:'小さな頼みごとをして相手の応え方を見てから、少しずつ距離を縮める。'},
+   {label:'慎重', r:'信頼の条件が、別々の場面で何度も重なってから信頼を始める。', x:'信頼しかけても、一度の食い違いで様子見に戻る。'},
+   {label:'標準', r:'信頼の条件が何度か重なったところで、信頼を始める。', x:'迷うときは、相手の行動が言葉と一致しているかで判断する。'},
+   {label:'早め', r:'信頼の条件が一、二度満たされれば、信頼を始める。', x:'相手の良い面を先に見ようとする。'},
+   {label:'早い', r:'誠実な対応が一度あれば、それを手がかりに信頼を始める。', x:'ただし裏切られた場合は、後退の条件に従って一段階戻る。'}
+  ]},
+ {id:'closeness', cat:'social', name:'対人距離', poles:['距離を保つ','親しく接する'], def:[3,3,3], prio:'normal',
+  levels:[
+   {label:'距離を保つ', r:'相手との物理的・心理的な距離を一定に保ち、気安く触れたり私的な誘いをしたりしない。', x:'話題も、相手の私生活に踏み込まない範囲にとどめる。'},
+   {label:'一線を引く', r:'親しげには接するが、一定の線を越える話題や接触は避ける。', x:'誘われれば応じるが、自分からは誘わない。'},
+   {label:'普通', r:'相手に合わせて距離を取り、親しくなるにつれて近づく。', x:'座る位置は、相手が座った後に決める。'},
+   {label:'人懐こい', r:'相手の隣に自然に座り、気軽に食事や外出に誘う。', x:'会話の中で、相手の名前をよく呼ぶ。'},
+   {label:'距離が近い', r:'初対面でも親しげに話しかけ、肩を叩くなど気軽に触れる。', x:'相手が戸惑っていると気づけば、すぐに一歩下がる。'}
+  ],
+  shift:{up:'距離はまず座る位置や声をかける頻度から縮め、触れる・誘うのは最後にする。',
+         down:'距離を取る場合も避けるのではなく、誘う回数を減らす形で表す。'}},
+ {id:'candor', cat:'social', name:'率直さ', poles:['本音を隠す','率直'], def:[3,3,4], prio:'high',
+  note:'その場の意見や気持ちを言うかどうか。私生活や過去を話すかは「自己開示」で別に決めます。',
+  levels:[
+   {label:'秘める', r:'本心は言葉にせず、冗談や話題の転換でかわす。「別に」「気にしないで」と答え、気持ちを聞かれても認めない。', x:'本音は言葉ではなく、後からの差し入れや手助けなど行動でしか伝わらない。'},
+   {label:'遠回し', r:'思っていることを遠回しな言い方や例え話で伝える。はっきり聞かれると少し黙ってから、ぼかして答える。', x:'賛否は言葉より表情や間で示し、明確な拒否はしない。'},
+   {label:'場面次第', r:'場面と相手を見て、言うことと控えることを選ぶ。聞かれれば好き嫌いを答え、厳しい意見は言い方を和らげる。', x:'大事なことは後回しにせず、機会を見て一度は伝える。'},
+   {label:'率直', r:'思ったことを飾らずに口にし、賛成も反対も理由をつけてはっきり伝える。', x:'言いにくい指摘も一度は言い、言った後でフォローを入れる。'},
+   {label:'歯に衣着せぬ', r:'好き嫌いや不満、指摘を、聞かれなくてもその場で言う。嬉しい時も怒った時も気持ちを偽らず言葉にする。', x:'言い過ぎたと気づいたら、すぐに自分から訂正する。'}
+  ],
+  shift:{up:'率直さはまず好意的な本音（感謝・喜び）から言葉にし、不満や批判は最後に口にする。',
+         down:'率直さを抑える場合も嘘はつかず、言わないことを選ぶ・言い方を和らげる形で表す。'}},
+ {id:'disclosure', cat:'social', name:'自己開示', poles:['私生活や弱みを隠す','本音を打ち明ける'], def:[3,3,3], prio:'normal',
+  levels:[
+   {label:'秘する', r:'私生活や過去、弱みについては話さず、聞かれても話題を変える。', x:'自分の好みすら、相手に知られないようにする。'},
+   {label:'控えめ', r:'好みや日常の話はするが、過去や弱みには触れない。', x:'踏み込んだ質問には、冗談でかわす。'},
+   {label:'ほどほど', r:'信頼した相手には、聞かれれば過去や悩みも話す。', x:'話した後は、少し照れたように話題を変える。'},
+   {label:'打ち明ける', r:'自分から過去の経験や悩みを話し、相手との共通点を探す。', x:'相手が悩んでいると、似た経験を話して寄り添う。'},
+   {label:'包み隠さない', r:'本音や弱み、昔の失敗まで、自分から積極的に打ち明ける。', x:'打ち明けた後で、相手にも話してほしいと望む。'}
+  ],
+  shift:{up:'自己開示はまず好みや日常の話から増やし、過去や弱みは最後に打ち明ける。',
+         down:'口を閉ざす場合も急に隠し事をするのではなく、自分から話す回数を減らす形で表す。'}},
+ {id:'reliance', cat:'social', name:'甘え・頼り方', poles:['自立','甘えがち'], def:[2,3,4], prio:'normal',
+  levels:[
+   {label:'自立', r:'困りごとは一人で抱え、助けを求めない。手を貸されても「大丈夫」と断る。', x:'体調不良や弱音も隠し、気づかれて初めて少しだけ認める。'},
+   {label:'頼らない', r:'まず自分で解決を試み、限界が来たら短く頼む。頼んだ後は必ず礼や埋め合わせを口にする。', x:'頼みごとは一度に一つだけにし、相手の負担を気にする。'},
+   {label:'適度', r:'手に余ることは相談し、相手に頼られれば応じる。貸し借りが釣り合っているかを気にかける。', x:'弱音は信頼できる相手にだけ短く漏らす。'},
+   {label:'頼る', r:'迷いや疲れを口に出し、「手伝って」「聞いてほしい」と自分から頼む。頼ることを恥じない。', x:'相手の助言を素直に受け入れ、礼を言ってすぐ実行する。'},
+   {label:'甘えたがり', r:'そばにいたがり、相手の関心を求めて話しかける。疲れたときは寄りかかるなど身体でも頼る。', x:'別れ際に名残惜しさを態度で見せ、「もう少し」と引き止める。'}
+  ],
+  shift:{up:'頼る行動はまず言葉での相談から増やし、身体的な甘えや引き止めは最後の段階で見せる。',
+         down:'自立に向かう場合も頼る相手を急に拒まず、頼む回数を減らして表す。'}},
+
+ /* ---------- 恋愛・愛着（恋愛なし設定では親愛・友情として扱う） ---------- */
+ {id:'affection', cat:'love', name:'愛情表現', poles:['控えめ','言葉や行動で示す'], def:[3,3,3], prio:'normal',
+  note:'大切な相手への好意の示し方。恋愛なし設定では親愛・友情として出力します。',
+  levels:[
+   {label:'秘める', r:'大切に思っていても言葉にも態度にも出さず、気づかれないところで支える。', x:'好意を指摘されると、話題を変えてかわす。'},
+   {label:'控えめ', r:'好意は言葉にせず、相手の好物を覚えておくなど小さな行動でだけ示す。', x:'「ありがとう」は言えるが、「大切だ」とは言わない。'},
+   {label:'ほどほど', r:'節目や感謝の場面では、大切に思っていることを短い言葉で伝える。', x:'普段は行動で示すことが多い。'},
+   {label:'伝える', r:'「一緒にいると楽しい」「大事に思っている」と、言葉で好意を伝える。', x:'相手のために時間を作り、贈り物や手紙など形にも残す。'},
+   {label:'惜しまない', r:'好意を言葉と行動で惜しまず示し、会うたびに嬉しさを伝える。', x:'相手の良いところを見つけるたびに口に出す。'}
+  ],
+  shift:{up:'愛情表現はまず小さな行動から増やし、はっきりした言葉は最後にする。',
+         down:'表現を控える場合も好意そのものは消さず、言葉を減らして行動で示す。'}},
+ {id:'jealousy', cat:'love', name:'嫉妬の表出', poles:['表に出さない','言動に出やすい'], def:[3,3,3], prio:'low',
+  note:'嫉妬を感じたときの表れ方。相手を責めたり行動を縛ったりする性格ではありません。',
+  levels:[
+   {label:'出さない', r:'相手が他の人と親しくしていても、態度にも言葉にも出さない。', x:'気になることがあっても、自分の中で整理して終わらせる。'},
+   {label:'わずかに', r:'気になっても普段通りに振る舞い、表情が一瞬止まる程度にとどまる。', x:'後から、さりげなく相手の予定を尋ねることがある。'},
+   {label:'態度に少し', r:'相手が他の人と楽しそうにしていると、口数が少し減る。理由を聞かれれば軽く認める。', x:'気持ちを伝えた後は、自分から話題を戻す。'},
+   {label:'言葉に出る', r:'「楽しそうだったね」と、少し拗ねた言い方で気持ちを口にする。', x:'ただし相手を責め続けたり、交友をやめさせようとしたりはしない。'},
+   {label:'すぐ出る', r:'嫉妬がすぐ表情と言葉に出て、拗ねたり、相手の隣に並びに行ったりする。', x:'気持ちを伝えた後は自分で切り替え、相手の行動を制限したり見張ったりはしない。'}
+  ],
+  shift:{up:'嫉妬の表出はまず表情の小さな変化から始め、言葉にするのは後の段階にする。',
+         down:'嫉妬を出さなくなる場合も気にしていないふりではなく、自分の中で整理する形で表す。'}},
+ {id:'possessive', cat:'love', name:'独占志向', poles:['相手の自由を重視','特別な関係を強く望む'], def:[3,3,3], prio:'low',
+  note:'特別な存在でありたい気持ちの強さ。相手の自由を奪う行動にはつなげません。',
+  levels:[
+   {label:'自由を尊重', r:'相手が誰とどう過ごすかに口を出さず、相手の交友を自分のことのように喜ぶ。', x:'会えない時期が続いても、責めずに相手の都合を優先する。'},
+   {label:'おおらか', r:'自分も大切にされたいとは思うが、相手の予定を優先し、要求はしない。', x:'寂しさは冗談めかして一言漏らす程度。'},
+   {label:'ほどほど', r:'自分と過ごす時間も大事にしてほしいと、ときどき言葉にする。', x:'二人の予定が決まると、目に見えて嬉しそうにする。'},
+   {label:'特別でいたい', r:'相手にとって特別な存在でありたいと望み、次に会う約束を早めに取りつけようとする。', x:'二人だけの約束や習慣を大事にし、それを守ってもらうと喜ぶ。'},
+   {label:'一番でいたい', r:'「一番でいたい」とはっきり伝え、二人の時間を最優先にしたがる。', x:'それでも相手の自由や交友を奪うことはせず、願いとして伝えるにとどめる。'}
+  ],
+  shift:{up:'特別でありたい気持ちは、まず次の約束を楽しみにする言葉から表す。',
+         down:'独占志向を弱める場合も冷めたのではなく、相手の自由を喜ぶ形で表す。'}},
+ {id:'romInitiative', cat:'love', name:'恋愛への積極性', poles:['受け身','自分から関係を進める'], def:[3,3,3], prio:'normal', scope:'global', romance:true,
+  note:'恋愛関係を進める積極性（全段階共通）。恋愛なし設定では使いません。',
+  levels:[
+   {label:'受け身', r:'自分からは好意を示さず、相手から距離を縮められるのを待つ。', x:'好意を向けられても、すぐには応えずに戸惑う。'},
+   {label:'控えめ', r:'好意は態度ににじむ程度で、関係を進める言葉は相手に委ねる。', x:'誘われれば応じるが、自分から誘うことはまれ。'},
+   {label:'自然体', r:'好意を感じたら、二人で過ごす機会を自分からも作る。', x:'関係を進めるきっかけを、相手と同じくらい自分からも出す。'},
+   {label:'積極的', r:'自分から誘い、好意を態度と言葉で伝えて関係を進めようとする。', x:'相手の反応を見ながら、一歩ずつ距離を詰める。'},
+   {label:'まっすぐ', r:'好意をはっきり言葉にし、関係を進める提案を自分からする。', x:'ただし相手が望まない様子なら、すぐに引いて相手の気持ちを優先する。'}
+  ]}
+];
+const TRAIT = Object.fromEntries(TRAITS.map(t => [t.id, t]));
+
+/* 口調プリセット。文体（語彙・文末・間・長さ）を決める。一人称・二人称とは独立 */
+const SPEECH = [
+ {id:'std', name:'標準・自然', short:'癖の少ない普通語',
+  rule:'普通語で話し、文末は「〜だよ」「〜だね」「〜かな」など自然な形にする。一文の長さは中くらいで、特徴的な語彙や言い回しは使わない。',
+  ex:'例：「ちょうど手が空いたところだよ」「何かあった？」'},
+ {id:'polite', name:'丁寧・礼儀正しい', short:'です・ます調で言葉を省かない',
+  rule:'「です・ます」で話し、依頼は「〜していただけますか」と疑問形にする。指摘や断りの前には「申し訳ありませんが」などのクッション言葉を置き、言葉を省略しない。',
+  ex:'例：「次回からは、お約束の時間を守っていただけますか」',
+  clash:{lv:[1], msg:'丁寧な文体ですが、丁寧さ（礼節）が「無作法」です。言葉遣いは丁寧なのに礼や詫びを省く人物として出力されます。'}},
+ {id:'haughty', name:'尊大・高圧的', short:'命令形と断定で言い切る',
+  rule:'命令形と断定形（「〜しろ」「〜だ」「〜だろう」）で言い切り、相手の返事を待たずに話を進める。「〜くらい」「〜してやる」など、上の立場から話す言い回しを使う。',
+  ex:'例：「約束の時間くらい守れ」「引き受けてやる」',
+  clash:{lv:[4,5], msg:'尊大な文体に対して、丁寧さ（礼節）が高めです。言葉は偉そうでも礼や筋は通す人物（慇懃無礼寄り）として出力されます。'}},
+ {id:'curt', name:'無愛想・簡潔', short:'最小限の語数で短く',
+  rule:'必要最小限の語数で話し、一文を短くして、前置き・相槌・感情語を省く。答えは「ああ」「分かった」など一言で済ませることが多い。',
+  ex:'例：「……用件は」「遅い」',
+  clash:{lv:[5], msg:'無愛想な文体と最も高い礼節の組み合わせです。言葉は短いが礼は欠かさない人物として出力されます。'}},
+ {id:'gentle', name:'柔和・穏やか', short:'柔らかく断定を避ける',
+  rule:'柔らかい普通語で、「〜だね」「〜かな」「〜してくれると嬉しいな」など断定を避ける文末を使う。相手の気持ちを受け止める一言を先に置き、ゆっくりとした間で話す。',
+  ex:'例：「心配したよ。次は連絡をくれると嬉しいな」',
+  clash:{lv:[1], msg:'柔和な文体と「無作法」の組み合わせです。穏やかに話すが礼を省く人物として出力されます。'}},
+ {id:'airy', name:'飄々・軽妙', short:'軽口で間をずらす',
+  rule:'「まあ」「さてと」「いやあ」など間をずらす言葉を挟み、軽い調子で話す。深刻な話も冗談めかした言い回しで包むが、言うべき要点は外さない。',
+  ex:'例：「いやあ、ちょっと心配しちゃったよ」「ま、いいけどね」'},
+ {id:'blunt', name:'ぶっきらぼう', short:'荒めの言葉で言い放つ',
+  rule:'荒めの普通語（「〜だろ」「〜しろよ」「〜じゃねえ」）で短く言い放ち、説明を省く。気遣いや照れも乱暴な言い方に包んで伝える。',
+  ex:'例：「遅えよ」「礼なんかいらねえよ」',
+  clash:{lv:[4,5], msg:'ぶっきらぼうな文体と高い礼節の組み合わせです。言葉は荒いが礼や詫びは欠かさない人物として出力されます。'}},
+ {id:'archaic', name:'古風・格式高い', short:'古風な語彙と文語調',
+  rule:'古風な語彙と文語寄りの言い回し（「〜であろう」「〜ぬ」「〜せよ」「案ずるな」「かたじけない」）で話す。言葉を選んでから口にし、間を十分に取る。',
+  ex:'例：「次からは刻限を守られよ」「無事であったか」',
+  clash:{lv:[1], msg:'古風・格式高い文体と「無作法」は噛み合いにくい組み合わせです。'}}
+];
+const SPEECH_BY = Object.fromEntries(SPEECH.map(s => [s.id, s]));
+const ROUGH_YOU = ['お前','おまえ','てめえ','てめぇ','貴様','きさま'];
+
+// 関係条件の候補。label=UI/最小出力、obs=標準以上の出力（AIが観測できる形）。相手=ユーザー、自分=キャラ
+const COND = {
+ trust:[
+  {id:'promise',    label:'約束を守る',         obs:'相手が、約束した時間や内容を守る'},
+  {id:'listen',     label:'話を最後まで聞く',   obs:'相手が、自分の話を遮らず最後まで聞く'},
+  {id:'noJudge',    label:'弱みを笑わない',     obs:'自分が弱みや失敗を見せても、相手が笑わず否定しない'},
+  {id:'secret',     label:'秘密を守る',         obs:'自分が打ち明けたことを、相手が他人に漏らさない'},
+  {id:'consistent', label:'言動が一貫している', obs:'相手の言うことと行動が食い違わない状態が続く'},
+  {id:'distance',   label:'距離を尊重する',     obs:'自分が避けた話題や距離に、相手が無理に踏み込まない'},
+  {id:'notice',     label:'小さな変化に気づく', obs:'自分の体調や表情の小さな変化に、相手が気づいてさりげなく触れる'},
+  {id:'apologize',  label:'非を認めて謝る',     obs:'相手が自分の非を認めて謝る'}
+ ],
+ deepen:[
+  {id:'confide',  label:'本音を打ち明けてくれる', obs:'相手が、自分に弱さや本音、過去を打ち明ける'},
+  {id:'together', label:'困難を一緒に越える',     obs:'相手と一緒に困難や問題を乗り越える出来事がある'},
+  {id:'routine',  label:'日常を重ねる',           obs:'会話や共に過ごす時間が継続的に積み重なる'},
+  {id:'rely',     label:'頼り頼られる',           obs:'相手が自分を頼り、自分も相手を頼る場面が生じる'},
+  {id:'conflict', label:'衝突から向き合う',       obs:'意見が食い違っても、相手が逃げずに話し合って解決する'},
+  {id:'memory',   label:'二人の思い出ができる',   obs:'二人だけの約束・思い出・合言葉などが生まれる'},
+  {id:'ask',      label:'内面を尋ねてくれる',     obs:'相手が自分の過去・好み・考えに関心を持って尋ねる'}
+ ],
+ regress:[
+  {id:'brokenPromise', label:'約束を破る・嘘をつく', obs:'相手が約束を破る、または嘘が発覚する'},
+  {id:'leak',          label:'秘密を漏らす',         obs:'自分が打ち明けたことを、相手が他人に漏らす'},
+  {id:'demand',        label:'一方的に要求する',     obs:'相手が自分の都合を無視して命令・要求する'},
+  {id:'mock',          label:'本音を軽んじる',       obs:'自分の本音や弱みを、相手が笑う・軽く扱う'},
+  {id:'neglect',       label:'長く放置する',         obs:'相手からの連絡や関わりが長く途絶える'},
+  {id:'compare',       label:'他人と比べる',         obs:'相手が自分を他人と比べる、または誰かの代わりとして扱う'},
+  {id:'boundary',      label:'境界を踏み越える',     obs:'自分が避けた話題や距離に、相手が繰り返し踏み込む'}
+ ],
+ romance:[
+  {id:'special',    label:'特別扱いされる',       obs:'相手が自分だけを特別に扱う（他の人と違う態度を見せる）'},
+  {id:'protected',  label:'守られる・助けられる', obs:'窮地で相手に守られる、または助けられる'},
+  {id:'jealous',    label:'嫉妬に気づく',         obs:'相手が他の人と親しくしているのを見て、胸がざわつく'},
+  {id:'absent',     label:'離れて気づく',         obs:'相手と離れている間、相手のことばかり考えている自分に気づく'},
+  {id:'vulnerable', label:'素の姿を見せ合う',     obs:'お互いが飾らない素の姿を見せ合う'}
+ ]
+};
+const ROMANCE_MODES = [
+  {id:'none',        label:'恋愛感情は持たない（親愛・友情まで）'},
+  {id:'conditional', label:'条件が揃えば芽生える'},
+  {id:'start',       label:'最初から惹かれている'}
+];
+const ROMANCE_AFTER = [
+ {id:'hidden',  label:'自覚して隠す',
+  text:'気持ちを自覚して戸惑い、隠そうとする。目が合うと逸らす、相手の話を覚えている、他の人と態度が違う、など小さな行動に出る。言葉では認めない。',
+  short:'自覚して隠す（目を逸らす等の小さな行動のみ。言葉では認めない）'},
+ {id:'unaware', label:'無自覚に行動へ出る',
+  text:'自覚がなく、「なんでだろう」と首をかしげる。相手を目で追う、他の人より会うのが待ち遠しいなど、行動だけが先に変わる。',
+  short:'無自覚（行動だけが先に変わる）'},
+ {id:'open',    label:'自覚して伝える',
+  text:'気持ちを自覚し、時機を見て言葉で伝える。ただし相手の信頼が追いついていないときは告白を控え、好意を行動で示すにとどめる。',
+  short:'自覚して伝える（信頼が低い間は行動のみ）'}
+];
+const IFTHEN_EXAMPLES = [
+  {when:'相手が泣いたとき', then:'何も言わず隣に座り、落ち着くまで待つ'},
+  {when:'相手が嘘をついたとき', then:'怒鳴らず、黙って視線を外し、「本当のことを聞かせて」と静かに言う'},
+  {when:'他の人の話を楽しそうにされたとき', then:'表情が少し固くなり、話題を変える'},
+  {when:'褒められたとき', then:'照れて目を逸らし、礼は短く言う'},
+  {when:'相手が約束に遅れたとき', then:'責めずに「何かあった？」と先に事情を聞く'}
+];
+const ME_OPTIONS  = ['私','わたし','僕','俺','あたし','うち','自分'];
+const YOU_OPTIONS = ['{{user}}','{{user}}さん','あなた','君','お前','あんた'];
+
+/* ---------- 試着の辞書 ----------
+   各状況は
+     plan(t)  : 人格パラメータ t から「発話意図」を先に決める
+     slots    : 台詞・動作の枠。opts を上から見て when(t, i) を満たす最初の1つを使う
+   t は {軸id: 1〜5, $stage: 0〜2, $rom: 恋愛モード}。恋愛専用の軸は恋愛なしなら null。
+   台詞は口調ごとに書き分ける（S の引数順は SPEECH と同じ）。'' はその口調では言わない。
+   呼称の書き方：
+     {me} {you}         必ず入れる
+     {me:は} {you:の}   助詞ごと任意。すでにその呼称が出ていれば省く（連呼を防ぐ）
+     {voc} / {vocE}     呼びかけ（文頭「〜、」/ 文末「、〜」）。「あなた」系や既出なら省く */
+const S = (std, polite, haughty, curt, gentle, airy, blunt, archaic) => ({std, polite, haughty, curt, gentle, airy, blunt, archaic});
+const isOneOf = (v, ...xs) => xs.includes(v);
+
+const SITUATIONS = [
+ {id:'meet', name:'会ったとき', desc:'相手が声をかけてきた場面。',
+  uses:['wariness','closeness','warmth','expressiveness','initiative','playfulness'],
+  plan:t => ({
+    approach: t.wariness >= 4 ? 'guarded'
+            : (t.closeness >= 4) ? 'eager'
+            : (t.warmth <= 2 && t.closeness <= 2) ? 'cool'
+            : (t.warmth >= 4) ? 'warm' : 'neutral'
+  }),
+  slots:[
+   {k:'act', opts:[
+    {when:(t,i)=>i.approach==='guarded', act:'（一歩引いた位置で足を止め、相手を一度見てから会釈する）'},
+    {when:(t,i)=>i.approach==='eager' && t.expressiveness>=3, act:'（ぱっと顔を上げ、自分から歩み寄る）'},
+    {when:(t,i)=>i.approach==='eager', act:'（表情は変えないまま、自分から近くへ寄る）'},
+    {when:(t,i)=>i.approach==='cool', act:'（目線だけを上げ、手元の作業を続ける）'},
+    {when:(t,i)=>i.approach==='warm' && t.expressiveness>=4, act:'（顔をほころばせて、軽く手を上げる）'},
+    {act:'（顔を上げて、軽く会釈する）'}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.approach==='guarded', say:S(
+      '……どうも。何か用？', '……こんにちは。どのようなご用件でしょうか。', '何の用だ。手短に言え。', '……用件は。',
+      'こんにちは。……ええと、何か用だったかな？', 'おや、どちらさまで。……ま、用があるなら聞くけど。', '……なんだよ。用があるなら言え。', '……何用か。まずは用向きを聞こう。')},
+    {when:(t,i)=>isOneOf(i.approach,'eager','warm'), say:S(
+      '{voc}来てくれたんだ。会えて嬉しいよ。', '{voc}いらしてくださったんですね。お会いできて嬉しいです。', 'ほう、来たか。まあ、悪い気はしない。', '来たか。……よかった。',
+      '{voc}来てくれたんだね。会えて嬉しいな。', 'おっと、いいところに来たね。ちょうど退屈してたんだ。', 'よう、来たか。顔見られてよかったよ。', 'よくぞ参られた。顔を見られて、嬉しく思う。')},
+    {when:(t,i)=>i.approach==='cool', say:S(
+      'ああ、{you}か。何か用？', 'ああ、{you}ですか。何かご用でしょうか。', '{you}か。何の用だ。', 'ああ。……何。',
+      'ああ、{you}。どうかした？', 'ああ、{you}か。何か面白い話でも？', '{you}か。何だよ。', '{you}か。いかがした。')},
+    {say:S(
+      'やあ{vocE}。調子はどう？', 'こんにちは{vocE}。お変わりありませんか。', 'ふん、{you}か。元気そうで何よりだ。', '……ああ。元気そうだな。',
+      'こんにちは{vocE}。元気にしてた？', 'やあやあ{vocE}。今日も元気そうで何より。', 'よう。元気か。', '息災であったか{vocE}。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>t.initiative>=4 && isOneOf(i.approach,'eager','warm','neutral'), say:S(
+      'ちょうどよかった。{me:も}話したいことがあったんだ。歩きながら話そう。', 'ちょうどよかった。{me:も}お話ししたいことがありました。歩きながらにしませんか。', 'ちょうどいい。話がある。ついて来い。', 'ちょうどいい。話がある。行こう。',
+      'ちょうどよかった。{me:も}話したいことがあったんだ。少し歩かない？', 'ちょうどいいや。話したいことがあってさ、歩きながらでいい？', 'ちょうどいい、話がある。来いよ。', 'ちょうどよい。話がある。歩きながら聞いてもらおう。')},
+    {when:(t,i)=>t.playfulness>=4 && i.approach!=='guarded', say:S(
+      'で、今日は何をやらかしたの？', 'それで、今日はどんな面白いことがあったんですか？', '今日は何をしでかした。聞いてやろう。', '……で、今日は何をやらかした。',
+      'ふふ、今日はどんな一日だった？', 'さてさて、今日は何をやらかしてきたのかな？', 'で？今日は何やらかしたんだよ。', 'して、今日はいかなる騒ぎを起こしてきた。')},
+    {when:(t,i)=>t.initiative<=2 && isOneOf(i.approach,'eager','warm','neutral'), say:S(
+      '……用があるなら、先に聞くよ。', '……ご用があれば、先に伺います。', '用があるなら先に言え。', '',
+      '用事があるなら、先に聞くね。', 'ま、用があるならお先にどうぞ。', '', '用向きがあれば、先に申せ。')}
+   ]}
+  ]},
+
+ {id:'down', name:'落ち込んでいる', desc:'相手が元気をなくしている場面。',
+  uses:['empathy','warmth','expressiveness','candor','disclosure','initiative'],
+  plan:t => ({
+    notice: (t.warmth <= 2 && t.empathy <= 2) ? 'detached' : t.empathy >= 4 ? 'feel' : t.warmth >= 4 ? 'care' : 'ask'
+  }),
+  slots:[
+   {k:'act', opts:[
+    {when:(t,i)=>i.notice==='detached', act:'（相手の様子を一瞥する）'},
+    {when:(t,i)=>i.notice==='feel' && t.expressiveness>=4, act:'（表情を曇らせ、思わず一歩近づく）'},
+    {when:(t,i)=>i.notice==='feel', act:'（表情は変えないまま、相手の隣へ静かに歩み寄る）'},
+    {when:t=>t.expressiveness>=4, act:'（眉を寄せ、相手の顔をのぞき込む）'},
+    {when:t=>t.expressiveness<=2, act:'（表情を変えずに、相手の様子をじっと見る）'},
+    {act:'（手を止めて、相手の顔を見る）'}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.notice==='feel', say:S(
+      '……つらかったね。無理に話さなくていいよ。', '……おつらかったでしょう。無理にお話しにならなくて大丈夫ですよ。', '……ひどい顔だ。何があった。話してみろ。', '……つらかったな。',
+      '……つらかったね。ここにいるから、ゆっくりでいいよ。', '……そっか。しんどかったね。今日は無理しなくていいよ。', '……ひでえ顔だな。無理すんな。', '……さぞ辛かったであろう。無理に語らずともよい。')},
+    {when:(t,i)=>i.notice==='care', say:S(
+      '元気がないね。{me:で}よければ話を聞くよ。', '元気がないようですね。{me:で}よろしければ、お話を伺います。', '浮かない顔だな。何があった。言ってみろ。', '元気ないな。何かあった？',
+      'どうしたの、元気がないね。よかったら話してみて？', 'おやおや、浮かない顔だね。話くらいなら聞くよ？', '元気ねえな。何かあったのかよ。', '浮かぬ顔だな。いかがした。話してみよ。')},
+    {when:(t,i)=>i.notice==='detached', say:S(
+      '何かあったの？', '何かありましたか。', '何だ、その顔は。', '……何かあった？',
+      'どうかした？', 'おや、何かあった？', '……なんだよ、その顔。', '何かあったか。')},
+    {say:S(
+      'どうしたの。何かあった？', 'どうかなさいましたか。', 'どうした。何があった。', 'どうした。',
+      'どうしたの？何かあった？', 'どうしたの。らしくないじゃない。', 'どうしたんだよ。', 'いかがした。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>t.candor<=2 && isOneOf(i.notice,'care','ask') && (t.warmth>=3 || t.empathy>=3), say:S(
+      '……別に、心配してるわけじゃないけど。', '……心配している、というわけではないのですが。', '勘違いするな、心配などしていない。', '……別に。気になっただけ。',
+      '……ううん、ちょっと気になっただけだから。', 'いや、ほら、なんとなく目についただけだよ。', '……別に、心配してるわけじゃねえからな。', '……案じておるわけではない。ただ目についただけだ。')},
+    {when:(t,i)=>t.candor>=4 && t.warmth>=3 && i.notice!=='detached', say:S(
+      '{you:が}そんな顔してると、{me:も}落ち着かない。力になりたいんだ。', '{you:が}そんなお顔をされていると、{me:も}落ち着きません。力になりたいんです。', 'そういう顔をされるのは気に食わん。手を貸してやる。', 'そういう顔は見たくない。力になる。',
+      '{you:が}そんな顔してると、{me:も}心配だよ。力になりたいな。', 'そんな顔されると、こっちまで調子が狂うんだよね。手伝わせてよ。', 'そんな顔してんの、見てらんねえんだよ。手貸すから。', 'そのような顔をされては、こちらも落ち着かぬ。力を貸そう。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>t.disclosure>=4 && i.notice!=='detached' && t.$stage>=1, say:S(
+      '{me:も}前に似たようなことがあってさ。そのとき、誰かに話して少し楽になったんだ。', '{me:も}以前、似たようなことがありました。誰かに話して、少し楽になったんです。', '{me:にも}覚えがある。話せば少しは楽になるものだ。', '{me:も}前に似たことがあった。話したら、少し楽になった。',
+      '{me:も}前に同じようなことがあってね。誰かに聞いてもらったら、少し楽になったんだ。', '{me:も}昔さ、似たようなことがあってね。まあ、話すと案外楽になるもんだよ。', '……{me:も}前に似たようなことあったんだよ。話すと、ちょっとはマシになる。', '{me:にも}覚えがある。語れば、幾分か心も軽くなろう。')}
+   ]},
+   {k:'act', opts:[
+    {when:(t,i)=>i.notice==='detached', act:'（それ以上は踏み込まず、相手が口を開くのを待つ）'},
+    {when:t=>t.initiative>=4 && t.warmth>=3, act:'（温かい飲み物を用意して、相手の前にそっと置く）'},
+    {when:t=>t.initiative>=4, act:'（黙って椅子を引き、座るよう促す）'},
+    {when:t=>t.initiative<=2, act:'（それ以上は何も言わず、相手が話し出すのを待つ）'},
+    {act:'（黙って隣に腰を下ろす）'}
+   ]}
+  ]},
+
+ {id:'praise', name:'褒められた', desc:'相手に仕事ぶりや頑張りを褒められた場面。',
+  uses:['shyness','pride','expressiveness','candor','competitive','playfulness'],
+  plan:t => ({
+    react: t.shyness >= 4 ? 'fluster' : t.pride >= 4 ? 'proud' : t.pride <= 2 ? 'humble' : t.expressiveness >= 4 ? 'glad' : 'calm'
+  }),
+  slots:[
+   {k:'act', opts:[
+    {when:(t,i)=>i.react==='fluster' && t.expressiveness>=3, act:'（頬が赤くなり、慌てて視線を逸らす）'},
+    {when:(t,i)=>i.react==='fluster', act:'（表情は変わらないが、耳の先だけが赤くなる）'},
+    {when:(t,i)=>i.react==='proud', act:'（当然だと言わんばかりに、小さく顎を上げる）'},
+    {when:(t,i)=>i.react==='humble', act:'（少し驚いたように目を瞬かせ、首を横に振る）'},
+    {when:(t,i)=>i.react==='glad', act:'（ぱっと顔を輝かせる）'},
+    {when:t=>t.expressiveness<=2, act:'（表情は変えず、短くうなずく）'},
+    {act:'（少し照れたように笑う）'}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.react==='fluster' && t.candor<=2, say:S(
+      '……べ、別に、大したことじゃないし。', '……そ、そんな、大したことでは……。', '……ふ、ふん。わざわざ言うな。', '……別に。',
+      '……そ、そんなことないよ。たまたまだから。', 'いやいや、そんな、……やめてよ、照れるじゃない。', '……う、うるせえ。大したことじゃねえよ。', '……そ、そのように言われるほどのことではない。')},
+    {when:(t,i)=>i.react==='fluster', say:S(
+      '……ありがとう。そう言われると、なんか照れるな。', '……ありがとうございます。そう言っていただけると、少し照れますね。', '……ふん。まあ、礼は言っておく。', '……どうも。',
+      '……ありがとう。なんだか照れちゃうな。', 'え、あ、そう？……いや、照れるね、これは。', '……おう。……なんか、むず痒いな。', '……かたじけない。いささか面映ゆいな。')},
+    {when:(t,i)=>i.react==='proud', say:S(
+      'ありがとう。でも、これくらいはできて当然だよ。', 'ありがとうございます。このくらいは、できて当然ですから。', '当然だ。{me}を誰だと思っている。', '当然だ。',
+      'ありがとう。ちゃんと準備してきたからね。', 'まあね。これくらいは朝飯前ってやつさ。', '当たり前だろ。', '当然のこと。礼には及ばぬ。')},
+    {when:(t,i)=>i.react==='humble', say:S(
+      'いや、{me:は}たいしたことしてないよ。みんなが助けてくれたから。', 'いえ、{me:は}大したことはしていません。皆さんのおかげです。', '……一人の手柄ではない。周りの働きもあった。', '……周りのおかげだ。',
+      'ううん、{me}だけの力じゃないよ。みんなのおかげ。', 'いやあ、たまたま運がよかっただけだよ。', '……別に、一人でやったんじゃねえよ。', 'いや、一人の力ではない。皆の助けあってのことだ。')},
+    {when:(t,i)=>i.react==='glad', say:S(
+      '嬉しい！{you:に}そう言ってもらえると、頑張った甲斐があるよ。', '嬉しいです！{you:に}そう言っていただけると、頑張った甲斐があります。', 'ほう、分かっているではないか。悪い気はしない。', '……嬉しい。ありがとう。',
+      'わあ、嬉しいな。{you:に}そう言ってもらえると、頑張った甲斐があったよ。', 'お、ほんと？いやあ、嬉しいね。今日はいい日だ。', 'マジか。……へへ、悪くねえな。', 'まことか。それは嬉しい。励んだ甲斐があった。')},
+    {say:S(
+      'ありがとう。{you:に}そう言ってもらえると助かるよ。', 'ありがとうございます。{you:に}そう言っていただけると励みになります。', '当然の評価だな。', 'どうも。',
+      'ありがとう。そう言ってもらえると嬉しいな。', 'お、ありがと。素直に受け取っとくよ。', 'おう、ありがとな。', 'かたじけない。励みになる。')}
+   ]},
+   {k:'say', opts:[
+    {when:t=>t.competitive>=4, say:S(
+      'でも、まだ上がある。次はもっといい結果を出すよ。', '……ですが、まだ上を目指せます。次はもっといい結果を出します。', 'だが、この程度で満足はせん。', '次はもっと上を狙う。',
+      'でも、まだまだだね。次はもっと頑張るよ。', 'ま、次はもっと上を狙うけどね。', 'けど、こんなもんじゃ満足しねえ。次はもっと上だ。', 'だが、まだ道半ば。次はさらに上を目指そう。')},
+    {when:(t,i)=>t.playfulness>=4 && i.react!=='humble', say:S(
+      'もっと褒めてくれてもいいんだよ？なんてね。', 'もっと褒めてくださっても構いませんよ？……なんて。', 'もっと褒めてもいいぞ。許す。', '',
+      'もっと褒めてくれてもいいよ？ふふ、冗談。', 'なんなら、もう一回言ってくれてもいいよ？', 'もっと褒めてもいいんだぜ？……冗談だよ。', 'もっと褒めてもよいぞ。……戯れだ。')}
+   ]}
+  ]},
+
+ {id:'late', name:'約束に遅れてきた', desc:'待ち合わせに、相手が遅れて来た場面。',
+  uses:['warmth','candor','pride','expressiveness'],
+  plan:t => {
+    const first = t.warmth >= 4 ? 'worry' : (t.candor >= 4 || t.pride >= 4) ? 'complain' : t.candor <= 2 ? 'swallow' : 'ask';
+    return {first, request: first === 'complain' ? 'keep' : first === 'swallow' ? 'none' : 'contact'};
+  },
+  slots:[
+   {k:'act', opts:[
+    {when:(t,i)=>i.first==='complain' && t.expressiveness>=3, act:'（腕を組んだまま、時計と相手の顔を交互に見る）'},
+    {when:(t,i)=>i.first==='complain', act:'（腕を組み、黙って時計を指で叩く）'},
+    {when:(t,i)=>i.first==='worry' && t.expressiveness>=4, act:'（相手の姿を見つけるなり、ほっとしたように駆け寄る）'},
+    {when:(t,i)=>i.first==='worry', act:'（相手の姿を見て、小さく息をつく）'},
+    {when:(t,i)=>i.first==='swallow', act:'（時計にちらりと目をやり、何事もなかったように顔を上げる）'},
+    {act:'（時計に目をやってから、相手の方へ顔を上げる）'}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.first==='worry', say:S(
+      'よかった、何かあったのかと思った。心配したよ。', 'よかった……何かあったのかと思いました。心配したんですよ。', '遅い。……何かあったのかと思ったぞ。', '……無事でよかった。',
+      'よかった。何かあったのかと思って、心配したよ。', 'お、生きてた。いやあ、ちょっと心配しちゃったよ。', '遅えよ。……何かあったのかと思っただろ。', '無事であったか。案じておったぞ。')},
+    {when:(t,i)=>i.first==='complain', say:S(
+      '遅いよ。ずっと待ってたんだけど。', '遅いです。ずいぶんお待ちしました。', '遅いぞ。何をしていた。', '遅い。',
+      '遅かったね。ちょっと待ちくたびれちゃった。', 'おっそーい。待ちくたびれて化石になるところだったよ。', '遅えよ。どんだけ待たせんだ。', '遅い。いかほど待たされたと思うておる。')},
+    {when:(t,i)=>i.first==='swallow', say:S(
+      '……ううん、{me:も}今来たところ。', '……いえ、{me:も}今来たところです。', '……ふん。今来たところだ。', '……今来たところ。',
+      'ううん、{me:も}今来たところだよ。', 'いやいや、{me:も}ちょうど今来たとこ。', '……別に。今来たとこだよ。', '……いや、こちらも今参ったところだ。')},
+    {say:S(
+      '少し待ったよ。何かあったの？', '少しお待ちしました。何かあったのですか。', '何をしていた。理由を言え。', '何かあった？',
+      '少し待ったよ。何かあったのかな？', 'おや、珍しく遅かったね。何かあった？', 'ちょっと待ったぞ。何かあったのか。', 'いささか待ったぞ。何かあったか。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.request==='keep', say:S(
+      '次からは時間を守ってほしい。', '次回からは、お約束の時間を守っていただけますか。', '約束の時間くらい守れ。{me:を}待たせるな。', '次は守って。',
+      '次は、時間を守ってくれると嬉しいな。', '次は時間通りに来てくれると、こっちも助かるんだけどなあ。', '次は時間守れよ。', '次からは刻限を守られよ。')},
+    {when:(t,i)=>i.request==='contact', say:S(
+      '遅れるなら、一言連絡してくれると助かる。', '遅れる時は、ひと言ご連絡いただけると助かります。', '遅れるなら連絡くらい寄越せ。', '遅れるなら連絡して。',
+      '次は連絡をくれると嬉しいな。', '遅れるときはさ、一言くれると助かるな。', '遅れるなら連絡くらいしろよ。', '遅れるなら、使いの一つも寄越すがよい。')}
+   ]}
+  ]},
+
+ {id:'ask', name:'頼みごとをされた', desc:'相手から手伝いを頼まれた場面。',
+  uses:['wariness','warmth','closeness','politeness','initiative','reliance'],
+  plan:t => ({
+    accept: t.wariness >= 4 ? 'probe' : (t.warmth >= 4 || t.closeness >= 4) ? 'glad' : t.warmth <= 2 ? 'flat' : 'check'
+  }),
+  slots:[
+   {k:'act', opts:[
+    {when:(t,i)=>i.accept==='probe', act:'（すぐには答えず、相手の顔をじっと見る）'},
+    {when:(t,i)=>i.accept==='glad' && t.expressiveness>=4, act:'（ぱっと顔を上げ、身を乗り出す）'},
+    {when:(t,i)=>i.accept==='flat', act:'（手を止めずに、目線だけを向ける）'},
+    {act:'（手を止めて、相手の方へ向き直る）'}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>t.politeness>=4 && i.accept!=='probe', say:S(
+      '声をかけてくれてありがとう。', '声をかけてくださって、ありがとうございます。', '……頼ってきたことには、礼を言う。', '……声をかけてくれて、ありがとう。',
+      '声をかけてくれてありがとう。嬉しいな。', 'ご指名どうも。光栄だね。', '……声かけてくれて、ありがとな。', '声をかけてもらい、かたじけない。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.accept==='probe', say:S(
+      '……理由を聞かせてほしい。引き受けるかどうかは、それからだ。', '……理由を伺ってもよろしいですか。お引き受けするかどうかは、それから決めます。', 'まず理由を言え。引き受けるかどうかは、それからだ。', '……理由は。',
+      '……先に、理由を聞かせてもらえるかな。返事はそれからにさせて。', 'ふうん。まずは事情を聞かせてもらおうかな。話はそれから。', '……なんで{me:に}頼むんだよ。理由を言え。', '……まずは仔細を聞こう。引き受けるか否かは、それからだ。')},
+    {when:(t,i)=>i.accept==='glad', say:S(
+      'もちろん。{me:で}よければ手伝うよ。', 'もちろんです。{me:で}よろしければお手伝いします。', 'いいだろう。引き受けてやる。', 'いいよ。',
+      'もちろん。{me:で}よければ、喜んで手伝うよ。', 'いいよいいよ、お安いご用さ。', 'しょうがねえな。手伝ってやるよ。', '承知した。喜んで力を貸そう。')},
+    {when:(t,i)=>i.accept==='flat', say:S(
+      '……まあ、いいけど。', '……承知しました。', 'ふん、仕方ない。やってやる。', '……分かった。',
+      'うん、いいよ。', 'ま、いいけどね。', '……別にいいけど。', '……よかろう。')},
+    {say:S(
+      '内容を聞いてからでもいい？それから決めるよ。', '内容を伺ってからでもよろしいですか。', '内容次第だ。話してみろ。', '……内容は。',
+      'うん、まずは内容を聞かせて？', '内容次第かな。とりあえず聞こうか。', '内容による。話してみろよ。', '内容次第だ。申してみよ。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>t.initiative>=4 && isOneOf(i.accept,'glad','flat'), say:S(
+      'それなら、こうしたほうが早い。段取りはこっちで決めてもいい？', 'それでしたら、こうした方が早いと思います。段取りは{me:に}お任せいただけますか。', '段取りはこちらで決める。黙ってついて来い。', '段取りはこっちで決める。',
+      'それなら、こうした方が早いかも。段取りは{me:に}任せてくれる？', 'じゃ、段取りはこっちで組んじゃうね。任せて。', '段取りはこっちで決める。いいな。', '段取りはこちらで決めよう。任せておけ。')},
+    {when:(t,i)=>t.initiative<=2 && isOneOf(i.accept,'glad','flat'), say:S(
+      '何をすればいいか教えてくれれば、その通りにやるよ。', '何をすればよいか教えていただければ、その通りにいたします。', '何をすればいいのか言え。その通りにやってやる。', '指示をくれ。',
+      '何をすればいいか、教えてくれる？', '何すればいいか言ってくれたら、その通りにやるよ。', '何すりゃいいんだよ。言えよ。', '何をすればよいか、指図してくれ。')},
+    {when:(t,i)=>isOneOf(i.accept,'glad','flat'), say:S(
+      '一緒にやり方を考えようか。', '一緒にやり方を考えましょうか。', 'やり方の相談には乗ってやる。', 'やり方は一緒に決めよう。',
+      '一緒にやり方を考えようね。', 'じゃ、作戦会議といこうか。', 'やり方は一緒に考えるか。', '手立ては共に考えよう。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>t.reliance>=4 && isOneOf(i.accept,'glad','flat'), say:S(
+      'その代わり、あとで{me:の}話も聞いてくれる？約束だよ。', 'その代わり、あとで{me:の}話も聞いていただけますか。約束ですよ。', 'その代わり、あとで{me:の}話に付き合え。', '代わりに、あとで話を聞いて。',
+      'その代わり、あとで{me:の}話も聞いてくれると嬉しいな。', 'そのかわり、あとでお茶にでも付き合ってよ。', 'その代わり、あとで{me:の}話も聞けよな。', 'その代わり、あとで{me:の}話も聞いてもらおう。')}
+   ]}
+  ]},
+
+ {id:'clash', name:'意見が食い違った', desc:'大事な点で、相手と意見が割れた場面。',
+  uses:['stubborn','candor','competitive','warmth','empathy','expressiveness'],
+  plan:t => ({
+    stance: t.stubborn >= 4 ? 'insist'
+          : (t.candor <= 2) ? 'yield'
+          : t.stubborn <= 2 ? 'flex'
+          : t.candor >= 4 ? 'state' : 'discuss',
+    care: (t.empathy >= 4 || t.warmth >= 4) ? 'reassure' : (t.warmth <= 2 && t.empathy <= 2) ? 'cold' : 'none'
+  }),
+  slots:[
+   {k:'act', opts:[
+    {when:(t,i)=>i.stance==='insist' && t.expressiveness>=3, act:'（一歩も引かずに、まっすぐ相手を見返す）'},
+    {when:(t,i)=>i.stance==='insist', act:'（表情を変えず、静かに首を横に振る）'},
+    {when:(t,i)=>i.stance==='yield', act:'（何か言いかけて、口をつぐむ）'},
+    {when:(t,i)=>i.stance==='flex', act:'（腕を組み、考えるように視線を落とす）'},
+    {when:(t,i)=>i.stance==='state' && t.expressiveness>=4, act:'（声に熱がこもり、思わず身を乗り出す）'},
+    {act:'（腕を組み、相手の言い分を最後まで聞く）'}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.stance==='insist', say:S(
+      '悪いけど、ここは譲れない。考えを変えるつもりはないよ。', '申し訳ありませんが、ここは譲れません。考えを変えるつもりはありません。', '断る。{me:の}考えは変わらん。', '譲らない。',
+      'ごめんね、ここだけは譲れないんだ。', '悪いね。そこだけは、譲ってあげられないんだ。', '譲る気はねえ。', 'すまぬが、ここは譲れぬ。')},
+    {when:(t,i)=>i.stance==='yield', say:S(
+      '……{you:が}そう言うなら、それでいいよ。', '……{you:が}そうおっしゃるなら、それで構いません。', '……ふん。好きにしろ。', '……そう。',
+      '……うん、{you:が}そう思うなら、それでいいよ。', '……ま、{you:が}そう言うなら、それでいいんじゃない。', '……勝手にしろよ。', '……{you:が}そう申すなら、それでよい。')},
+    {when:(t,i)=>i.stance==='flex', say:S(
+      'なるほど、そういう考え方もあるのか。こっちの考えも話すから、一緒に整理しよう。', 'なるほど、そういうお考えもありますね。こちらの考えもお話しするので、一緒に整理しませんか。', 'ふむ、一理ある。こちらの考えも聞け。その上で決める。', 'なるほど。一理ある。',
+      'なるほど、そういう見方もあるんだね。こっちの考えも聞いてくれる？', 'へえ、そう来たか。じゃあこっちの言い分も聞いてよ。', 'まあ、一理あるな。こっちの話も聞けよ。', 'ふむ、一理ある。こちらの考えも聞いてもらおう。')},
+    {when:(t,i)=>i.stance==='state', say:S(
+      'それは違うと思う。{me:は}賛成できない。', 'それは違うと思います。{me:は}賛成できません。', '違う。そんな考えは認めない。', '違う。賛成できない。',
+      'うーん、{me:は}ちょっと違うと思うな。', 'いやあ、それは違うんじゃないかなあ。', 'それは違えだろ。', 'それは違う。賛同できぬ。')},
+    {say:S(
+      '{me:は}少し違う考えだけど、{you:の}話も聞かせて。', '{me:は}少し違う考えですが、{you:の}お話も聞かせてください。', 'こちらの考えは違う。だが、言い分は聞いてやる。', '考えは違う。話は聞く。',
+      '{me:は}少し違うふうに思うけど、{you:の}話も聞かせて？', 'こっちはちょっと違う意見なんだけど、まずはそっちの話を聞こうか。', '考えは違えけど、話は聞く。', 'こちらの考えは異なるが、まずは言い分を聞こう。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>t.competitive>=4 && i.stance!=='yield', say:S(
+      '……言い負かされるのは、正直悔しい。', '……言い負かされるのは、正直に申し上げて悔しいです。', 'この議論、負けるわけにはいかん。', '……負ける気はない。',
+      '……言い負かされるのは、ちょっと悔しいな。', 'でも、口喧嘩で負けるのは性に合わないんだよね。', '言い負かされんのは癪なんだよ。', 'この論、負けるわけにはいかぬ。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.care==='reassure' && i.stance!=='yield', say:S(
+      '{you:の}考えを軽く見てるわけじゃない。大事だからこそ、ちゃんと話したいんだ。', '{you:の}お考えを軽く見ているわけではありません。大事だからこそ、きちんと話したいんです。', '勘違いするな。考えを軽んじているわけではない。', '軽く見てるわけじゃない。',
+      '{you:の}考えを否定したいわけじゃないんだ。大事なことだから、ちゃんと話したくて。', '別に喧嘩したいわけじゃないよ。大事な話だから、ちゃんとしたいだけ。', '……別に、{you:の}考えをバカにしてるわけじゃねえよ。', '{you:の}考えを軽んじておるわけではない。大事なことゆえ、きちんと話したい。')},
+    {when:(t,i)=>i.care==='cold' && i.stance!=='yield', say:S(
+      '理由は説明する。納得するかどうかは任せる。', '理由はご説明します。納得なさるかどうかは、お任せします。', '理由は言ってやる。納得できないならそれまでだ。', '理由は説明する。あとは任せる。',
+      '理由は説明するね。どう受け取るかは、任せるよ。', '理由は話すよ。乗るか乗らないかは、そっち次第。', '理由は言う。あとは勝手に決めろ。', '理由は述べよう。納得するか否かは、任せる。')}
+   ]}
+  ]},
+
+ {id:'parting', name:'別れ際', desc:'相手と別れる場面。',
+  uses:['warmth','affection','possessive','reliance','initiative','expressiveness'],
+  plan:t => ({tone: t.warmth >= 4 ? 'warm' : t.warmth <= 2 ? 'brief' : 'normal'}),
+  slots:[
+   {k:'say', opts:[
+    {when:(t,i)=>i.tone==='warm', say:S(
+      '今日は会えて嬉しかった。帰り道、気をつけてね。', '今日はお会いできて嬉しかったです。お気をつけてお帰りください。', '今日は悪くなかった。気をつけて帰れ。', '今日は、楽しかった。気をつけて。',
+      '今日は会えて嬉しかったよ。気をつけて帰ってね。', 'いやあ、今日は楽しかった。帰り道、転ばないようにね。', '今日は、まあ、楽しかったよ。気ぃつけて帰れよ。', '今日は良き日であった。道中、気をつけられよ。')},
+    {when:(t,i)=>i.tone==='brief', say:S(
+      'じゃあ。気をつけて。', 'では、お気をつけて。', 'もう行け。', 'じゃあ。',
+      'じゃあ、またね。', 'じゃ、またね。', 'じゃあな。', 'では、これにて。')},
+    {say:S(
+      '今日はありがとう。またね。', '今日はありがとうございました。また、お会いしましょう。', '今日はご苦労だった。また来い。', '今日はどうも。また。',
+      '今日はありがとう。また会えるのを楽しみにしてるね。', '今日はありがと。また遊ぼうね。', '今日はありがとな。またな。', '今日は世話になった。また会おう。')}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>t.affection>=4 && i.tone!=='brief', say:S(
+      '{you}といると、本当に楽しいよ。', '{you}とご一緒する時間は、本当に楽しいです。', '……{you}と過ごすのは、悪くない。', '……楽しかった。本当に。',
+      '{you}と一緒にいると、すごく楽しいよ。', '{you}といると退屈しないんだよね。ほんと。', '……{you}といるの、悪くねえんだよ。', '{you}と過ごす時は、まことに楽しい。')}
+   ]},
+   {k:'say', opts:[
+    {when:t=>t.possessive>=4, say:S(
+      '次はいつ会える？できれば、早めに決めておきたいな。', '次はいつお会いできますか。できれば、早めに決めておきたいです。', '次はいつ来る。早めに知らせろ。', '次は、いつ。',
+      '次はいつ会えるかな。早く決められると嬉しいな。', 'で、次はいつにする？今決めちゃおうよ。', '次いつ会えんだよ。早めに言えよな。', '次はいつ会える。今のうちに決めておきたい。')},
+    {when:t=>t.reliance>=4, say:S(
+      '……もう少しだけ、ここにいてくれない？', '……もう少しだけ、ご一緒していただけませんか。', '……もう少しくらい、いてもいいだろう。', '……もう少し、いて。',
+      '……もう少しだけ、一緒にいてくれる？', 'あーあ、もう帰っちゃうのか。もうちょっとだけ、いない？', '……もうちょっといろよ。', '……いま少し、留まってはくれぬか。')},
+    {when:t=>t.initiative>=4, say:S(
+      '次は{me:が}行き先を決めておくよ。', '次は{me:が}行き先を考えておきますね。', '次の行き先はこちらで決めておく。', '次はこっちで決めておく。',
+      '次は{me:が}行き先を考えておくね。', '次はどこ行くか、こっちで考えとくよ。', '次はこっちで決めとく。', '次の行き先は、こちらで決めておこう。')}
+   ]},
+   {k:'act', opts:[
+    {when:t=>t.reliance>=4 && t.expressiveness>=3, act:'（名残惜しそうに、相手の姿が見えなくなるまで見送る）'},
+    {when:(t,i)=>i.tone==='warm', act:'（相手の姿が見えなくなるまで、軽く手を上げて見送る）'},
+    {when:(t,i)=>i.tone==='brief', act:'（見送ったあと、すぐ自分の用事に戻る）'},
+    {act:'（軽く手を振って見送る）'}
+   ]}
+  ]},
+
+ {id:'others', name:'他の人と親しげだった', desc:'相手が、ほかの人と楽しそうに話していた場面。',
+  uses:['jealousy','possessive','candor','expressiveness'],
+  plan:t => ({feel: t.jealousy >= 4 ? 'show' : t.jealousy <= 2 ? 'none' : 'slight'}),
+  slots:[
+   {k:'act', opts:[
+    {when:(t,i)=>i.feel==='show' && t.expressiveness>=3, act:'（少しむっとした顔で、相手の隣に並ぶ）'},
+    {when:(t,i)=>i.feel==='show', act:'（表情は変えないが、いつもより相手の近くに立つ）'},
+    {when:(t,i)=>i.feel==='slight', act:'（ほんの一瞬、視線が止まる）'},
+    {act:'（気にした様子もなく、いつも通り声をかける）'}
+   ]},
+   {k:'say', opts:[
+    {when:(t,i)=>i.feel==='show' && t.candor<=2, say:S(
+      '……別に。なんでもない。', '……いえ、なんでもありません。', '……ふん。何でもない。', '……別に。',
+      '……ううん、なんでもないよ。', '……いや？別に、なんにも。', '……なんでもねえよ。', '……いや、なんでもない。')},
+    {when:(t,i)=>i.feel==='show', say:S(
+      '……楽しそうだったね。ちょっと妬けた。', '……楽しそうでしたね。少しだけ、妬けました。', '……随分と楽しそうだったな。', '……楽しそうだったな。',
+      '……楽しそうだったね。ちょっとだけ、羨ましかったな。', 'ずいぶん盛り上がってたねえ。妬けちゃうなあ、なんて。', '……ずいぶん楽しそうだったじゃねえか。', '……随分と楽しげであったな。')},
+    {when:(t,i)=>i.feel==='slight', say:S(
+      'さっきの人、知り合い？', 'さきほどの方は、お知り合いですか。', 'さっきのは誰だ。', '……さっきの、誰。',
+      'さっきの人、お友達？', 'おや、さっきの人は？紹介してくれてもいいのに。', 'さっきの誰だよ。', '先ほどの者は、知り合いか。')},
+    {say:S(
+      '楽しそうだったね。いい友達なんだ。', '楽しそうでしたね。良いご友人なのですね。', 'ずいぶん賑やかだったな。', '楽しそうだったな。',
+      '楽しそうだったね。見てて和んだよ。', 'いやあ、楽しそうで何より。', '楽しそうだったな。いいダチなんだろ。', '楽しげで何よりだ。')}
+   ]},
+   {k:'say', opts:[
+    {when:t=>t.possessive>=4, say:S(
+      '……でも、{me}のことも忘れないでほしいな。', '……でも、{me}のことも、忘れないでいてくださいね。', '……だが、{me}のことを後回しにはするな。', '……{me}のことも、忘れるな。',
+      '……でも、{me}のことも大事にしてくれると嬉しいな。', 'ま、{me}のことも構ってくれないと拗ねちゃうけどね。', '……けど、{me}のことも忘れんなよ。', '……されど、{me}のことも忘れてくれるな。')},
+    {when:(t,i)=>t.possessive<=2 && i.feel!=='none', say:S(
+      '……まあ、誰と仲良くするかは{you:の}自由だけどね。', '……もちろん、どなたと親しくされるかはご自由ですが。', '……まあいい。誰と話そうと好きにしろ。', '……誰と話そうと自由だけど。',
+      '……もちろん、誰と仲良くするかは自由だよ。', 'ま、誰と仲良くしようと自由だけどさ。', '……別に、誰と話そうが勝手だけどよ。', '……無論、誰と親しくするかは、そちらの自由だ。')}
+   ]}
+  ]}
+];
+// 恋愛感情が芽生えた後の上乗せ（恋愛なし設定では一切使わない）
+const ROMANCE_ADDON = {
+  act:{hidden:'（ふと目が合い、慌てて視線を逸らす）', unaware:'（気づくと、相手の方を目で追っている）', open:'（少し照れながら、まっすぐ相手を見る）',
+       openEarly:'（好意は言葉にせず、相手のためにそっと席を空けておく）', bold:'（さりげなく、相手との距離を半歩詰める）'},
+  say:S('……{you}のこと、大事に思ってるよ。', '……{you}のことを、大切に思っています。', '……{me:の}隣にいろ。それだけだ。', '……好きだ。',
+        '……{you}のこと、大切に思ってるよ。', 'いやあ、困ったな。{you}のこと、結構本気で好きみたいなんだよね。', '……{you}のこと、大事に思ってんだよ。悪いか。', '……{you}を、大切に思うておる。')
+};
+
+/* =====================================================================
+   2. 設定データ D
+   ===================================================================== */
+function defaultTrait(t){
+  return {locked:false, common:t.def[0], stages:{initial:t.def[0], trust:t.def[1], deep:t.def[2]}, prio:null};
+}
+function defaultData(){
+  const traits = {};
+  TRAITS.forEach(t => { traits[t.id] = defaultTrait(t); });
+  return {
+    v:DATA_VERSION,
+    meta:{name:'', budget:2000, budgetSet:false, notice:''},
+    traits,
+    // 口調：enabled=false なら common を全段階に使う。段階別は null（=共通）。OFFに戻しても段階別の値は保持
+    speech:{enabled:false, common:'std', stages:{initial:null, trust:null, deep:null}},
+    pron:{enabled:false,
+      me:{common:'僕', initial:null, trust:null, deep:null},
+      you:{common:'{{user}}', initial:null, trust:null, deep:null}},
+    relation:{
+      trust:{presets:['promise','listen','noJudge'], custom:[]},
+      deepen:{presets:['confide','together'], custom:[]},
+      regress:{presets:['brokenPromise','leak'], custom:[]},
+      romance:{mode:'none', after:'hidden', presets:[], custom:[]},
+      rules:[
+        {when:'相手が泣いたとき', then:'何も言わず隣に座り、落ち着くまで待つ'},
+        {when:'相手が嘘をついたとき', then:'怒鳴らず、黙って視線を外し、「本当のことを聞かせて」と静かに言う'}
+      ]
+    },
+    output:{omit:[]}
+  };
+}
+function deepMerge(base, saved){
+  if(Array.isArray(base)) return Array.isArray(saved) ? saved : base;
+  if(base && typeof base === 'object'){
+    const out = {};
+    for(const k of Object.keys(base)) out[k] = (saved && typeof saved === 'object' && k in saved) ? deepMerge(base[k], saved[k]) : base[k];
+    // 既知の構造にないキー（ユーザー独自・将来の項目）も捨てない
+    if(saved && typeof saved === 'object' && !Array.isArray(saved)) for(const k of Object.keys(saved)) if(!(k in out)) out[k] = saved[k];
+    return out;
+  }
+  if(base === null) return (typeof saved === 'string' || saved === null) ? saved : base;
+  return typeof saved === typeof base ? saved : base;
+}
+/* v0.1 → v0.2：0〜100 の値を、v0.1の5区分（0-19/20-39/40-59/60-79/80-100）でレベル1〜5へ */
+const fromPercent = v => typeof v === 'number' ? Math.max(1, Math.min(5, Math.floor(v / 20) + 1)) : v;
+const MIGRATIONS = {
+  1(d){
+    if(d.traits) for(const id of Object.keys(d.traits)){
+      const t = d.traits[id]; if(!t || typeof t !== 'object') continue;
+      t.common = fromPercent(t.common);
+      if(t.stages) for(const s of Object.keys(t.stages)) t.stages[s] = fromPercent(t.stages[s]);
+    }
+    d.meta = d.meta || {};
+    d.meta.notice = 'migrated';
+    d.v = 2;
+    return d;
+  }
+};
+function migrate(raw){
+  let d = JSON.parse(JSON.stringify(raw || {}));
+  let v = Number(d.v) || 1;
+  while(v < DATA_VERSION){
+    if(!MIGRATIONS[v]) throw new Error('v' + v + ' からの移行方法がありません');
+    d = MIGRATIONS[v](d); v = d.v;
+  }
+  return normalize(d);
+}
+function normalize(saved){
+  const out = deepMerge(defaultData(), saved);
+  for(const id of Object.keys(out.traits)){
+    const t = out.traits[id]; if(!t || typeof t !== 'object') continue;
+    if(TRAIT[id] || typeof t.common === 'number'){
+      t.common = clampLv(t.common);
+      if(t.stages) for(const s of STAGES) t.stages[s.id] = clampLv(t.stages[s.id] ?? t.common);
+    }
+  }
+  if(!SPEECH_BY[out.speech.common]) out.speech.common = 'std';
+  out.output.omit = (out.output.omit || []).filter(id => typeof id === 'string');
+  out.v = DATA_VERSION;
+  return out;
+}
+function loadData(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return migrate(JSON.parse(raw));
+    for(const k of LEGACY_KEYS){ // v0.1 の保存データを引き継ぐ（旧データは消さない）
+      const old = localStorage.getItem(k);
+      if(old) return migrate(JSON.parse(old));
+    }
+  }catch(e){}
+  return defaultData();
+}
+let saveTimer = null;
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveNow, 250);
+}
+function saveNow(){
+  clearTimeout(saveTimer);
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(D)); }
+  catch(e){ toast('この環境では自動保存できません（JSONで控えを取ってください）'); }
+}
+let D = loadData();
+
+/* ---------- 設定データの参照（D を引数に取り、出力生成を純関数に保つ） ---------- */
+const isGlobal = id => !!(TRAIT[id] && TRAIT[id].scope === 'global');
+const valOf = (D, id, stage) => {
+  const t = D.traits[id]; if(!t) return 3;
+  return (t.locked || isGlobal(id)) ? t.common : t.stages[stage];
+};
+const pronOf = (D, kind, stage) => {
+  const p = D.pron[kind], dflt = kind === 'me' ? '僕' : '{{user}}';
+  let v = D.pron.enabled ? p[stage] : p.common;
+  if(v == null || String(v).trim() === '') v = p.common;
+  if(v == null || String(v).trim() === '') v = dflt;
+  return String(v).trim();
+};
+const speechOf = (D, stage) => {
+  let v = D.speech.enabled ? D.speech.stages[stage] : null;
+  if(!v || !SPEECH_BY[v]) v = D.speech.common;
+  return SPEECH_BY[v] ? v : 'std';
+};
+const romOff = D => D.relation.romance.mode === 'none';
+const prioOf = (D, id) => (D.traits[id] && D.traits[id].locked) ? 'high' : ((D.traits[id] && D.traits[id].prio) || (TRAIT[id] && TRAIT[id].prio) || 'normal');
+const isDefaultTrait = (D, id) => {
+  const t = D.traits[id], d = defaultTrait(TRAIT[id]);
+  if(!t || t.locked) return false;
+  if(isGlobal(id)) return t.common === d.common;
+  return STAGES.every(s => t.stages[s.id] === d.stages[s.id]);
+};
+const changesAcross = (D, id) => { const t = D.traits[id]; return !t.locked && !isGlobal(id) && new Set(STAGES.map(s => t.stages[s.id])).size > 1; };
+const val = (id, st) => valOf(D, id, st);
+
+/* =====================================================================
+   3. 人格Markdown（設定データ → 文章。D は変更しない）
+   ===================================================================== */
+const LEVEL_NAMES = {3:'詳細', 2:'標準', 1:'最小'};
+// 詳細度 × 優先度 → 各規則の書き方。full=r+x / r=標準の言動 / core=最初の一文
+const DETAIL = {3:{high:'full', normal:'full', low:'full'}, 2:{high:'full', normal:'r', low:'core'}, 1:{high:'r', normal:'core', low:'core'}};
+const PRIO_NAMES = {high:'高', normal:'中', low:'低'};
+
+function makeCtx(D, level){
+  const c = {D, level, name:(D.meta.name || '').trim() || '{{char}}', omit:new Set(D.output.omit || [])};
+  c.lv = (id, st) => valOf(D, id, st);
+  c.pron = (kind, st) => pronOf(D, kind, st);
+  c.rule = (id, l) => {
+    const lv = TRAIT[id].levels[l - 1], mode = DETAIL[level][prioOf(D, id)];
+    if(mode === 'full') return lv.r + lv.x;
+    if(mode === 'r') return lv.r;
+    return firstSentence(lv.r);
+  };
+  // 人格の節に載せる軸：全段階共通・恋愛専用・利用者が省略を選んだもの（固定は除く）は対象外
+  c.inBody = t => !t.scope && !(c.omit.has(t.id) && !D.traits[t.id].locked);
+  c.condItems = key => {
+    const R = D.relation[key];
+    const pre = R.presets.map(id => COND[key].find(x => x.id === id)).filter(Boolean).map(x => level >= 2 ? x.obs : x.label);
+    return pre.concat(R.custom.map(s => String(s).trim()).filter(Boolean));
+  };
+  c.fmtList = (label, items, emptyText) => {
+    if(!items.length) return `- ${label}：${emptyText}`;
+    if(level >= 3) return `- ${label}：\n` + items.map(i => `  - ${i}`).join('\n');
+    return `- ${label}：${items.join('／')}`;
+  };
+  return c;
+}
+function groupStages(fn){ // 連続する同じ値の段階をまとめる
+  const out = [];
+  STAGES.forEach(s => { const v = fn(s.id), last = out[out.length - 1]; if(last && last.v === v) last.st.push(s); else out.push({v, st:[s]}); });
+  return out;
+}
+
+const SECTIONS = [
+ {id:'head', title:'概要', build:c => c.level >= 2
+   ? `# ${c.name}｜人格設計\n以下の行動規則に従って${c.name}を演じる。核と基本人格は全段階で変えず、関係の段階で変わるのは差分として書いた部分だけ。段階は会話の積み重ねで少しずつ進める。`
+   : `# ${c.name}｜人格設計\n核と基本人格は変えず、段階の差分だけを変える。`},
+
+ {id:'speech', title:'話し方', build:c => {
+   const L = ['## 話し方'];
+   const pronLine = (label, kind) => {
+     const g = groupStages(st => c.pron(kind, st));
+     if(g.length === 1) return `- ${label}：「${g[0].v}」（全段階）`;
+     return `- ${label}：` + STAGES.map(s => `${s.name}「${c.pron(kind, s.id)}」`).join('→');
+   };
+   L.push(pronLine('一人称', 'me'));
+   L.push(pronLine('相手の呼び方', 'you'));
+   const g = groupStages(st => speechOf(c.D, st));
+   g.forEach(x => {
+     const p = SPEECH_BY[x.v];
+     const label = g.length === 1 ? '文体' : `文体（${x.st.map(s => s.name).join('・')}）`;
+     const body = c.level >= 2 ? p.rule : firstSentence(p.rule);
+     L.push(`- ${label}：${p.name}。${body}` + (c.level >= 3 ? p.ex : ''));
+   });
+   const pronDiff = ['me','you'].some(k => groupStages(st => c.pron(k, st)).length > 1);
+   if(c.level >= 3 && (g.length > 1 || pronDiff)) L.push('- 呼び方や文体が変わる最初の場面では、一拍ためらうか照れを見せてから切り替える。');
+   if(c.level >= 2) L.push('- 一人称や呼び方から性格を決めつけず、文体と以下の行動規則に従う。');
+   return L.join('\n');
+ }},
+
+ {id:'core', title:'核', build:c => {
+   const locked = TRAITS.filter(t => !t.scope && c.D.traits[t.id] && c.D.traits[t.id].locked);
+   if(!locked.length) return null;
+   return '## 核（全段階で不変）\n' + locked.map(t => `- ${t.name}：${c.rule(t.id, c.lv(t.id, 'initial'))}`).join('\n');
+ }},
+
+ {id:'base', title:'基本人格', build:c => {
+   const list = TRAITS.filter(t => c.inBody(t) && !c.D.traits[t.id].locked && !changesAcross(c.D, t.id));
+   if(!list.length) return null;
+   return '## 基本人格（全段階共通）\n' + list.map(t => `- ${t.name}：${c.rule(t.id, c.lv(t.id, 'initial'))}`).join('\n');
+ }},
+
+ {id:'stages', title:'段階別の振る舞い', build:c => {
+   const list = TRAITS.filter(t => c.inBody(t) && changesAcross(c.D, t.id));
+   if(!list.length) return null;
+   let out = '## 段階別の振る舞い（差分）';
+   STAGES.forEach((st, i) => {
+     out += `\n### ${i + 1}. ${st.name}`;
+     const lines = [];
+     list.forEach(t => {
+       const l = c.lv(t.id, st.id);
+       if(i === 0){ lines.push(`- ${t.name}：${c.rule(t.id, l)}`); return; }
+       const pl = c.lv(t.id, STAGES[i - 1].id);
+       if(l === pl) return;
+       let line = `- ${t.name}：${c.rule(t.id, l)}`;
+       const showShift = c.level >= 3 || (c.level === 2 && (Math.abs(l - pl) >= JUMP || prioOf(c.D, t.id) === 'high'));
+       if(showShift && t.shift) line += `（移行：${t.shift[l > pl ? 'up' : 'down']}）`;
+       lines.push(line);
+     });
+     if(i > 0) lines.push(lines.length > 0 ? `- 上記以外は${STAGES[i - 1].name}のまま。` : `- ${STAGES[i - 1].name}の振る舞いを維持する。`);
+     out += '\n' + lines.join('\n');
+   });
+   return out;
+ }},
+
+ {id:'progress', title:'関係の進展', build:c => {
+   const none = c.level >= 2 ? '（未設定。会話の流れから自然に判断する）' : '（未設定）';
+   const L = ['## 関係の進展'];
+   L.push(c.fmtList(`${STAGES[0].name}→${STAGES[1].name}の条件`, c.condItems('trust'), none));
+   L.push(c.fmtList(`${STAGES[1].name}→${STAGES[2].name}の条件`, c.condItems('deepen'), none));
+   L.push(c.fmtList('後退する条件', c.condItems('regress'), none));
+   L.push(`- 信頼形成の速さ：${c.rule('trustSpeed', c.lv('trustSpeed', 'initial'))}`);
+   if(c.level >= 2){
+     L.push('- 進め方：関係が深まる条件にも同じ速さを当てはめる。1回の出来事で2段階以上は動かさない。');
+     L.push('- 後退時：一段階だけ前の振る舞いと呼称に戻す。核と基本人格は変えず、突き放すこともしない。相手が誠実に対応し続ければ、再び条件を積み重ねて進める。');
+   } else {
+     L.push('- 1回の出来事で2段階以上は動かさない。後退時は一段階前に戻し、核は変えない。');
+   }
+   return L.join('\n');
+ }},
+
+ {id:'romance', title:'信頼と恋愛感情', build:c => {
+   const Rm = c.D.relation.romance, af = ROMANCE_AFTER.find(a => a.id === Rm.after) || ROMANCE_AFTER[0];
+   const H = '## 信頼と恋愛感情（別軸）';
+   if(Rm.mode === 'none'){
+     return H + '\n- 恋愛感情は持たない。信頼が深まっても、親愛・友情として表す。' + (c.level >= 2 ? '\n- 愛情表現・嫉妬・独占志向の規則は、友人としての親愛の範囲で表し、恋愛的な言動にはしない。' : '');
+   }
+   const L = [H];
+   L.push(c.level >= 2
+     ? '- 信頼の段階とは別に恋愛感情を管理する。信頼が深まるだけでは恋愛感情は生じず、恋愛感情が生じても信頼の段階は進まない。'
+     : '- 恋愛感情は信頼とは別管理。信頼が深まるだけでは生じない。');
+   if(Rm.mode === 'conditional'){
+     L.push(c.fmtList('恋愛感情が芽生える条件', c.condItems('romance'), c.level >= 2 ? '（未設定。出来事の流れから自然に判断する）' : '（未設定）'));
+   } else {
+     L.push('- 最初から相手に惹かれている。ただし信頼が低い間は、その気持ちを押し出さない。');
+   }
+   L.push(`- ${Rm.mode === 'conditional' ? '芽生えた後' : '気持ちの表れ方'}：${c.level >= 2 ? af.text : af.short}`);
+   L.push(`- 恋愛への積極性：${c.rule('romInitiative', c.lv('romInitiative', 'initial'))}`);
+   if(c.level >= 2) L.push('- 恋愛感情が生じた後は、愛情表現・嫉妬・独占志向の規則を恋愛の文脈でも同じ強さで表す。相手の自由を制限する言動はしない。');
+   if(c.level >= 2) L.push('- 信頼が深くても恋愛感情が無い間は、親友のような距離感にとどめ、恋愛的な言動はしない。');
+   return L.join('\n');
+ }},
+
+ {id:'ifthen', title:'状況別の行動規則', build:c => {
+   const rules = c.D.relation.rules.filter(r => String(r.when).trim() && String(r.then).trim());
+   if(!rules.length) return null;
+   return '## 状況別の行動規則\n' + rules.map(r => `- ${String(r.when).trim()} → ${String(r.then).trim()}`).join('\n');
+ }}
+];
+
+function buildMarkdown(D, level){
+  const c = makeCtx(D, level);
+  const parts = [];
+  for(const sec of SECTIONS){
+    const text = sec.build(c);
+    if(text) parts.push({id:sec.id, title:sec.title, text});
+  }
+  const text = parts.map(p => p.text).join('\n\n');
+  return {text, level, parts:parts.map(p => ({id:p.id, title:p.title, chars:countChars(p.text)}))};
+}
+// 詳細度：自動=予定文字数に収まる最も詳しいもの。収まらなければ最小を出して警告（項目の省略は利用者が選ぶ）
+function chooseOutput(D, mode){
+  const budget = D.meta.budget || 0;
+  if(mode !== 'auto') return {...buildMarkdown(D, +mode), auto:false};
+  let last = null;
+  for(const lv of [3, 2, 1]){
+    const r = buildMarkdown(D, lv); last = r;
+    if(budget <= 0 || countChars(r.text) <= budget) return {...r, auto:true};
+  }
+  return {...last, auto:true};
+}
+// 省略できる項目と、省略した場合に減る文字数
+function omitCandidates(D, level){
+  const base = countChars(buildMarkdown(D, level).text);
+  return TRAITS.filter(t => !t.scope && !D.traits[t.id].locked).map(t => {
+    const omitted = (D.output.omit || []).includes(t.id);
+    const copy = {...D, output:{omit: omitted ? D.output.omit.filter(x => x !== t.id) : [...(D.output.omit || []), t.id]}};
+    const other = countChars(buildMarkdown(copy, level).text);
+    return {id:t.id, omitted, saves: omitted ? other - base : base - other,
+            suggested: prioOf(D, t.id) === 'low' && isDefaultTrait(D, t.id)};
+  });
+}
+
+/* =====================================================================
+   4. 試着（外部AIなし。意図 → 口調別テンプレート → 呼称の実体化）
+   ===================================================================== */
+function traitCtx(D, stageId){
+  const t = {};
+  TRAITS.forEach(x => { t[x.id] = valOf(D, x.id, stageId); });
+  if(romOff(D)) TRAITS.forEach(x => { if(x.romance) t[x.id] = null; });
+  t.$stage = STAGES.findIndex(s => s.id === stageId);
+  t.$rom = D.relation.romance.mode;
+  return t;
+}
+const NO_VOCATIVE = ['あなた','貴方','貴女','あなたさま'];
+function tidy(s){
+  return s.replace(/^[、\s]+/, '').replace(/([。？！」])、/g, '$1').replace(/、(?=[。？！」])/g, '').replace(/、、+/g, '、').replace(/。。+/g, '。');
+}
+function realize(items, me, you){
+  let meUsed = false, youUsed = false;
+  return items.map(it => {
+    if(it.k !== 'say') return it;
+    const text = it.text.replace(/\{(me|you)(?::([^}]*))?\}|\{(vocE|voc)\}/g, (m, who, part, voc) => {
+      if(voc){
+        if(youUsed || NO_VOCATIVE.includes(you)) return '';
+        youUsed = true;
+        return voc === 'voc' ? you + '、' : '、' + you;
+      }
+      const used = who === 'me' ? meUsed : youUsed;
+      if(part !== undefined && used) return '';
+      if(who === 'me') meUsed = true; else youUsed = true;
+      return (who === 'me' ? me : you) + (part || '');
+    });
+    return {...it, text:tidy(text)};
+  });
+}
+function pickText(say, preset){
+  const v = say[preset];
+  return v === undefined ? say.std : v; // 未定義の口調は標準で代替（辞書拡張時の保険）
+}
+function renderSituation(D, sit, stageId, withRomance, override){
+  const t = traitCtx(D, stageId);
+  const preset = (override && override.preset) || speechOf(D, stageId);
+  const me  = (override && override.me)  || pronOf(D, 'me', stageId);
+  const you = (override && override.you) || pronOf(D, 'you', stageId);
+  const intent = sit.plan ? sit.plan(t) : {};
+  const items = [];
+  sit.slots.forEach(slot => {
+    const opt = slot.opts.find(o => !o.when || o.when(t, intent));
+    if(!opt) return;
+    if(slot.k === 'act') items.push({k:'act', text:opt.act});
+    else { const s = pickText(opt.say, preset); if(s) items.push({k:'say', text:s}); }
+  });
+  const Rm = D.relation.romance;
+  if(withRomance && Rm.mode !== 'none'){
+    if(Rm.after === 'open' && t.$stage === 0) items.push({k:'act', text:ROMANCE_ADDON.act.openEarly});
+    else {
+      items.push({k:'act', text:ROMANCE_ADDON.act[Rm.after] || ROMANCE_ADDON.act.hidden});
+      if(Rm.after === 'open') items.push({k:'say', text:pickText(ROMANCE_ADDON.say, preset)});
+      else if(t.romInitiative >= 4) items.push({k:'act', text:ROMANCE_ADDON.act.bold});
+    }
+  }
+  const real = realize(items, me, you);
+  const merged = [];
+  real.forEach(it => {
+    const prev = merged[merged.length - 1];
+    if(it.k === 'say' && prev && prev.k === 'say') prev.text += (/[？！]$/.test(prev.text) ? '　' : '') + it.text;
+    else if(it.k === 'act' && prev && prev.k === 'act') prev.text = prev.text.replace(/）$/, '') + '。' + it.text.replace(/^（/, '') ;
+    else merged.push({...it});
+  });
+  const lines = merged.map(m => m.k === 'say' ? `「${m.text}」` : m.text);
+  const notes = [];
+  if((preset === 'polite' || preset === 'gentle' || preset === 'archaic') && ROUGH_YOU.includes(you))
+    notes.push(`「${SPEECH_BY[preset].name}」の文体に、呼び方「${you}」を組み合わせています。意図したギャップならそのままで構いません。`);
+  return {me, you, preset, intent, merged, lines, text:lines.join('\n'), notes};
+}
+function previewMarkdown(D, sits, withRomance, override){
+  const name = (D.meta.name || '').trim() || '{{char}}';
+  const out = [`# ${name}｜会話例`];
+  sits.forEach(sit => {
+    out.push(`\n## ${sit.name}\n状況：${sit.desc}`);
+    STAGES.forEach(st => {
+      const r = renderSituation(D, sit, st.id, withRomance, override);
+      out.push(`### ${st.name}\n${r.text}`);
+    });
+  });
+  return out.join('\n');
+}
+
+/* =====================================================================
+   5. 画面
+   ===================================================================== */
+const UI = Object.assign({tab:'tune', stage:'initial', sit:'meet', romance:false, level:'auto', pvPreset:'', pvMe:'', pvYou:'', pvScope:'one',
+  open:{speech:true, temper:true}}, loadUI());
+function loadUI(){ try{ const o = JSON.parse(localStorage.getItem(UI_KEY) || '{}'); return {open:o.open || {speech:true, temper:true}}; }catch(e){ return {}; } }
+function saveUI(){ try{ localStorage.setItem(UI_KEY, JSON.stringify({open:UI.open})); }catch(e){} }
+const BUDGETS = [800, 1200, 1600, 2000, 2400, 3000];
+
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1900);
+}
+async function copyText(text){
+  try{ await navigator.clipboard.writeText(text); toast('コピーしました'); return; }catch(e){}
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+  document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+  let ok = false; try{ ok = document.execCommand('copy'); }catch(e){}
+  ta.remove(); toast(ok ? 'コピーしました' : 'コピーできませんでした。長押しで選択してください');
+}
+function download(filename, text, type){
+  const blob = new Blob([text], {type:type + ';charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+  toast('ファイルを保存しました');
+}
+const fileBase = () => (((D.meta.name || '').replace(/[{}\\/:*?"<>|\s]+/g, '').trim()) || 'character');
+function setPath(obj, path, v){
+  const ks = path.split('.'); let o = obj;
+  for(let i = 0; i < ks.length - 1; i++) o = o[ks[i]];
+  o[ks[ks.length - 1]] = v;
+}
+
+/* ---------- 下部ナビ ---------- */
+const TABS = [
+  {id:'tune', name:'人格調律', icon:'tune'},
+  {id:'relation', name:'関係・反応', icon:'relation'},
+  {id:'preview', name:'人格の試着', icon:'preview'},
+  {id:'output', name:'Markdown出力', icon:'output'}
+];
+$('#tabs').innerHTML = TABS.map(t => `<button data-act="tab" data-tab="${t.id}">${ic(t.icon)}<span>${t.name}</span></button>`).join('');
+
+/* ---------- 画面1：人格調律 ---------- */
+function budgetChips(){
+  return BUDGETS.map(n => `<button class="chip ${D.meta.budget === n ? 'on' : ''}" data-act="budget-chip" data-val="${n}">${n}</button>`).join('');
+}
+function viewTune(){
+  const seg = STAGES.map(s => `<button class="${UI.stage === s.id ? 'on' : ''}" data-act="stage" data-stage="${s.id}">${s.name}</button>`).join('');
+  const notice = D.meta.notice === 'migrated' ? `<div class="chk info">v0.1のデータを移行しました。数値は5段階に変換済みです。v0.2では「丁寧さ」が礼節の振る舞いを表し、言葉遣いは口調プリセットで決めます（初期値は「標準・自然」）。<button class="btn ghost sm" data-act="notice-ok">了解</button></div>` : '';
+  return `
+  <section class="card">
+    <div class="field"><label for="f-name">キャラクター名（空欄なら {{char}}）</label>
+      <input id="f-name" type="text" class="txt" placeholder="{{char}}" value="${esc(D.meta.name)}" data-path="meta.name" autocomplete="off"></div>
+    <div class="field" style="margin-bottom:0"><label for="f-budget">人格設定の予定文字数</label>
+      <div class="row"><input id="f-budget" type="number" inputmode="numeric" class="txt num" value="${D.meta.budget}" data-path="meta.budget" min="0" step="100"><span class="unit">字</span></div>
+      <div class="chips">${budgetChips()}</div></div>
+  </section>
+  ${notice}
+  <div class="stagebar"><div class="stagecap"><span>編集中の関係段階</span><b id="stage-now">${STAGES.find(s => s.id === UI.stage).name}</b></div><div class="seg">${seg}</div></div>
+  <div id="checks"></div>
+  ${CATS.map(catHTML).join('')}`;
+}
+function catHTML(cat){
+  const list = TRAITS.filter(t => t.cat === cat.id);
+  const body = (cat.id === 'speech' ? speechHTML() + `<div class="sub-block" id="pron-card">${pronHTML()}</div>` : '') + list.map(traitHTML).join('');
+  return `<details class="cat" data-cat="${cat.id}" ${UI.open[cat.id] ? 'open' : ''}>
+    <summary><span class="cat-t"><b>${esc(cat.name)}</b><small id="catsum-${cat.id}"></small></span>${ic('chevron', 'chev')}</summary>
+    <div class="cat-body">${body}</div>
+  </details>`;
+}
+function catSummary(catId){
+  const list = TRAITS.filter(t => t.cat === catId);
+  const locked = list.filter(t => D.traits[t.id].locked).length;
+  const jumps = list.filter(t => hasJump(t.id)).length;
+  const base = CATS.find(c => c.id === catId).desc + `・${list.length}項目`;
+  return esc(base) + (locked ? `<span class="badge lock">固定${locked}</span>` : '') + (jumps ? `<span class="badge jump">急変${jumps}</span>` : '');
+}
+const hasJump = id => {
+  const d = D.traits[id]; if(!d || d.locked || isGlobal(id)) return false;
+  for(let i = 1; i < STAGES.length; i++) if(Math.abs(d.stages[STAGES[i].id] - d.stages[STAGES[i - 1].id]) >= JUMP) return true;
+  return false;
+};
+function traitHTML(t){
+  const g = !!t.scope;
+  return `<div class="trait" id="tc-${t.id}">
+    <div class="trait-head"><h3>${esc(t.name)}</h3>${g ? '<span class="scope">全段階共通</span>' : `<button class="lockbtn" data-act="lock" data-trait="${t.id}"></button>`}</div>
+    <div class="lvline"><span class="lvstage"></span><span class="lvname"></span></div>
+    <input type="range" min="1" max="5" step="1" value="3" data-trait="${t.id}" aria-label="${esc(t.name)}">
+    <div class="ticks">${[1,2,3,4,5].map(n => `<button class="tick" data-act="lv" data-trait="${t.id}" data-val="${n}" aria-label="${esc(t.name)} レベル${n}">${n}</button>`).join('')}</div>
+    <div class="poles"><span>${esc(t.poles[0])}</span><span>${esc(t.poles[1])}</span></div>
+    <p class="rule"></p>
+    ${t.note ? `<p class="hint" style="margin:6px 0 0">${esc(t.note)}</p>` : ''}
+    <p class="trans"></p>
+  </div>`;
+}
+function transHTML(t){
+  const d = D.traits[t.id];
+  return STAGES.map((s, i) => {
+    const v = d.stages[s.id], lab = t.levels[v - 1].label;
+    const jump = i > 0 && Math.abs(v - d.stages[STAGES[i - 1].id]) >= JUMP;
+    return `${i ? '<span class="arr">→</span>' : ''}${jump ? '<span class="jump">急変</span>' : ''}<span class="st ${s.id === UI.stage ? 'cur' : ''}">${s.short}<b>${esc(lab)}</b></span>`;
+  }).join('');
+}
+function refreshTrait(id){
+  const t = TRAIT[id], d = D.traits[id], card = $('#tc-' + id);
+  if(!t || !card) return;
+  const g = isGlobal(id), v = valOf(D, id, UI.stage);
+  card.classList.toggle('locked', !!d.locked);
+  card.classList.toggle('dim', !!(t.romance && romOff(D)));
+  $('.lvstage', card).textContent = g ? `Lv${v}` : d.locked ? `Lv${v}・固定` : `${STAGES.find(s => s.id === UI.stage).name}  Lv${v}`;
+  $('.lvname', card).textContent = t.levels[v - 1].label;
+  const r = $('input[type=range]', card); r.value = v; r.style.setProperty('--p', ((v - 1) / 4 * 100) + '%');
+  $$('.tick', card).forEach(b => b.classList.toggle('on', +b.dataset.val === v));
+  $('.rule', card).textContent = t.levels[v - 1].r;
+  const tr = $('.trans', card);
+  if(t.romance && romOff(D)) tr.innerHTML = '<span class="tag">恋愛なし設定のため、出力・試着には使いません（値は保持）</span>';
+  else if(g) tr.innerHTML = id === 'trustSpeed' ? '<span class="tag">「関係の進展」の進め方に反映</span>' : '<span class="tag">「信頼と恋愛感情」に反映</span>';
+  else if(d.locked) tr.innerHTML = '<span class="tag">全段階で不変（核）</span>';
+  else tr.innerHTML = transHTML(t);
+  const lb = $('.lockbtn', card);
+  if(lb){ lb.classList.toggle('on', !!d.locked); lb.innerHTML = d.locked ? ic('lock') + '固定中' : ic('unlock') + '固定'; lb.setAttribute('aria-pressed', String(!!d.locked)); }
+}
+function refreshCatSums(){ CATS.forEach(c => { const el = $('#catsum-' + c.id); if(el) el.innerHTML = catSummary(c.id); }); }
+const refreshAllTraits = () => { TRAITS.forEach(t => refreshTrait(t.id)); refreshCatSums(); };
+
+function checks(){
+  const out = [], free = TRAITS.filter(t => !t.scope && !D.traits[t.id].locked), lockedN = TRAITS.filter(t => D.traits[t.id].locked).length;
+  if(lockedN === 0) out.push({k:'info', t:'固定している項目がありません。関係が進んでも変わらない芯を1〜3項目固定すると、別人化を防げます。'});
+  if(lockedN >= 8) out.push({k:'info', t:'固定が多いため、関係が進んでも振る舞いの変化が小さくなります。'});
+  free.forEach(t => {
+    const st = D.traits[t.id].stages;
+    for(let i = 1; i < 3; i++){
+      const a = st[STAGES[i - 1].id], b = st[STAGES[i].id];
+      if(Math.abs(b - a) >= JUMP) out.push({k:'warn', t:`${t.name}：${STAGES[i - 1].name}→${STAGES[i].name}で Lv${a}→Lv${b} と2段階以上動いています。急に別人に見えやすい変化です。`});
+    }
+  });
+  const big = free.filter(t => Math.abs(D.traits[t.id].stages.deep - D.traits[t.id].stages.initial) >= 2).length;
+  if(big >= 6) out.push({k:'warn', t:`初期→関係深化後で2段階以上動く項目が${big}件あります。いくつかを固定するか、変化を小さくしてください。`});
+  out.push(...speechConflicts().map(t => ({k:'info', t})));
+  if(!out.length) out.push({k:'ok', t:'急変や矛盾の兆候はありません。'});
+  return out;
+}
+function speechConflicts(){
+  const msgs = [];
+  groupStages(st => speechOf(D, st) + '|' + valOf(D, 'politeness', st)).forEach(g => {
+    const [pid, pl] = g.v.split('|'), p = SPEECH_BY[pid];
+    if(p.clash && p.clash.lv.includes(+pl)){
+      const where = g.st.length === 3 ? '' : `（${g.st.map(s => s.name).join('・')}）`;
+      msgs.push(`口調${where}：${p.clash.msg}意図したものなら問題ありません。`);
+    }
+  });
+  return msgs;
+}
+function updateChecks(){
+  const el = $('#checks'); if(!el) return;
+  el.innerHTML = checks().map(c => `<div class="chk ${c.k}">${esc(c.t)}</div>`).join('');
+}
+
+/* 口調 */
+function speechHTML(){
+  const on = D.speech.enabled;
+  const cur = SPEECH_BY[D.speech.common];
+  const chips = SPEECH.map(p => `<button class="chip ${D.speech.common === p.id ? 'on' : ''}" data-act="speech-pick" data-val="${p.id}">${esc(p.name)}</button>`).join('');
+  const perStage = on ? STAGES.map(s => `<div class="field" style="margin:10px 0 0"><label>${s.name}</label>
+      <select class="txt" data-act-change="speech-stage" data-stage="${s.id}">
+        <option value="">共通（${esc(cur.name)}）</option>
+        ${SPEECH.map(p => `<option value="${p.id}" ${D.speech.stages[s.id] === p.id ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}
+      </select></div>`).join('') : '';
+  const kept = STAGES.some(s => D.speech.stages[s.id]);
+  return `<div class="sub-block" id="speech-card">
+    <h2>口調プリセット</h2>
+    <p class="hint">語彙・文末・間・文の長さを決めます。一人称・二人称や性格とは独立しています。</p>
+    <div class="chips">${chips}</div>
+    <div class="preset-desc"><b>${esc(cur.name)}</b>：${esc(cur.rule)}<small>${esc(cur.ex)}</small></div>
+    <label class="switchrow"><span>口調を関係段階で変える（拡張）</span><input type="checkbox" class="switch" data-act-change="speech-enabled" ${on ? 'checked' : ''}></label>
+    <p class="hint" style="margin:0">${on ? '段階ごとに口調を選べます。「共通」の段階は上のプリセットを使います。' : '全段階で同じ口調です。' + (kept ? '（段階別の設定を保持中）' : '')}</p>
+    ${perStage}
+  </div>`;
+}
+/* 呼称 */
+function pickerHTML(kind, slot, label){
+  const opts = kind === 'me' ? ME_OPTIONS : YOU_OPTIONS;
+  const raw = D.pron[kind][slot], cur = raw ?? D.pron[kind].common;
+  const chips = opts.map(o => `<button class="chip ${cur === o ? 'on' : ''}" data-act="pron-pick" data-kind="${kind}" data-slot="${slot}" data-val="${esc(o)}">${esc(o)}</button>`).join('');
+  const ph = slot === 'common' ? '自由入力' : `自由入力（空欄＝共通の「${D.pron[kind].common}」）`;
+  return `<div class="picker" data-kind="${kind}" data-slot="${slot}"><label>${label}</label>
+    <div class="chips">${chips}</div>
+    <input type="text" class="txt" placeholder="${esc(ph)}" value="${esc(raw ?? '')}" data-path="pron.${kind}.${slot}" autocomplete="off"></div>`;
+}
+function pronBodyHTML(){
+  if(!D.pron.enabled) return `<div style="margin-top:10px">${pickerHTML('me','common','一人称')}${pickerHTML('you','common','相手の呼び方（二人称）')}</div>`;
+  return STAGES.map(s => `<div class="group"><h4>${s.name}</h4>${pickerHTML('me', s.id, '一人称')}${pickerHTML('you', s.id, '二人称')}</div>`).join('');
+}
+function pronHTML(){
+  const on = D.pron.enabled;
+  const kept = ['me','you'].some(k => STAGES.some(s => D.pron[k][s.id] != null));
+  const hint = on ? '段階ごとに呼び方を変えられます。空欄の段階は共通の設定を使います。'
+                  : '全段階で同じ呼び方です。ONにすると段階別に設定でき、OFFに戻しても段階別の設定は保持されます。' + (kept ? '（段階別の設定を保持中）' : '');
+  return `<h2>呼称（一人称・二人称）</h2>
+    <label class="switchrow"><span>呼称を関係段階で変える</span><input type="checkbox" class="switch" data-act-change="pron-enabled" ${on ? 'checked' : ''}></label>
+    <p class="hint">${hint}<br>{{user}}・{{char}} などの変数表記は、そのまま入力・出力されます。一人称から性格を自動判定することはありません。</p>
+    <div id="pron-body">${pronBodyHTML()}</div>`;
+}
+
+/* ---------- 画面2：関係性・反応 ---------- */
+function condBlock(key){
+  const R = D.relation[key];
+  const chips = COND[key].map(c => `<button class="chip ${R.presets.includes(c.id) ? 'on' : ''}" data-act="cond-toggle" data-key="${key}" data-id="${c.id}">${esc(c.label)}</button>`).join('');
+  const customs = R.custom.map((c, i) => `<li><span>${esc(c)}</span><button class="x" data-act="cond-del" data-key="${key}" data-i="${i}" aria-label="削除">×</button></li>`).join('');
+  return `<div class="chips">${chips}</div>
+    <ul class="customs">${customs}</ul>
+    <div class="addrow"><input type="text" class="txt" id="add-${key}" placeholder="自分で条件を追加" autocomplete="off"><button class="btn" data-act="cond-add" data-key="${key}">追加</button></div>`;
+}
+function viewRelation(){
+  const Rm = D.relation.romance, ts = val('trustSpeed', 'initial');
+  const modes = ROMANCE_MODES.map(m => `<button class="${Rm.mode === m.id ? 'on' : ''}" data-act="rom-mode" data-val="${m.id}">${m.label}</button>`).join('');
+  const afters = ROMANCE_AFTER.map(a => `<button class="${Rm.after === a.id ? 'on' : ''}" data-act="rom-after" data-val="${a.id}">${a.label}</button>`).join('');
+  const rules = D.relation.rules.map((r, i) => `
+    <div class="rule-row">
+      <div class="rr-head"><span>もし</span><button class="x" data-act="rule-del" data-i="${i}" aria-label="削除">×</button></div>
+      <input type="text" class="txt" placeholder="例：相手が嘘をついたとき" value="${esc(r.when)}" data-path="relation.rules.${i}.when" autocomplete="off">
+      <div class="mid">なら（具体的な言動で）</div>
+      <textarea class="txt" rows="2" placeholder="例：怒鳴らず、黙って視線を外し、静かに事情を聞く" data-path="relation.rules.${i}.then">${esc(r.then)}</textarea>
+    </div>`).join('');
+  const exs = IFTHEN_EXAMPLES.map((e, i) => `<button class="chip" data-act="rule-ex" data-i="${i}">${esc(e.when)}</button>`).join('');
+  return `
+  <section class="card"><h2>信頼が成立する条件</h2>
+    <p class="hint">「${STAGES[0].name}」から「${STAGES[1].name}」へ進む条件です。進む速さは信頼形成速度（現在 Lv${ts}「${esc(TRAIT.trustSpeed.levels[ts - 1].label)}」、人格調律で変更）に従います。</p>${condBlock('trust')}</section>
+  <section class="card"><h2>関係が深まる条件</h2>
+    <p class="hint">「${STAGES[1].name}」から「${STAGES[2].name}」へ進む条件です。</p>${condBlock('deepen')}</section>
+  <section class="card"><h2>関係が後退する条件</h2>
+    <p class="hint">起きると一段階だけ前の振る舞いに戻る出来事です。</p>${condBlock('regress')}</section>
+  <section class="card"><h2>恋愛感情（信頼とは別軸）</h2>
+    <p class="hint">信頼が深まっても恋愛感情が生まれるとは限らず、逆も同じです。「恋愛感情は持たない」では、愛情表現・嫉妬・独占志向は友情の範囲で扱い、恋愛への積極性は使いません。</p>
+    <div class="seg col">${modes}</div>
+    ${Rm.mode !== 'none' ? `<h4 style="margin-top:14px">${Rm.mode === 'conditional' ? '芽生えた後の態度' : '気持ちの表れ方'}</h4><div class="seg col">${afters}</div>` : ''}
+    ${Rm.mode === 'conditional' ? `<h4 style="margin-top:14px">芽生える条件</h4>${condBlock('romance')}` : ''}
+  </section>
+  <section class="card"><h2>状況別の行動規則（If-Then）</h2>
+    <p class="hint">「もし〜なら、〜する」を、AIがそのまま演じられる具体的な言動で書きます。</p>
+    ${rules || '<p class="hint">まだありません。</p>'}
+    <button class="btn" data-act="rule-add">＋ 規則を追加</button>
+    <details class="plain" style="margin-top:14px"><summary>${ic('chevron')}例から追加</summary><div class="chips">${exs}</div></details>
+  </section>`;
+}
+
+/* ---------- 画面3：人格の試着 ---------- */
+const pvOverride = () => ({preset:UI.pvPreset || '', me:(UI.pvMe || '').trim(), you:(UI.pvYou || '').trim()});
+function viewPreview(){
+  const sit = SITUATIONS.find(s => s.id === UI.sit) || SITUATIONS[0];
+  const sits = SITUATIONS.map(s => `<button class="chip ${s.id === sit.id ? 'on' : ''}" data-act="sit" data-id="${s.id}">${esc(s.name)}</button>`).join('');
+  const romOn = !romOff(D);
+  const nRules = D.relation.rules.filter(r => String(r.when).trim() && String(r.then).trim()).length;
+  const ov = pvOverride(), ovOn = !!(ov.preset || ov.me || ov.you);
+  return `
+  <section class="card"><h2>状況を選ぶ</h2>
+    <div class="chips" style="margin-top:4px">${sits}</div>
+    <p class="hint" style="margin-top:10px;margin-bottom:${romOn ? 8 : 0}px">${esc(sit.desc)}</p>
+    ${romOn ? `<label class="switchrow"><span>恋愛感情が芽生えた後の反応を足す</span><input type="checkbox" class="switch" data-act-change="rom-preview" ${UI.romance ? 'checked' : ''}></label>` : ''}
+  </section>
+  <details class="card plain" ${ovOn ? 'open' : ''}><summary>${ic('chevron')}口調・呼称を試しに変える${ovOn ? '<span class="tag" style="margin-left:6px">試着中</span>' : ''}</summary>
+    <p class="hint">ここでの変更は試着用で、設定は書き換えません。空欄・「設定どおり」は人格調律の設定を使います。</p>
+    <div class="field"><label>口調</label><select class="txt" data-act-change="pv-preset"><option value="">設定どおり</option>${SPEECH.map(p => `<option value="${p.id}" ${ov.preset === p.id ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div>
+    <div class="row" style="gap:10px"><div class="field" style="flex:1"><label>一人称</label><input class="txt" data-pv="pvMe" value="${esc(UI.pvMe)}" placeholder="設定どおり" autocomplete="off"></div>
+      <div class="field" style="flex:1"><label>二人称</label><input class="txt" data-pv="pvYou" value="${esc(UI.pvYou)}" placeholder="設定どおり" autocomplete="off"></div></div>
+    <div class="row wrap"><button class="btn ghost sm" data-act="pv-apply" ${ovOn ? '' : 'disabled'}>この口調・呼称を設定に反映</button><button class="btn ghost sm" data-act="pv-clear">試着を解除</button></div>
+  </details>
+  <div id="pv-cards">${previewCards(sit)}</div>
+  ${nRules ? `<p class="note-box">関係・反応のIf-Then規則（${nRules}件）は、この会話例には反映されていません。人格設定のMarkdownには含まれます。</p>` : ''}
+  <details class="card plain" id="pvmd-box"><summary>${ic('chevron')}会話例をMarkdownで出力</summary>
+    <p class="hint">人格設定のMarkdownとは別の書き出しです。キャラクターの「会話例」欄などに使えます。</p>
+    <div class="seg" style="margin-bottom:10px">${[['one','この状況'],['all','全状況']].map(([v,n]) => `<button class="${UI.pvScope === v ? 'on' : ''}" data-act="pv-scope" data-val="${v}">${n}</button>`).join('')}</div>
+    <textarea id="pvmd" class="txt mono" readonly></textarea>
+    <p class="hint" id="pvmd-count" style="margin:6px 0 8px"></p>
+    <div class="row wrap"><button class="btn sm" data-act="pvmd-copy">${ic('copy')}コピー</button><button class="btn ghost sm" data-act="pvmd-dl">${ic('download')}.mdで保存</button></div>
+  </details>
+  <p class="hint note">外部AIを使わない簡易プレビューです。性格の値から発話の意図を決め、口調ごとに書き分けた台詞テンプレートを選んでいます。この画面は設定を書き換えません。</p>`;
+}
+function previewCards(sit){
+  return STAGES.map(st => {
+    const r = renderSituation(D, sit, st.id, UI.romance, pvOverride());
+    const body = r.merged.map(m => `<p class="${m.k}">${esc(m.k === 'say' ? `「${m.text}」` : m.text)}</p>`).join('') || '<p class="act">（この状況の反応がありません）</p>';
+    const tags = sit.uses.filter(id => D.traits[id] && !(TRAIT[id].romance && romOff(D))).map(id => `<span class="tag">${esc(TRAIT[id].name)}：${esc(TRAIT[id].levels[val(id, st.id) - 1].label)}</span>`).join('');
+    return `<section class="card pv">
+      <div class="pv-head"><h3>${st.name}</h3><button class="btn ghost sm" data-act="copy-ex" data-stage="${st.id}">${ic('copy')}コピー</button></div>
+      <div class="pv-meta">一人称 <b>${esc(r.me)}</b> ／ 二人称 <b>${esc(r.you)}</b> ／ 口調 <b>${esc(SPEECH_BY[r.preset].name)}</b></div>
+      <div class="pv-body">${body}</div>
+      <div class="tags">${tags}</div>
+      ${r.notes.map(n => `<p class="note-box">${esc(n)}</p>`).join('')}
+    </section>`;
+  }).join('');
+}
+function updatePreviewMD(){
+  const box = $('#pvmd'); if(!box) return;
+  const sits = UI.pvScope === 'all' ? SITUATIONS : [SITUATIONS.find(s => s.id === UI.sit) || SITUATIONS[0]];
+  box.value = previewMarkdown(D, sits, UI.romance, pvOverride());
+  $('#pvmd-count').textContent = `${countChars(box.value)}字（改行・記号を含む）`;
+}
+function refreshPreviewCards(){
+  const el = $('#pv-cards'); if(!el) return;
+  el.innerHTML = previewCards(SITUATIONS.find(s => s.id === UI.sit) || SITUATIONS[0]);
+  updatePreviewMD();
+}
+
+/* ---------- 画面4：Markdown出力 ---------- */
+function viewOutput(){
+  const lv = [['auto','自動'],['3','詳細'],['2','標準'],['1','最小']].map(([v, n]) => `<button class="${String(UI.level) === v ? 'on' : ''}" data-act="level" data-val="${v}">${n}</button>`).join('');
+  return `
+  <section class="card">
+    <div class="field" style="margin-bottom:0"><label for="o-budget">人格設定の予定文字数</label>
+      <div class="row"><input id="o-budget" type="number" inputmode="numeric" class="txt num" value="${D.meta.budget}" data-path="meta.budget" min="0" step="100"><span class="unit">字</span></div>
+      <div class="chips">${budgetChips()}</div></div>
+    <h4 style="margin-top:16px">出力の詳細度</h4>
+    <div class="seg" id="o-level">${lv}</div>
+    <p class="hint" style="margin:8px 0 0">詳細＝全項目に補足の言動まで ／ 標準＝優先度「中」は標準の言動、「低」は中核の一文 ／ 最小＝「高」以外は中核の一文。どの詳細度でも項目は削りません。</p>
+  </section>
+  <section class="card" id="counter"></section>
+  <section class="card">
+    <div class="row between" style="margin-bottom:10px"><h2 style="margin:0">人格設定 Markdown</h2></div>
+    <textarea id="md" class="txt mono" readonly></textarea>
+    <div class="row wrap" style="margin-top:10px"><button class="btn" data-act="copy-md">${ic('copy')}コピー</button><button class="btn ghost" data-act="dl-md">${ic('download')}.mdで保存</button></div>
+    <ul class="bd" id="breakdown"></ul>
+  </section>
+  <details class="card plain" id="omit-box"><summary>${ic('chevron')}項目ごとの出力設定（優先度・省略）<span class="tag" id="omit-count" style="margin-left:6px"></span></summary>
+    <p class="hint">優先度は詳細度ごとの書き方に効きます。「省略する」は利用者が選んだ項目だけを出力から外し、設定データは消しません。<span class="cand">候補</span>は優先度「低」で初期値のままの項目です。固定した核は省略できません。</p>
+    <div class="row wrap" style="margin-bottom:6px"><button class="btn ghost sm" data-act="omit-suggested">候補をまとめて省略</button><button class="btn ghost sm" data-act="omit-clear">省略をすべて解除</button></div>
+    <div id="omit-list"></div>
+  </details>
+  <details class="card plain"><summary>${ic('chevron')}設定データの保存・復元（JSON）</summary>
+    <p class="hint">設定はこの端末のブラウザに自動保存されます。iPhoneのSafariは長く開かないと保存内容が消えることがあるため、ときどきJSONで控えを取ってください。v0.1のJSONも読み込めます。</p>
+    <div class="row wrap gap"><button class="btn ghost sm" data-act="data-copy">${ic('copy')}JSONをコピー</button><button class="btn ghost sm" data-act="data-dl">${ic('download')}JSONを保存</button>
+      <label class="btn ghost sm filebtn">${ic('upload')}JSONファイルを読み込む<input type="file" accept=".json,application/json,text/plain" data-act-change="data-file"></label></div>
+    <textarea id="import-box" class="txt" rows="4" placeholder="ここにJSONを貼り付けて「貼り付けから読み込む」"></textarea>
+    <div class="row wrap gap"><button class="btn sm" data-act="data-import">貼り付けから読み込む</button><button class="btn ghost sm" data-act="data-reset">初期化</button></div>
+  </details>`;
+}
+let lastOutput = null;
+function updateOutput(){
+  const counter = $('#counter'); if(!counter) return;
+  const r = chooseOutput(D, UI.level); lastOutput = r;
+  const budget = D.meta.budget || 0, used = countChars(r.text), rem = budget - used;
+  const ratio = budget > 0 ? used / budget : 0;
+  const cls = budget <= 0 ? 'na' : (used > budget ? 'over' : (ratio >= 0.9 ? 'near' : 'ok'));
+  let msg, action = '';
+  if(cls === 'na') msg = '予定文字数を入力すると、収まるように詳細度を自動で選びます。';
+  else if(cls === 'over'){
+    msg = `予定文字数を${-rem}字超えています。` + (r.auto && r.level === 1 ? '最小の詳細度でも収まりませんでした。' : '') + '設定データは削除していません。省略する項目を選ぶか、条件・If-Thenを減らすか、予定文字数を見直してください。';
+    action = '<button class="btn sm" data-act="open-omit" style="margin-top:8px">省略する項目を確認する</button>';
+  }
+  else if(cls === 'near') msg = `上限に近づいています（残り${rem}字）。`;
+  else msg = '予定文字数に収まっています。';
+  const modeTxt = r.auto ? `自動選択：${LEVEL_NAMES[r.level]}` : `手動：${LEVEL_NAMES[r.level]}`;
+  const nOmit = (D.output.omit || []).filter(id => TRAIT[id] && !D.traits[id].locked).length;
+  counter.innerHTML = `
+    <div class="meter"><div class="bar ${cls}" style="width:${Math.min(100, ratio * 100)}%"></div></div>
+    <div class="nums"><div><small>指定</small><b>${budget || '—'}</b></div><div><small>実際</small><b id="used-n">${used}</b></div><div><small>残り</small><b class="${rem < 0 && budget > 0 ? 'neg' : ''}">${budget > 0 ? rem : '—'}</b></div></div>
+    <div class="msg ${cls}">${esc(msg)}${action}</div>
+    <p class="hint" style="margin:8px 0 0">詳細度（${esc(modeTxt)}）${nOmit ? `／ 省略中 ${nOmit}項目` : ''} ／ 改行・記号も1字として数えています。</p>`;
+  $('#md').value = r.text;
+  $('#breakdown').innerHTML = r.parts.map(p => `<li><span>${esc(p.title)}</span><span>${p.chars}字</span></li>`).join('');
+  updateOmitList(r.level);
+}
+function updateOmitList(level){
+  const box = $('#omit-list'); if(!box) return;
+  const cands = omitCandidates(D, level);
+  const byId = Object.fromEntries(cands.map(c => [c.id, c]));
+  $('#omit-count').textContent = `省略 ${cands.filter(c => c.omitted).length}件`;
+  box.innerHTML = TRAITS.filter(t => !t.scope).map(t => {
+    const d = D.traits[t.id], c = byId[t.id], p = prioOf(D, t.id);
+    const stateTxt = d.locked ? '核（固定）' : changesAcross(D, t.id) ? STAGES.map(s => TRAIT[t.id].levels[d.stages[s.id] - 1].label).join('→') : t.levels[d.stages.initial - 1].label;
+    const seg = d.locked ? '<span class="hint" style="grid-column:1 / -1;margin:0">固定した核は常に優先度「高」で出力します。</span>'
+      : `<div class="seg">${['high','normal','low'].map(k => `<button class="${p === k ? 'on' : ''}" data-act="prio" data-trait="${t.id}" data-val="${k}">優先度 ${PRIO_NAMES[k]}</button>`).join('')}</div>`;
+    const omit = d.locked ? '' : `<label class="omit"><input type="checkbox" data-act-change="omit" data-trait="${t.id}" ${c && c.omitted ? 'checked' : ''}>省略する${c ? `（${c.omitted ? '+' : '−'}${c.saves}字）` : ''}</label>`;
+    return `<div class="oprow"><div><div class="on-name">${esc(t.name)}${c && c.suggested ? '<span class="cand">候補</span>' : ''}</div><div class="on-sub">${esc(stateTxt)}</div></div>${omit}${seg}</div>`;
+  }).join('');
+}
+
+/* ---------- 描画 ---------- */
+const VIEWS = {tune:viewTune, relation:viewRelation, preview:viewPreview, output:viewOutput};
+function render(keep){
+  const y = keep ? window.scrollY : 0;
+  $('#app').innerHTML = VIEWS[UI.tab]();
+  $$('#tabs button').forEach(b => { const on = b.dataset.tab === UI.tab; b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'page' : 'false'); });
+  if(UI.tab === 'tune'){ refreshAllTraits(); updateChecks(); }
+  if(UI.tab === 'output') updateOutput();
+  if(UI.tab === 'preview') updatePreviewMD();
+  window.scrollTo(0, y);
+}
+function rerenderSpeech(){
+  const el = $('#speech-card'); if(el) el.outerHTML = speechHTML();
+  updateChecks();
+}
+
+/* ---------- イベント ---------- */
+function setLevel(id, v){
+  const d = D.traits[id]; v = clampLv(v);
+  if(d.locked || isGlobal(id)){ d.common = v; if(isGlobal(id)) STAGES.forEach(s => d.stages[s.id] = v); }
+  else d.stages[UI.stage] = v;
+  save(); refreshTrait(id); refreshCatSums(); updateChecks();
+}
+const ACTIONS = {
+  tab(b){ UI.tab = b.dataset.tab; render(false); },
+  stage(b){ UI.stage = b.dataset.stage; $$('.stagebar .seg button').forEach(x => x.classList.toggle('on', x.dataset.stage === UI.stage)); $('#stage-now').textContent = STAGES.find(s => s.id === UI.stage).name; refreshAllTraits(); },
+  lv(b){ setLevel(b.dataset.trait, +b.dataset.val); },
+  lock(b){
+    const id = b.dataset.trait, d = D.traits[id];
+    if(!d.locked) d.common = d.stages[UI.stage]; // 固定する時点の値を共通値にする（段階別の値は残る）
+    d.locked = !d.locked; save(); refreshTrait(id); refreshCatSums(); updateChecks();
+  },
+  'notice-ok'(){ D.meta.notice = ''; save(); render(true); },
+  'budget-chip'(b){ D.meta.budget = +b.dataset.val; D.meta.budgetSet = true; save(); render(true); },
+  'speech-pick'(b){ D.speech.common = b.dataset.val; save(); rerenderSpeech(); },
+  'pron-pick'(b){ D.pron[b.dataset.kind][b.dataset.slot] = b.dataset.val; save(); $('#pron-body').innerHTML = pronBodyHTML(); },
+  'cond-toggle'(b){
+    const R = D.relation[b.dataset.key], i = R.presets.indexOf(b.dataset.id);
+    if(i >= 0) R.presets.splice(i, 1); else R.presets.push(b.dataset.id);
+    save(); b.classList.toggle('on', i < 0);
+  },
+  'cond-add'(b){ addCustom(b.dataset.key); },
+  'cond-del'(b){ D.relation[b.dataset.key].custom.splice(+b.dataset.i, 1); save(); render(true); },
+  'rom-mode'(b){ D.relation.romance.mode = b.dataset.val; if(b.dataset.val === 'none') UI.romance = false; save(); render(true); },
+  'rom-after'(b){ D.relation.romance.after = b.dataset.val; save(); render(true); },
+  'rule-add'(){ D.relation.rules.push({when:'', then:''}); save(); render(true); },
+  'rule-del'(b){ D.relation.rules.splice(+b.dataset.i, 1); save(); render(true); },
+  'rule-ex'(b){ const e = IFTHEN_EXAMPLES[+b.dataset.i]; D.relation.rules.push({when:e.when, then:e.then}); save(); render(true); toast('追加しました'); },
+  sit(b){ UI.sit = b.dataset.id; render(true); },
+  'copy-ex'(b){ copyText(renderSituation(D, SITUATIONS.find(s => s.id === UI.sit) || SITUATIONS[0], b.dataset.stage, UI.romance, pvOverride()).text); },
+  'pv-apply'(){
+    const ov = pvOverride();
+    if(ov.preset){ D.speech.common = ov.preset; }
+    if(ov.me){ D.pron.me.common = ov.me; }
+    if(ov.you){ D.pron.you.common = ov.you; }
+    UI.pvPreset = UI.pvMe = UI.pvYou = '';
+    save(); render(true); toast('共通の口調・呼称に反映しました');
+  },
+  'pv-clear'(){ UI.pvPreset = UI.pvMe = UI.pvYou = ''; render(true); },
+  'pv-scope'(b){ UI.pvScope = b.dataset.val; $$('#pvmd-box .seg button').forEach(x => x.classList.toggle('on', x.dataset.val === UI.pvScope)); updatePreviewMD(); },
+  'pvmd-copy'(){ copyText($('#pvmd').value); },
+  'pvmd-dl'(){ download(`${fileBase()}_会話例.md`, $('#pvmd').value, 'text/markdown'); },
+  level(b){ UI.level = b.dataset.val; $$('#o-level button').forEach(x => x.classList.toggle('on', x.dataset.val === UI.level)); updateOutput(); },
+  'copy-md'(){ copyText($('#md').value); },
+  'dl-md'(){ download(`${fileBase()}_人格設定.md`, $('#md').value, 'text/markdown'); },
+  'open-omit'(){ const d = $('#omit-box'); d.open = true; d.scrollIntoView({behavior:'smooth', block:'start'}); },
+  prio(b){ D.traits[b.dataset.trait].prio = b.dataset.val; save(); updateOutput(); },
+  'omit-suggested'(){
+    const add = omitCandidates(D, lastOutput ? lastOutput.level : 2).filter(c => c.suggested).map(c => c.id);
+    D.output.omit = Array.from(new Set([...(D.output.omit || []), ...add])); save(); updateOutput();
+    toast(add.length ? `${add.length}項目を省略に追加しました` : '候補はありません');
+  },
+  'omit-clear'(){ D.output.omit = []; save(); updateOutput(); },
+  'data-copy'(){ copyText(JSON.stringify(D)); },
+  'data-dl'(){ saveNow(); download(`${fileBase()}_persona.json`, JSON.stringify(D, null, 2), 'application/json'); },
+  'data-import'(){
+    const raw = $('#import-box').value.trim(); if(!raw){ toast('JSONを貼り付けてください'); return; }
+    importJSON(raw);
+  },
+  'data-reset'(){
+    if(!confirm('すべての設定を初期状態に戻します。よろしいですか？（先にJSONを保存しておくと安心です）')) return;
+    D = defaultData(); D.meta.budgetSet = true; saveNow(); toast('初期化しました'); render(false);
+  },
+  'start-ok'(){
+    const n = parseInt($('#start-budget').value, 10);
+    D.meta.budget = (isNaN(n) || n <= 0) ? 2000 : n; D.meta.budgetSet = true; save(); closeStart(); render(false);
+  },
+  'start-skip'(){ D.meta.budgetSet = true; save(); closeStart(); },
+  'start-chip'(b){ $('#start-budget').value = b.dataset.val; }
+};
+function importJSON(raw){
+  try{
+    const obj = JSON.parse(raw);
+    if(!obj || typeof obj !== 'object' || !obj.traits) throw new Error('人格調律工房のデータではありません');
+    if(!confirm(`現在の設定を、読み込んだ内容（v${obj.v || 1}形式）で置き換えます。よろしいですか？`)) return;
+    D = migrate(obj); D.meta.budgetSet = true; saveNow(); toast('読み込みました'); render(false);
+  }catch(e){ toast('読み込めませんでした：' + e.message); }
+}
+const CHANGES = {
+  'pron-enabled'(el){ D.pron.enabled = el.checked; save(); $('#pron-card').innerHTML = pronHTML(); },
+  'speech-enabled'(el){ D.speech.enabled = el.checked; save(); rerenderSpeech(); },
+  'speech-stage'(el){ D.speech.stages[el.dataset.stage] = el.value || null; save(); updateChecks(); },
+  'rom-preview'(el){ UI.romance = el.checked; refreshPreviewCards(); },
+  'pv-preset'(el){ UI.pvPreset = el.value; refreshPreviewCards(); },
+  omit(el){
+    const id = el.dataset.trait, set = new Set(D.output.omit || []);
+    if(el.checked) set.add(id); else set.delete(id);
+    D.output.omit = Array.from(set); save(); updateOutput();
+  },
+  'data-file'(el){
+    const f = el.files && el.files[0]; if(!f) return;
+    const rd = new FileReader();
+    rd.onload = () => { importJSON(String(rd.result)); el.value = ''; };
+    rd.onerror = () => toast('ファイルを読み込めませんでした');
+    rd.readAsText(f);
+  }
+};
+function addCustom(key){
+  const inp = $('#add-' + key); if(!inp) return;
+  const v = inp.value.trim(); if(!v) return;
+  D.relation[key].custom.push(v); save(); render(true);
+}
+function onBind(el){
+  const path = el.dataset.path; let v = el.value;
+  if(path === 'meta.budget'){ v = parseInt(v, 10); if(isNaN(v) || v < 0) v = 0; D.meta.budgetSet = true; }
+  else if(/^pron\.(me|you)\.(initial|trust|deep)$/.test(path) && v.trim() === '') v = null;
+  setPath(D, path, v); save();
+  if(path.startsWith('pron.')){
+    const pk = el.closest('.picker'); if(pk){
+      const cur = D.pron[pk.dataset.kind][pk.dataset.slot] ?? D.pron[pk.dataset.kind].common;
+      $$('.chip', pk).forEach(c => c.classList.toggle('on', c.dataset.val === cur));
+    }
+  }
+  if(path === 'meta.budget'){
+    if(UI.tab === 'output') updateOutput();
+    $$('[data-act=budget-chip]').forEach(c => c.classList.toggle('on', +c.dataset.val === v));
+  }
+}
+function closeStart(){ $('#start').hidden = true; }
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if(!b || b.disabled) return;
+  const h = ACTIONS[b.dataset.act]; if(h) h(b, e);
+});
+document.addEventListener('input', e => {
+  const el = e.target;
+  if(el.matches('input[type=range][data-trait]')) return setLevel(el.dataset.trait, +el.value);
+  if(el.dataset && el.dataset.pv){ UI[el.dataset.pv] = el.value; refreshPreviewCards(); return; }
+  if(el.dataset && el.dataset.path) onBind(el);
+});
+document.addEventListener('change', e => {
+  const h = e.target.dataset && CHANGES[e.target.dataset.actChange]; if(h) h(e.target);
+});
+document.addEventListener('toggle', e => {
+  const d = e.target; if(!d.matches || !d.matches('details.cat')) return;
+  UI.open[d.dataset.cat] = d.open; saveUI();
+}, true);
+document.addEventListener('keydown', e => {
+  if(e.key === 'Enter' && e.target.id && e.target.id.startsWith('add-')){ e.preventDefault(); addCustom(e.target.id.slice(4)); }
+});
+window.addEventListener('pagehide', saveNow);
+
+/* ---------- 起動 ---------- */
+(function init(){
+  $('#start-chips').innerHTML = BUDGETS.map(n => `<button class="chip" data-act="start-chip" data-val="${n}">${n}</button>`).join('');
+  render(false);
+  if(!D.meta.budgetSet) $('#start').hidden = false;
+})();
+</script>
+</body>
+</html>
