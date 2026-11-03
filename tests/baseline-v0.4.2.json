@@ -1,0 +1,4391 @@
+{
+ "fx_all_sections": {
+  "ch_1_0": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2052,
+    "sha256": "ea7a250b07caecd3ea6ec5e1826867271b9587bb73890eca85e5f2913cabdbd2"
+   }
+  },
+  "ch_1_1500": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2052,
+    "sha256": "ea7a250b07caecd3ea6ec5e1826867271b9587bb73890eca85e5f2913cabdbd2"
+   }
+  },
+  "ch_1_2000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2052,
+    "sha256": "ea7a250b07caecd3ea6ec5e1826867271b9587bb73890eca85e5f2913cabdbd2"
+   }
+  },
+  "ch_1_300": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2052,
+    "sha256": "ea7a250b07caecd3ea6ec5e1826867271b9587bb73890eca85e5f2913cabdbd2"
+   }
+  },
+  "ch_1_6000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2052,
+    "sha256": "ea7a250b07caecd3ea6ec5e1826867271b9587bb73890eca85e5f2913cabdbd2"
+   }
+  },
+  "ch_1_800": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2052,
+    "sha256": "ea7a250b07caecd3ea6ec5e1826867271b9587bb73890eca85e5f2913cabdbd2"
+   }
+  },
+  "ch_2_0": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3247,
+    "sha256": "ede87a4c1868dc35f74a38eef64f01494c19af00bca2ab6400ca353839ccc97d"
+   }
+  },
+  "ch_2_1500": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3247,
+    "sha256": "ede87a4c1868dc35f74a38eef64f01494c19af00bca2ab6400ca353839ccc97d"
+   }
+  },
+  "ch_2_2000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3247,
+    "sha256": "ede87a4c1868dc35f74a38eef64f01494c19af00bca2ab6400ca353839ccc97d"
+   }
+  },
+  "ch_2_300": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3247,
+    "sha256": "ede87a4c1868dc35f74a38eef64f01494c19af00bca2ab6400ca353839ccc97d"
+   }
+  },
+  "ch_2_6000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3247,
+    "sha256": "ede87a4c1868dc35f74a38eef64f01494c19af00bca2ab6400ca353839ccc97d"
+   }
+  },
+  "ch_2_800": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3247,
+    "sha256": "ede87a4c1868dc35f74a38eef64f01494c19af00bca2ab6400ca353839ccc97d"
+   }
+  },
+  "ch_3_0": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4488,
+    "sha256": "d1c492019c1cb6f4da502522f5f2940537c22bb1f5d7962ab61ba6a9eb67d80c"
+   }
+  },
+  "ch_3_1500": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4488,
+    "sha256": "d1c492019c1cb6f4da502522f5f2940537c22bb1f5d7962ab61ba6a9eb67d80c"
+   }
+  },
+  "ch_3_2000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4488,
+    "sha256": "d1c492019c1cb6f4da502522f5f2940537c22bb1f5d7962ab61ba6a9eb67d80c"
+   }
+  },
+  "ch_3_300": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4488,
+    "sha256": "d1c492019c1cb6f4da502522f5f2940537c22bb1f5d7962ab61ba6a9eb67d80c"
+   }
+  },
+  "ch_3_6000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4488,
+    "sha256": "d1c492019c1cb6f4da502522f5f2940537c22bb1f5d7962ab61ba6a9eb67d80c"
+   }
+  },
+  "ch_3_800": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4488,
+    "sha256": "d1c492019c1cb6f4da502522f5f2940537c22bb1f5d7962ab61ba6a9eb67d80c"
+   }
+  },
+  "ch_auto_0": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 4488,
+    "sha256": "d1c492019c1cb6f4da502522f5f2940537c22bb1f5d7962ab61ba6a9eb67d80c"
+   }
+  },
+  "ch_auto_1500": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2052,
+    "sha256": "ea7a250b07caecd3ea6ec5e1826867271b9587bb73890eca85e5f2913cabdbd2"
+   }
+  },
+  "ch_auto_2000": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2052,
+    "sha256": "ea7a250b07caecd3ea6ec5e1826867271b9587bb73890eca85e5f2913cabdbd2"
+   }
+  },
+  "ch_auto_300": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2052,
+    "sha256": "ea7a250b07caecd3ea6ec5e1826867271b9587bb73890eca85e5f2913cabdbd2"
+   }
+  },
+  "ch_auto_6000": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 4488,
+    "sha256": "d1c492019c1cb6f4da502522f5f2940537c22bb1f5d7962ab61ba6a9eb67d80c"
+   }
+  },
+  "ch_auto_800": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2052,
+    "sha256": "ea7a250b07caecd3ea6ec5e1826867271b9587bb73890eca85e5f2913cabdbd2"
+   }
+  },
+  "md1": {
+   "len": 2052,
+   "sha256": "ea7a250b07caecd3ea6ec5e1826867271b9587bb73890eca85e5f2913cabdbd2"
+  },
+  "md2": {
+   "len": 3247,
+   "sha256": "ede87a4c1868dc35f74a38eef64f01494c19af00bca2ab6400ca353839ccc97d"
+  },
+  "md3": {
+   "len": 4488,
+   "sha256": "d1c492019c1cb6f4da502522f5f2940537c22bb1f5d7962ab61ba6a9eb67d80c"
+  },
+  "parts1": [
+   {
+    "chars": 34,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 93,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 375,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1149,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 188,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 110,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ],
+  "parts2": [
+   {
+    "chars": 88,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 157,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 453,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1787,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 355,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 304,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ],
+  "parts3": [
+   {
+    "chars": 88,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 183,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 685,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 2683,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 414,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 332,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ]
+ },
+ "fx_all_used": {
+  "ch_1_0": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1662,
+    "sha256": "7b01ce98893342e9789d53a053c9a8b289524c18da88428dc55d26e5c1f23d95"
+   }
+  },
+  "ch_1_1500": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1662,
+    "sha256": "7b01ce98893342e9789d53a053c9a8b289524c18da88428dc55d26e5c1f23d95"
+   }
+  },
+  "ch_1_2000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1662,
+    "sha256": "7b01ce98893342e9789d53a053c9a8b289524c18da88428dc55d26e5c1f23d95"
+   }
+  },
+  "ch_1_300": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1662,
+    "sha256": "7b01ce98893342e9789d53a053c9a8b289524c18da88428dc55d26e5c1f23d95"
+   }
+  },
+  "ch_1_6000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1662,
+    "sha256": "7b01ce98893342e9789d53a053c9a8b289524c18da88428dc55d26e5c1f23d95"
+   }
+  },
+  "ch_1_800": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1662,
+    "sha256": "7b01ce98893342e9789d53a053c9a8b289524c18da88428dc55d26e5c1f23d95"
+   }
+  },
+  "ch_2_0": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2501,
+    "sha256": "9ece78d90a66db27aeb3b7a447dfd3668599ef9e6c75593a8eee8d5e336a08cf"
+   }
+  },
+  "ch_2_1500": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2501,
+    "sha256": "9ece78d90a66db27aeb3b7a447dfd3668599ef9e6c75593a8eee8d5e336a08cf"
+   }
+  },
+  "ch_2_2000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2501,
+    "sha256": "9ece78d90a66db27aeb3b7a447dfd3668599ef9e6c75593a8eee8d5e336a08cf"
+   }
+  },
+  "ch_2_300": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2501,
+    "sha256": "9ece78d90a66db27aeb3b7a447dfd3668599ef9e6c75593a8eee8d5e336a08cf"
+   }
+  },
+  "ch_2_6000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2501,
+    "sha256": "9ece78d90a66db27aeb3b7a447dfd3668599ef9e6c75593a8eee8d5e336a08cf"
+   }
+  },
+  "ch_2_800": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2501,
+    "sha256": "9ece78d90a66db27aeb3b7a447dfd3668599ef9e6c75593a8eee8d5e336a08cf"
+   }
+  },
+  "ch_3_0": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_3_1500": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_3_2000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_3_300": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_3_6000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_3_800": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_auto_0": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_auto_1500": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1662,
+    "sha256": "7b01ce98893342e9789d53a053c9a8b289524c18da88428dc55d26e5c1f23d95"
+   }
+  },
+  "ch_auto_2000": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1662,
+    "sha256": "7b01ce98893342e9789d53a053c9a8b289524c18da88428dc55d26e5c1f23d95"
+   }
+  },
+  "ch_auto_300": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1662,
+    "sha256": "7b01ce98893342e9789d53a053c9a8b289524c18da88428dc55d26e5c1f23d95"
+   }
+  },
+  "ch_auto_6000": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_auto_800": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1662,
+    "sha256": "7b01ce98893342e9789d53a053c9a8b289524c18da88428dc55d26e5c1f23d95"
+   }
+  },
+  "md1": {
+   "len": 1662,
+   "sha256": "7b01ce98893342e9789d53a053c9a8b289524c18da88428dc55d26e5c1f23d95"
+  },
+  "md2": {
+   "len": 2501,
+   "sha256": "9ece78d90a66db27aeb3b7a447dfd3668599ef9e6c75593a8eee8d5e336a08cf"
+  },
+  "md3": {
+   "len": 3655,
+   "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+  },
+  "parts1": [
+   {
+    "chars": 39,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 93,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 375,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1149,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   }
+  ],
+  "parts2": [
+   {
+    "chars": 98,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 157,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 453,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1787,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   }
+  ],
+  "parts3": [
+   {
+    "chars": 98,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 183,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 685,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 2683,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   }
+  ]
+ },
+ "fx_default": {
+  "ch_1_0": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 110,
+    "sha256": "683bc60b4495c475a63d05887e9ebb536b7fcd1c12d67775f2058c8e9c661000"
+   }
+  },
+  "ch_1_1500": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 110,
+    "sha256": "683bc60b4495c475a63d05887e9ebb536b7fcd1c12d67775f2058c8e9c661000"
+   }
+  },
+  "ch_1_2000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 110,
+    "sha256": "683bc60b4495c475a63d05887e9ebb536b7fcd1c12d67775f2058c8e9c661000"
+   }
+  },
+  "ch_1_300": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 110,
+    "sha256": "683bc60b4495c475a63d05887e9ebb536b7fcd1c12d67775f2058c8e9c661000"
+   }
+  },
+  "ch_1_6000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 110,
+    "sha256": "683bc60b4495c475a63d05887e9ebb536b7fcd1c12d67775f2058c8e9c661000"
+   }
+  },
+  "ch_1_800": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 110,
+    "sha256": "683bc60b4495c475a63d05887e9ebb536b7fcd1c12d67775f2058c8e9c661000"
+   }
+  },
+  "ch_2_0": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 174,
+    "sha256": "3dbf208262187347fb9654746e7864df7873dcceff07b0317802a4c774ee5b5a"
+   }
+  },
+  "ch_2_1500": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 174,
+    "sha256": "3dbf208262187347fb9654746e7864df7873dcceff07b0317802a4c774ee5b5a"
+   }
+  },
+  "ch_2_2000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 174,
+    "sha256": "3dbf208262187347fb9654746e7864df7873dcceff07b0317802a4c774ee5b5a"
+   }
+  },
+  "ch_2_300": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 174,
+    "sha256": "3dbf208262187347fb9654746e7864df7873dcceff07b0317802a4c774ee5b5a"
+   }
+  },
+  "ch_2_6000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 174,
+    "sha256": "3dbf208262187347fb9654746e7864df7873dcceff07b0317802a4c774ee5b5a"
+   }
+  },
+  "ch_2_800": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 174,
+    "sha256": "3dbf208262187347fb9654746e7864df7873dcceff07b0317802a4c774ee5b5a"
+   }
+  },
+  "ch_3_0": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "ch_3_1500": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "ch_3_2000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "ch_3_300": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "ch_3_6000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "ch_3_800": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "ch_auto_0": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "ch_auto_1500": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "ch_auto_2000": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "ch_auto_300": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "ch_auto_6000": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "ch_auto_800": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 200,
+    "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+   }
+  },
+  "md1": {
+   "len": 110,
+   "sha256": "683bc60b4495c475a63d05887e9ebb536b7fcd1c12d67775f2058c8e9c661000"
+  },
+  "md2": {
+   "len": 174,
+   "sha256": "3dbf208262187347fb9654746e7864df7873dcceff07b0317802a4c774ee5b5a"
+  },
+  "md3": {
+   "len": 200,
+   "sha256": "c871eb9aa0769c14005082f5aa9c9a63df3e96e3581943d6aafbc1bd7dda0511"
+  },
+  "parts1": [
+   {
+    "chars": 15,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 93,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   }
+  ],
+  "parts2": [
+   {
+    "chars": 15,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 157,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   }
+  ],
+  "parts3": [
+   {
+    "chars": 15,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 183,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   }
+  ]
+ },
+ "fx_empty_sections": {
+  "ch_1_0": {
+   "auto": false,
+   "level": 1,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_1_1500": {
+   "auto": false,
+   "level": 1,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_1_2000": {
+   "auto": false,
+   "level": 1,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_1_300": {
+   "auto": false,
+   "level": 1,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_1_6000": {
+   "auto": false,
+   "level": 1,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_1_800": {
+   "auto": false,
+   "level": 1,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_2_0": {
+   "auto": false,
+   "level": 2,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_2_1500": {
+   "auto": false,
+   "level": 2,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_2_2000": {
+   "auto": false,
+   "level": 2,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_2_300": {
+   "auto": false,
+   "level": 2,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_2_6000": {
+   "auto": false,
+   "level": 2,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_2_800": {
+   "auto": false,
+   "level": 2,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_3_0": {
+   "auto": false,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_3_1500": {
+   "auto": false,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_3_2000": {
+   "auto": false,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_3_300": {
+   "auto": false,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_3_6000": {
+   "auto": false,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_3_800": {
+   "auto": false,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_auto_0": {
+   "auto": true,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_auto_1500": {
+   "auto": true,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_auto_2000": {
+   "auto": true,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_auto_300": {
+   "auto": true,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_auto_6000": {
+   "auto": true,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "ch_auto_800": {
+   "auto": true,
+   "level": 3,
+   "text": "# {{char}}｜人格設計"
+  },
+  "md1": "# {{char}}｜人格設計",
+  "md2": "# {{char}}｜人格設計",
+  "md3": "# {{char}}｜人格設計",
+  "parts1": [
+   {
+    "chars": 15,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   }
+  ],
+  "parts2": [
+   {
+    "chars": 15,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   }
+  ],
+  "parts3": [
+   {
+    "chars": 15,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   }
+  ]
+ },
+ "fx_locked_mix": {
+  "ch_1_0": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1539,
+    "sha256": "4fb5c3e9789dfcffa84fbe8e7350bedad03ccb2243a054671dd140652d202e37"
+   }
+  },
+  "ch_1_1500": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1539,
+    "sha256": "4fb5c3e9789dfcffa84fbe8e7350bedad03ccb2243a054671dd140652d202e37"
+   }
+  },
+  "ch_1_2000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1539,
+    "sha256": "4fb5c3e9789dfcffa84fbe8e7350bedad03ccb2243a054671dd140652d202e37"
+   }
+  },
+  "ch_1_300": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1539,
+    "sha256": "4fb5c3e9789dfcffa84fbe8e7350bedad03ccb2243a054671dd140652d202e37"
+   }
+  },
+  "ch_1_6000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1539,
+    "sha256": "4fb5c3e9789dfcffa84fbe8e7350bedad03ccb2243a054671dd140652d202e37"
+   }
+  },
+  "ch_1_800": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1539,
+    "sha256": "4fb5c3e9789dfcffa84fbe8e7350bedad03ccb2243a054671dd140652d202e37"
+   }
+  },
+  "ch_2_0": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2787,
+    "sha256": "6eb8b4ccfffd6127c69f1c6c15e7f54bd24690b57c4956341825a810c2413d21"
+   }
+  },
+  "ch_2_1500": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2787,
+    "sha256": "6eb8b4ccfffd6127c69f1c6c15e7f54bd24690b57c4956341825a810c2413d21"
+   }
+  },
+  "ch_2_2000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2787,
+    "sha256": "6eb8b4ccfffd6127c69f1c6c15e7f54bd24690b57c4956341825a810c2413d21"
+   }
+  },
+  "ch_2_300": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2787,
+    "sha256": "6eb8b4ccfffd6127c69f1c6c15e7f54bd24690b57c4956341825a810c2413d21"
+   }
+  },
+  "ch_2_6000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2787,
+    "sha256": "6eb8b4ccfffd6127c69f1c6c15e7f54bd24690b57c4956341825a810c2413d21"
+   }
+  },
+  "ch_2_800": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2787,
+    "sha256": "6eb8b4ccfffd6127c69f1c6c15e7f54bd24690b57c4956341825a810c2413d21"
+   }
+  },
+  "ch_3_0": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3399,
+    "sha256": "185a01513970e9d720648e660777dc82478c2c7b2261f0444ab285fc9a37dd68"
+   }
+  },
+  "ch_3_1500": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3399,
+    "sha256": "185a01513970e9d720648e660777dc82478c2c7b2261f0444ab285fc9a37dd68"
+   }
+  },
+  "ch_3_2000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3399,
+    "sha256": "185a01513970e9d720648e660777dc82478c2c7b2261f0444ab285fc9a37dd68"
+   }
+  },
+  "ch_3_300": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3399,
+    "sha256": "185a01513970e9d720648e660777dc82478c2c7b2261f0444ab285fc9a37dd68"
+   }
+  },
+  "ch_3_6000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3399,
+    "sha256": "185a01513970e9d720648e660777dc82478c2c7b2261f0444ab285fc9a37dd68"
+   }
+  },
+  "ch_3_800": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3399,
+    "sha256": "185a01513970e9d720648e660777dc82478c2c7b2261f0444ab285fc9a37dd68"
+   }
+  },
+  "ch_auto_0": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 3399,
+    "sha256": "185a01513970e9d720648e660777dc82478c2c7b2261f0444ab285fc9a37dd68"
+   }
+  },
+  "ch_auto_1500": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1539,
+    "sha256": "4fb5c3e9789dfcffa84fbe8e7350bedad03ccb2243a054671dd140652d202e37"
+   }
+  },
+  "ch_auto_2000": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1539,
+    "sha256": "4fb5c3e9789dfcffa84fbe8e7350bedad03ccb2243a054671dd140652d202e37"
+   }
+  },
+  "ch_auto_300": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1539,
+    "sha256": "4fb5c3e9789dfcffa84fbe8e7350bedad03ccb2243a054671dd140652d202e37"
+   }
+  },
+  "ch_auto_6000": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 3399,
+    "sha256": "185a01513970e9d720648e660777dc82478c2c7b2261f0444ab285fc9a37dd68"
+   }
+  },
+  "ch_auto_800": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1539,
+    "sha256": "4fb5c3e9789dfcffa84fbe8e7350bedad03ccb2243a054671dd140652d202e37"
+   }
+  },
+  "md1": {
+   "len": 1539,
+   "sha256": "4fb5c3e9789dfcffa84fbe8e7350bedad03ccb2243a054671dd140652d202e37"
+  },
+  "md2": {
+   "len": 2787,
+   "sha256": "6eb8b4ccfffd6127c69f1c6c15e7f54bd24690b57c4956341825a810c2413d21"
+  },
+  "md3": {
+   "len": 3399,
+   "sha256": "185a01513970e9d720648e660777dc82478c2c7b2261f0444ab285fc9a37dd68"
+  },
+  "parts1": [
+   {
+    "chars": 33,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 93,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 153,
+    "group": "persona",
+    "id": "core",
+    "title": "核"
+   },
+   {
+    "chars": 958,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 152,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 47,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ],
+  "parts2": [
+   {
+    "chars": 86,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 157,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 292,
+    "group": "persona",
+    "id": "core",
+    "title": "核"
+   },
+   {
+    "chars": 1717,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 337,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 95,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ],
+  "parts3": [
+   {
+    "chars": 86,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 183,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 292,
+    "group": "persona",
+    "id": "core",
+    "title": "核"
+   },
+   {
+    "chars": 2272,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 368,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 95,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ]
+ },
+ "fx_prio_variety": {
+  "ch_1_0": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1673,
+    "sha256": "4e6d5e1a607ae782e2701afdee73033857241ec388e6af2c15eb4db0ee176b2e"
+   }
+  },
+  "ch_1_1500": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1673,
+    "sha256": "4e6d5e1a607ae782e2701afdee73033857241ec388e6af2c15eb4db0ee176b2e"
+   }
+  },
+  "ch_1_2000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1673,
+    "sha256": "4e6d5e1a607ae782e2701afdee73033857241ec388e6af2c15eb4db0ee176b2e"
+   }
+  },
+  "ch_1_300": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1673,
+    "sha256": "4e6d5e1a607ae782e2701afdee73033857241ec388e6af2c15eb4db0ee176b2e"
+   }
+  },
+  "ch_1_6000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1673,
+    "sha256": "4e6d5e1a607ae782e2701afdee73033857241ec388e6af2c15eb4db0ee176b2e"
+   }
+  },
+  "ch_1_800": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 1673,
+    "sha256": "4e6d5e1a607ae782e2701afdee73033857241ec388e6af2c15eb4db0ee176b2e"
+   }
+  },
+  "ch_2_0": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2512,
+    "sha256": "827a91da8f69af19a66b9cbca48caea28fc50482220d355a2f316e9eb79b6ceb"
+   }
+  },
+  "ch_2_1500": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2512,
+    "sha256": "827a91da8f69af19a66b9cbca48caea28fc50482220d355a2f316e9eb79b6ceb"
+   }
+  },
+  "ch_2_2000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2512,
+    "sha256": "827a91da8f69af19a66b9cbca48caea28fc50482220d355a2f316e9eb79b6ceb"
+   }
+  },
+  "ch_2_300": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2512,
+    "sha256": "827a91da8f69af19a66b9cbca48caea28fc50482220d355a2f316e9eb79b6ceb"
+   }
+  },
+  "ch_2_6000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2512,
+    "sha256": "827a91da8f69af19a66b9cbca48caea28fc50482220d355a2f316e9eb79b6ceb"
+   }
+  },
+  "ch_2_800": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 2512,
+    "sha256": "827a91da8f69af19a66b9cbca48caea28fc50482220d355a2f316e9eb79b6ceb"
+   }
+  },
+  "ch_3_0": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_3_1500": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_3_2000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_3_300": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_3_6000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_3_800": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_auto_0": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_auto_1500": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1673,
+    "sha256": "4e6d5e1a607ae782e2701afdee73033857241ec388e6af2c15eb4db0ee176b2e"
+   }
+  },
+  "ch_auto_2000": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1673,
+    "sha256": "4e6d5e1a607ae782e2701afdee73033857241ec388e6af2c15eb4db0ee176b2e"
+   }
+  },
+  "ch_auto_300": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1673,
+    "sha256": "4e6d5e1a607ae782e2701afdee73033857241ec388e6af2c15eb4db0ee176b2e"
+   }
+  },
+  "ch_auto_6000": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 3655,
+    "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+   }
+  },
+  "ch_auto_800": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 1673,
+    "sha256": "4e6d5e1a607ae782e2701afdee73033857241ec388e6af2c15eb4db0ee176b2e"
+   }
+  },
+  "md1": {
+   "len": 1673,
+   "sha256": "4e6d5e1a607ae782e2701afdee73033857241ec388e6af2c15eb4db0ee176b2e"
+  },
+  "md2": {
+   "len": 2512,
+   "sha256": "827a91da8f69af19a66b9cbca48caea28fc50482220d355a2f316e9eb79b6ceb"
+  },
+  "md3": {
+   "len": 3655,
+   "sha256": "2ba3057b5d066a7f58ba829ff39b6fcb33961534b36e45a96ebd6db9dd4996d5"
+  },
+  "parts1": [
+   {
+    "chars": 39,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 93,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 390,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1145,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   }
+  ],
+  "parts2": [
+   {
+    "chars": 98,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 157,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 514,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1737,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   }
+  ],
+  "parts3": [
+   {
+    "chars": 98,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 183,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 685,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 2683,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   }
+  ]
+ },
+ "fx_romance_innate": {
+  "ch_1_0": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2111,
+    "sha256": "28f3b8b9fbe752c91b659c1337c087f3d7a9d4d56df38ccff7a401a0c1e644fa"
+   }
+  },
+  "ch_1_1500": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2111,
+    "sha256": "28f3b8b9fbe752c91b659c1337c087f3d7a9d4d56df38ccff7a401a0c1e644fa"
+   }
+  },
+  "ch_1_2000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2111,
+    "sha256": "28f3b8b9fbe752c91b659c1337c087f3d7a9d4d56df38ccff7a401a0c1e644fa"
+   }
+  },
+  "ch_1_300": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2111,
+    "sha256": "28f3b8b9fbe752c91b659c1337c087f3d7a9d4d56df38ccff7a401a0c1e644fa"
+   }
+  },
+  "ch_1_6000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2111,
+    "sha256": "28f3b8b9fbe752c91b659c1337c087f3d7a9d4d56df38ccff7a401a0c1e644fa"
+   }
+  },
+  "ch_1_800": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2111,
+    "sha256": "28f3b8b9fbe752c91b659c1337c087f3d7a9d4d56df38ccff7a401a0c1e644fa"
+   }
+  },
+  "ch_2_0": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3264,
+    "sha256": "95918572d40e2e5696c5ca5b210077ca41a32e238eb01b7c41ef4b957b18189f"
+   }
+  },
+  "ch_2_1500": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3264,
+    "sha256": "95918572d40e2e5696c5ca5b210077ca41a32e238eb01b7c41ef4b957b18189f"
+   }
+  },
+  "ch_2_2000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3264,
+    "sha256": "95918572d40e2e5696c5ca5b210077ca41a32e238eb01b7c41ef4b957b18189f"
+   }
+  },
+  "ch_2_300": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3264,
+    "sha256": "95918572d40e2e5696c5ca5b210077ca41a32e238eb01b7c41ef4b957b18189f"
+   }
+  },
+  "ch_2_6000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3264,
+    "sha256": "95918572d40e2e5696c5ca5b210077ca41a32e238eb01b7c41ef4b957b18189f"
+   }
+  },
+  "ch_2_800": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3264,
+    "sha256": "95918572d40e2e5696c5ca5b210077ca41a32e238eb01b7c41ef4b957b18189f"
+   }
+  },
+  "ch_3_0": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4505,
+    "sha256": "b7b986e64cc235c755ba97550d8809aa120d548ee2bcd5feed206e54b848173c"
+   }
+  },
+  "ch_3_1500": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4505,
+    "sha256": "b7b986e64cc235c755ba97550d8809aa120d548ee2bcd5feed206e54b848173c"
+   }
+  },
+  "ch_3_2000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4505,
+    "sha256": "b7b986e64cc235c755ba97550d8809aa120d548ee2bcd5feed206e54b848173c"
+   }
+  },
+  "ch_3_300": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4505,
+    "sha256": "b7b986e64cc235c755ba97550d8809aa120d548ee2bcd5feed206e54b848173c"
+   }
+  },
+  "ch_3_6000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4505,
+    "sha256": "b7b986e64cc235c755ba97550d8809aa120d548ee2bcd5feed206e54b848173c"
+   }
+  },
+  "ch_3_800": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4505,
+    "sha256": "b7b986e64cc235c755ba97550d8809aa120d548ee2bcd5feed206e54b848173c"
+   }
+  },
+  "ch_auto_0": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 4505,
+    "sha256": "b7b986e64cc235c755ba97550d8809aa120d548ee2bcd5feed206e54b848173c"
+   }
+  },
+  "ch_auto_1500": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2111,
+    "sha256": "28f3b8b9fbe752c91b659c1337c087f3d7a9d4d56df38ccff7a401a0c1e644fa"
+   }
+  },
+  "ch_auto_2000": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2111,
+    "sha256": "28f3b8b9fbe752c91b659c1337c087f3d7a9d4d56df38ccff7a401a0c1e644fa"
+   }
+  },
+  "ch_auto_300": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2111,
+    "sha256": "28f3b8b9fbe752c91b659c1337c087f3d7a9d4d56df38ccff7a401a0c1e644fa"
+   }
+  },
+  "ch_auto_6000": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 4505,
+    "sha256": "b7b986e64cc235c755ba97550d8809aa120d548ee2bcd5feed206e54b848173c"
+   }
+  },
+  "ch_auto_800": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2111,
+    "sha256": "28f3b8b9fbe752c91b659c1337c087f3d7a9d4d56df38ccff7a401a0c1e644fa"
+   }
+  },
+  "md1": {
+   "len": 2111,
+   "sha256": "28f3b8b9fbe752c91b659c1337c087f3d7a9d4d56df38ccff7a401a0c1e644fa"
+  },
+  "md2": {
+   "len": 3264,
+   "sha256": "95918572d40e2e5696c5ca5b210077ca41a32e238eb01b7c41ef4b957b18189f"
+  },
+  "md3": {
+   "len": 4505,
+   "sha256": "b7b986e64cc235c755ba97550d8809aa120d548ee2bcd5feed206e54b848173c"
+  },
+  "parts1": [
+   {
+    "chars": 39,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 93,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 375,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1149,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 188,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 164,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ],
+  "parts2": [
+   {
+    "chars": 98,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 157,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 453,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1787,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 355,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 311,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ],
+  "parts3": [
+   {
+    "chars": 98,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 183,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 685,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 2683,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 414,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 339,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ]
+ },
+ "fx_romance_none_progress": {
+  "ch_1_0": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2003,
+    "sha256": "29635e1102459ba6167c4c69f4980fd11f621d21f88bad999362423e90243e1d"
+   }
+  },
+  "ch_1_1500": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2003,
+    "sha256": "29635e1102459ba6167c4c69f4980fd11f621d21f88bad999362423e90243e1d"
+   }
+  },
+  "ch_1_2000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2003,
+    "sha256": "29635e1102459ba6167c4c69f4980fd11f621d21f88bad999362423e90243e1d"
+   }
+  },
+  "ch_1_300": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2003,
+    "sha256": "29635e1102459ba6167c4c69f4980fd11f621d21f88bad999362423e90243e1d"
+   }
+  },
+  "ch_1_6000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2003,
+    "sha256": "29635e1102459ba6167c4c69f4980fd11f621d21f88bad999362423e90243e1d"
+   }
+  },
+  "ch_1_800": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2003,
+    "sha256": "29635e1102459ba6167c4c69f4980fd11f621d21f88bad999362423e90243e1d"
+   }
+  },
+  "ch_2_0": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3073,
+    "sha256": "6fd5b33da2b4c6afd167418d33f1d91194d8dd3010691381a251f3b22daae66e"
+   }
+  },
+  "ch_2_1500": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3073,
+    "sha256": "6fd5b33da2b4c6afd167418d33f1d91194d8dd3010691381a251f3b22daae66e"
+   }
+  },
+  "ch_2_2000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3073,
+    "sha256": "6fd5b33da2b4c6afd167418d33f1d91194d8dd3010691381a251f3b22daae66e"
+   }
+  },
+  "ch_2_300": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3073,
+    "sha256": "6fd5b33da2b4c6afd167418d33f1d91194d8dd3010691381a251f3b22daae66e"
+   }
+  },
+  "ch_2_6000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3073,
+    "sha256": "6fd5b33da2b4c6afd167418d33f1d91194d8dd3010691381a251f3b22daae66e"
+   }
+  },
+  "ch_2_800": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3073,
+    "sha256": "6fd5b33da2b4c6afd167418d33f1d91194d8dd3010691381a251f3b22daae66e"
+   }
+  },
+  "ch_3_0": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4290,
+    "sha256": "f3f87b408785237774d3699e2f118d2857515e2304a31403e5ab7fb31f207ad3"
+   }
+  },
+  "ch_3_1500": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4290,
+    "sha256": "f3f87b408785237774d3699e2f118d2857515e2304a31403e5ab7fb31f207ad3"
+   }
+  },
+  "ch_3_2000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4290,
+    "sha256": "f3f87b408785237774d3699e2f118d2857515e2304a31403e5ab7fb31f207ad3"
+   }
+  },
+  "ch_3_300": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4290,
+    "sha256": "f3f87b408785237774d3699e2f118d2857515e2304a31403e5ab7fb31f207ad3"
+   }
+  },
+  "ch_3_6000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4290,
+    "sha256": "f3f87b408785237774d3699e2f118d2857515e2304a31403e5ab7fb31f207ad3"
+   }
+  },
+  "ch_3_800": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4290,
+    "sha256": "f3f87b408785237774d3699e2f118d2857515e2304a31403e5ab7fb31f207ad3"
+   }
+  },
+  "ch_auto_0": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 4290,
+    "sha256": "f3f87b408785237774d3699e2f118d2857515e2304a31403e5ab7fb31f207ad3"
+   }
+  },
+  "ch_auto_1500": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2003,
+    "sha256": "29635e1102459ba6167c4c69f4980fd11f621d21f88bad999362423e90243e1d"
+   }
+  },
+  "ch_auto_2000": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2003,
+    "sha256": "29635e1102459ba6167c4c69f4980fd11f621d21f88bad999362423e90243e1d"
+   }
+  },
+  "ch_auto_300": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2003,
+    "sha256": "29635e1102459ba6167c4c69f4980fd11f621d21f88bad999362423e90243e1d"
+   }
+  },
+  "ch_auto_6000": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 4290,
+    "sha256": "f3f87b408785237774d3699e2f118d2857515e2304a31403e5ab7fb31f207ad3"
+   }
+  },
+  "ch_auto_800": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2003,
+    "sha256": "29635e1102459ba6167c4c69f4980fd11f621d21f88bad999362423e90243e1d"
+   }
+  },
+  "md1": {
+   "len": 2003,
+   "sha256": "29635e1102459ba6167c4c69f4980fd11f621d21f88bad999362423e90243e1d"
+  },
+  "md2": {
+   "len": 3073,
+   "sha256": "6fd5b33da2b4c6afd167418d33f1d91194d8dd3010691381a251f3b22daae66e"
+  },
+  "md3": {
+   "len": 4290,
+   "sha256": "f3f87b408785237774d3699e2f118d2857515e2304a31403e5ab7fb31f207ad3"
+  },
+  "parts1": [
+   {
+    "chars": 39,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 93,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 375,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1149,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 197,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 47,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ],
+  "parts2": [
+   {
+    "chars": 98,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 157,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 453,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1787,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 364,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 111,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ],
+  "parts3": [
+   {
+    "chars": 98,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 183,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 685,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 2683,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 427,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 111,
+    "group": "romance",
+    "id": "romance",
+    "title": "信頼と恋愛感情"
+   },
+   {
+    "chars": 91,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ]
+ },
+ "fx_speech_pron_stages": {
+  "ch_1_0": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2125,
+    "sha256": "bcf746aeea709d611a3114a6e8f4a38df6ee17b01ce6fb22310f328487dd0b05"
+   }
+  },
+  "ch_1_1500": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2125,
+    "sha256": "bcf746aeea709d611a3114a6e8f4a38df6ee17b01ce6fb22310f328487dd0b05"
+   }
+  },
+  "ch_1_2000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2125,
+    "sha256": "bcf746aeea709d611a3114a6e8f4a38df6ee17b01ce6fb22310f328487dd0b05"
+   }
+  },
+  "ch_1_300": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2125,
+    "sha256": "bcf746aeea709d611a3114a6e8f4a38df6ee17b01ce6fb22310f328487dd0b05"
+   }
+  },
+  "ch_1_6000": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2125,
+    "sha256": "bcf746aeea709d611a3114a6e8f4a38df6ee17b01ce6fb22310f328487dd0b05"
+   }
+  },
+  "ch_1_800": {
+   "auto": false,
+   "level": 1,
+   "text": {
+    "len": 2125,
+    "sha256": "bcf746aeea709d611a3114a6e8f4a38df6ee17b01ce6fb22310f328487dd0b05"
+   }
+  },
+  "ch_2_0": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3206,
+    "sha256": "7297847b6896f5b4dbba7440914bd0e2c1019b1981b4fc2ea48eea8a11899602"
+   }
+  },
+  "ch_2_1500": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3206,
+    "sha256": "7297847b6896f5b4dbba7440914bd0e2c1019b1981b4fc2ea48eea8a11899602"
+   }
+  },
+  "ch_2_2000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3206,
+    "sha256": "7297847b6896f5b4dbba7440914bd0e2c1019b1981b4fc2ea48eea8a11899602"
+   }
+  },
+  "ch_2_300": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3206,
+    "sha256": "7297847b6896f5b4dbba7440914bd0e2c1019b1981b4fc2ea48eea8a11899602"
+   }
+  },
+  "ch_2_6000": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3206,
+    "sha256": "7297847b6896f5b4dbba7440914bd0e2c1019b1981b4fc2ea48eea8a11899602"
+   }
+  },
+  "ch_2_800": {
+   "auto": false,
+   "level": 2,
+   "text": {
+    "len": 3206,
+    "sha256": "7297847b6896f5b4dbba7440914bd0e2c1019b1981b4fc2ea48eea8a11899602"
+   }
+  },
+  "ch_3_0": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4511,
+    "sha256": "1cde354c03db9261a26fba216e143b0bbbcfcee8655181cba258fe1cde1496d4"
+   }
+  },
+  "ch_3_1500": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4511,
+    "sha256": "1cde354c03db9261a26fba216e143b0bbbcfcee8655181cba258fe1cde1496d4"
+   }
+  },
+  "ch_3_2000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4511,
+    "sha256": "1cde354c03db9261a26fba216e143b0bbbcfcee8655181cba258fe1cde1496d4"
+   }
+  },
+  "ch_3_300": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4511,
+    "sha256": "1cde354c03db9261a26fba216e143b0bbbcfcee8655181cba258fe1cde1496d4"
+   }
+  },
+  "ch_3_6000": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4511,
+    "sha256": "1cde354c03db9261a26fba216e143b0bbbcfcee8655181cba258fe1cde1496d4"
+   }
+  },
+  "ch_3_800": {
+   "auto": false,
+   "level": 3,
+   "text": {
+    "len": 4511,
+    "sha256": "1cde354c03db9261a26fba216e143b0bbbcfcee8655181cba258fe1cde1496d4"
+   }
+  },
+  "ch_auto_0": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 4511,
+    "sha256": "1cde354c03db9261a26fba216e143b0bbbcfcee8655181cba258fe1cde1496d4"
+   }
+  },
+  "ch_auto_1500": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2125,
+    "sha256": "bcf746aeea709d611a3114a6e8f4a38df6ee17b01ce6fb22310f328487dd0b05"
+   }
+  },
+  "ch_auto_2000": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2125,
+    "sha256": "bcf746aeea709d611a3114a6e8f4a38df6ee17b01ce6fb22310f328487dd0b05"
+   }
+  },
+  "ch_auto_300": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2125,
+    "sha256": "bcf746aeea709d611a3114a6e8f4a38df6ee17b01ce6fb22310f328487dd0b05"
+   }
+  },
+  "ch_auto_6000": {
+   "auto": true,
+   "level": 3,
+   "text": {
+    "len": 4511,
+    "sha256": "1cde354c03db9261a26fba216e143b0bbbcfcee8655181cba258fe1cde1496d4"
+   }
+  },
+  "ch_auto_800": {
+   "auto": true,
+   "level": 1,
+   "text": {
+    "len": 2125,
+    "sha256": "bcf746aeea709d611a3114a6e8f4a38df6ee17b01ce6fb22310f328487dd0b05"
+   }
+  },
+  "md1": {
+   "len": 2125,
+   "sha256": "bcf746aeea709d611a3114a6e8f4a38df6ee17b01ce6fb22310f328487dd0b05"
+  },
+  "md2": {
+   "len": 3206,
+   "sha256": "7297847b6896f5b4dbba7440914bd0e2c1019b1981b4fc2ea48eea8a11899602"
+  },
+  "md3": {
+   "len": 4511,
+   "sha256": "1cde354c03db9261a26fba216e143b0bbbcfcee8655181cba258fe1cde1496d4"
+  },
+  "parts1": [
+   {
+    "chars": 39,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 251,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 375,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1149,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 188,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 113,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ],
+  "parts2": [
+   {
+    "chars": 98,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 390,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 453,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 1787,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 355,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 113,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ],
+  "parts3": [
+   {
+    "chars": 98,
+    "group": "head",
+    "id": "head",
+    "title": "概要"
+   },
+   {
+    "chars": 508,
+    "group": "speech",
+    "id": "speech",
+    "title": "話し方"
+   },
+   {
+    "chars": 685,
+    "group": "persona",
+    "id": "base",
+    "title": "基本人格"
+   },
+   {
+    "chars": 2683,
+    "group": "persona",
+    "id": "stages",
+    "title": "段階別の振る舞い"
+   },
+   {
+    "chars": 414,
+    "group": "progress",
+    "id": "progress",
+    "title": "関係の進展"
+   },
+   {
+    "chars": 113,
+    "group": "ifthen",
+    "id": "ifthen",
+    "title": "状況別の行動規則"
+   }
+  ]
+ },
+ "legacy_v1": {
+  "budget": 1500,
+  "legacy": {
+   "affection": {
+    "use": true
+   },
+   "affectionFrom": "v0.3"
+  },
+  "link": {
+   "mode": "individual",
+   "traits": {
+    "affectionActions": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "affectionWords": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "candor": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "closeness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "competitive": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "disclosure": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "empathy": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "expressiveness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "initiative": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "jealousy": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "playfulness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "politeness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "possessive": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "pride": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "reliance": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "romInitiative": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "shyness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "stubborn": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "trustSpeed": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "wariness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "warmth": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    }
+   }
+  },
+  "md1": {
+   "len": 1625,
+   "sha256": "fdac0b496417e858fc8ccfbcbd7509d35eec9ba04d83a4896969ef6d7f0e48b8"
+  },
+  "md2": {
+   "len": 2556,
+   "sha256": "dd834747e35d22aafadf0e50837ecc42b3196fd50aec6a873cb5b99b6109f3b9"
+  },
+  "md3": {
+   "len": 3265,
+   "sha256": "6995d0a1d3e7f3389af4f9989fd6b1e269f1298c4221cb289f3d4e6b2a1b9d9e"
+  },
+  "name": "旧データ",
+  "progressParts": {
+   "deepen": true,
+   "regress": true,
+   "trust": true
+  },
+  "pron": {
+   "enabled": false,
+   "me": {
+    "common": "僕",
+    "deep": null,
+    "initial": null,
+    "trust": null
+   },
+   "you": {
+    "common": "{{user}}",
+    "deep": null,
+    "initial": null,
+    "trust": null
+   }
+  },
+  "relation": {
+   "deepen": {
+    "custom": [],
+    "presets": [
+     "confide",
+     "together"
+    ]
+   },
+   "regress": {
+    "custom": [],
+    "presets": [
+     "brokenPromise",
+     "leak"
+    ]
+   },
+   "romance": {
+    "after": "hidden",
+    "custom": [],
+    "mode": "none",
+    "presets": []
+   },
+   "rules": [
+    {
+     "out": true,
+     "then": "何も言わず隣に座り、落ち着くまで待つ",
+     "when": "相手が泣いたとき"
+    },
+    {
+     "out": true,
+     "then": "怒鳴らず、黙って視線を外し、「本当のことを聞かせて」と静かに言う",
+     "when": "相手が嘘をついたとき"
+    }
+   ],
+   "trust": {
+    "custom": [],
+    "presets": [
+     "promise",
+     "listen",
+     "noJudge"
+    ]
+   }
+  },
+  "sections": {
+   "ifthen": true,
+   "persona": true,
+   "progress": true,
+   "romance": true,
+   "speech": true
+  },
+  "speech": {
+   "common": "std",
+   "enabled": false,
+   "stages": {
+    "deep": null,
+    "initial": null,
+    "trust": null
+   }
+  },
+  "traits": {
+   "affectionActions": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "affectionWords": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 2,
+     "initial": 2,
+     "trust": 2
+    },
+    "use": true
+   },
+   "candor": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "closeness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "competitive": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "disclosure": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "empathy": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "expressiveness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "initiative": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "jealousy": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "pampering": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": false
+   },
+   "playfulness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "politeness": {
+    "common": 1,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 5,
+     "initial": 1,
+     "trust": 3
+    },
+    "use": true
+   },
+   "possessive": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "pride": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "reliance": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": true
+   },
+   "romInitiative": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "shyness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "specialTreatment": {
+    "common": 1,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 1,
+     "trust": 2
+    },
+    "use": false
+   },
+   "stubborn": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "trustSpeed": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "wariness": {
+    "common": 4,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 2,
+     "initial": 4,
+     "trust": 3
+    },
+    "use": true
+   },
+   "warmth": {
+    "common": 4,
+    "locked": true,
+    "prio": null,
+    "stages": {
+     "deep": 5,
+     "initial": 1,
+     "trust": 3
+    },
+    "use": true
+   }
+  }
+ },
+ "legacy_v2": {
+  "budget": 1800,
+  "legacy": {
+   "affection": {
+    "use": true
+   },
+   "affectionFrom": "v0.3"
+  },
+  "link": {
+   "mode": "individual",
+   "traits": {
+    "affectionActions": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "affectionWords": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "candor": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "closeness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "competitive": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "disclosure": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "empathy": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "expressiveness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "initiative": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "jealousy": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "playfulness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "politeness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "possessive": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "pride": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "reliance": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "romInitiative": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "shyness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "stubborn": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "trustSpeed": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "wariness": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "warmth": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    }
+   }
+  },
+  "md1": {
+   "len": 1691,
+   "sha256": "79343c00152ef59ec039a9df905c70d81e165032526095c9d1552da87759e0b8"
+  },
+  "md2": {
+   "len": 2681,
+   "sha256": "2aeed7c3026953016333dba3fb1fe491a97ca759f20857b2419dfbd1b782f714"
+  },
+  "md3": {
+   "len": 3428,
+   "sha256": "6ab1fa0c16df26f6347fede137a6a47b516de2048fe291fa8a8cf748e76100c5"
+  },
+  "name": "V2",
+  "progressParts": {
+   "deepen": true,
+   "regress": true,
+   "trust": true
+  },
+  "pron": {
+   "enabled": false,
+   "me": {
+    "common": "僕",
+    "deep": null,
+    "initial": null,
+    "trust": null
+   },
+   "you": {
+    "common": "{{user}}",
+    "deep": null,
+    "initial": null,
+    "trust": null
+   }
+  },
+  "relation": {
+   "deepen": {
+    "custom": [],
+    "presets": [
+     "confide",
+     "together"
+    ]
+   },
+   "regress": {
+    "custom": [],
+    "presets": [
+     "brokenPromise",
+     "leak"
+    ]
+   },
+   "romance": {
+    "after": "hidden",
+    "custom": [],
+    "mode": "none",
+    "presets": []
+   },
+   "rules": [
+    {
+     "out": true,
+     "then": "何も言わず隣に座り、落ち着くまで待つ",
+     "when": "相手が泣いたとき"
+    },
+    {
+     "out": true,
+     "then": "怒鳴らず、黙って視線を外し、「本当のことを聞かせて」と静かに言う",
+     "when": "相手が嘘をついたとき"
+    }
+   ],
+   "trust": {
+    "custom": [],
+    "presets": [
+     "promise",
+     "listen",
+     "noJudge"
+    ]
+   }
+  },
+  "sections": {
+   "ifthen": true,
+   "persona": true,
+   "progress": true,
+   "romance": true,
+   "speech": true
+  },
+  "speech": {
+   "common": "std",
+   "enabled": false,
+   "stages": {
+    "deep": null,
+    "initial": null,
+    "trust": null
+   }
+  },
+  "traits": {
+   "affectionActions": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "affectionWords": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 2,
+     "initial": 2,
+     "trust": 2
+    },
+    "use": true
+   },
+   "candor": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "closeness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "competitive": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "disclosure": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "empathy": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "expressiveness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "initiative": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "jealousy": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "pampering": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": false
+   },
+   "playfulness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "politeness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": true
+   },
+   "possessive": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "pride": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "reliance": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": true
+   },
+   "romInitiative": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "shyness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "specialTreatment": {
+    "common": 1,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 1,
+     "trust": 2
+    },
+    "use": false
+   },
+   "stubborn": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "trustSpeed": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": true
+   },
+   "wariness": {
+    "common": 4,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 2,
+     "initial": 4,
+     "trust": 3
+    },
+    "use": true
+   },
+   "warmth": {
+    "common": 4,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 5,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": true
+   }
+  }
+ },
+ "legacy_v3": {
+  "budget": 2000,
+  "legacy": {
+   "affection": {
+    "common": 4,
+    "locked": false,
+    "prio": "high",
+    "stages": {
+     "deep": 5,
+     "initial": 2,
+     "trust": 4
+    },
+    "use": true
+   },
+   "affectionFrom": "v0.3"
+  },
+  "link": {
+   "mode": "individual",
+   "traits": {
+    "affectionActions": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "affectionWords": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    },
+    "warmth": {
+     "edited": {
+      "deep": true,
+      "trust": true
+     },
+     "sugg": true
+    }
+   }
+  },
+  "md1": {
+   "len": 901,
+   "sha256": "c16310d10c5be11ba23d93a7e87a38ad029e0de489d663009069d7adb96c25d1"
+  },
+  "md2": {
+   "len": 1779,
+   "sha256": "d8641b5d495a95c2f420b96ac663db0cbe1f4574b4c1c71937e7cf0ee785d568"
+  },
+  "md3": {
+   "len": 1836,
+   "sha256": "bc98dcde0116c8abff1b784cb2e8c7cb8743f4a7f328f403c055ca588ad551c3"
+  },
+  "name": "V3",
+  "progressParts": {
+   "deepen": true,
+   "regress": true,
+   "trust": true
+  },
+  "pron": {
+   "enabled": false,
+   "me": {
+    "common": "僕",
+    "deep": null,
+    "initial": null,
+    "trust": null
+   },
+   "you": {
+    "common": "{{user}}",
+    "deep": null,
+    "initial": null,
+    "trust": null
+   }
+  },
+  "relation": {
+   "deepen": {
+    "custom": [],
+    "presets": [
+     "confide",
+     "together"
+    ]
+   },
+   "regress": {
+    "custom": [],
+    "presets": [
+     "brokenPromise",
+     "leak"
+    ]
+   },
+   "romance": {
+    "after": "hidden",
+    "custom": [],
+    "mode": "none",
+    "presets": []
+   },
+   "rules": [
+    {
+     "out": true,
+     "then": "何も言わず隣に座り、落ち着くまで待つ",
+     "when": "相手が泣いたとき"
+    },
+    {
+     "out": true,
+     "then": "怒鳴らず、黙って視線を外し、「本当のことを聞かせて」と静かに言う",
+     "when": "相手が嘘をついたとき"
+    }
+   ],
+   "trust": {
+    "custom": [],
+    "presets": [
+     "promise",
+     "listen",
+     "noJudge"
+    ]
+   }
+  },
+  "sections": {
+   "ifthen": true,
+   "persona": true,
+   "progress": true,
+   "romance": true,
+   "speech": true
+  },
+  "speech": {
+   "common": "std",
+   "enabled": false,
+   "stages": {
+    "deep": null,
+    "initial": null,
+    "trust": null
+   }
+  },
+  "traits": {
+   "affectionActions": {
+    "common": 4,
+    "locked": false,
+    "prio": "high",
+    "stages": {
+     "deep": 4,
+     "initial": 2,
+     "trust": 4
+    },
+    "use": true
+   },
+   "affectionWords": {
+    "common": 4,
+    "locked": false,
+    "prio": "high",
+    "stages": {
+     "deep": 5,
+     "initial": 1,
+     "trust": 4
+    },
+    "use": true
+   },
+   "candor": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "closeness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "competitive": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "disclosure": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "empathy": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "expressiveness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "initiative": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "jealousy": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "pampering": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": false
+   },
+   "playfulness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "politeness": {
+    "common": 4,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 4,
+     "trust": 3
+    },
+    "use": false
+   },
+   "possessive": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "pride": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "reliance": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": false
+   },
+   "romInitiative": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "shyness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "specialTreatment": {
+    "common": 1,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 1,
+     "trust": 2
+    },
+    "use": false
+   },
+   "stubborn": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "trustSpeed": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "wariness": {
+    "common": 4,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 2,
+     "initial": 4,
+     "trust": 3
+    },
+    "use": false
+   },
+   "warmth": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": true
+   }
+  }
+ },
+ "legacy_v4": {
+  "budget": 2400,
+  "legacy": {},
+  "link": {
+   "mode": "suggest",
+   "traits": {}
+  },
+  "md1": {
+   "len": 586,
+   "sha256": "624134dfaaf647d7aeb2f5a613daa5e66d259a593d181f4fb219bdcc46fd813e"
+  },
+  "md2": {
+   "len": 1077,
+   "sha256": "d8ca54eaf7ef54ab05e26c8ad88d6a8aae4303703e31ef4dc33a012a12c66bc8"
+  },
+  "md3": {
+   "len": 1134,
+   "sha256": "6989a9a2a65be638f72d3d2c21d84acc10941f49a49d57ff3ad02b077e9c0cbb"
+  },
+  "name": "V4",
+  "progressParts": {
+   "deepen": true,
+   "regress": true,
+   "trust": true
+  },
+  "pron": {
+   "enabled": false,
+   "me": {
+    "common": "僕",
+    "deep": null,
+    "initial": null,
+    "trust": null
+   },
+   "you": {
+    "common": "{{user}}",
+    "deep": null,
+    "initial": null,
+    "trust": null
+   }
+  },
+  "relation": {
+   "deepen": {
+    "custom": [],
+    "presets": [
+     "confide",
+     "together"
+    ]
+   },
+   "regress": {
+    "custom": [],
+    "presets": [
+     "brokenPromise",
+     "leak"
+    ]
+   },
+   "romance": {
+    "after": "hidden",
+    "custom": [],
+    "mode": "none",
+    "presets": []
+   },
+   "rules": [
+    {
+     "out": true,
+     "then": "b",
+     "when": "a"
+    }
+   ],
+   "trust": {
+    "custom": [],
+    "presets": [
+     "promise",
+     "listen",
+     "noJudge"
+    ]
+   }
+  },
+  "sections": {
+   "ifthen": true,
+   "persona": true,
+   "progress": true,
+   "romance": true,
+   "speech": true
+  },
+  "speech": {
+   "common": "std",
+   "enabled": false,
+   "stages": {
+    "deep": null,
+    "initial": null,
+    "trust": null
+   }
+  },
+  "traits": {
+   "affectionActions": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": false
+   },
+   "affectionWords": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": false
+   },
+   "candor": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "closeness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "competitive": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "disclosure": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "empathy": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "expressiveness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "initiative": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "jealousy": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "pampering": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": false
+   },
+   "playfulness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "politeness": {
+    "common": 4,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 4,
+     "trust": 3
+    },
+    "use": false
+   },
+   "possessive": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "pride": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "reliance": {
+    "common": 2,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": false
+   },
+   "romInitiative": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "shyness": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "specialTreatment": {
+    "common": 1,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 1,
+     "trust": 2
+    },
+    "use": false
+   },
+   "stubborn": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "trustSpeed": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 3,
+     "initial": 3,
+     "trust": 3
+    },
+    "use": false
+   },
+   "wariness": {
+    "common": 4,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 2,
+     "initial": 4,
+     "trust": 3
+    },
+    "use": false
+   },
+   "warmth": {
+    "common": 3,
+    "locked": false,
+    "prio": null,
+    "stages": {
+     "deep": 4,
+     "initial": 2,
+     "trust": 3
+    },
+    "use": true
+   }
+  }
+ }
+}

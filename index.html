@@ -70,6 +70,15 @@ textarea.txt{resize:vertical;line-height:1.6}
 .seg button{flex:1;border:0;background:transparent;color:var(--sub);font:inherit;font-size:14px;padding:9px 2px;border-radius:8px;min-height:40px}
 .seg button.on{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.14)}
 .seg.col{flex-direction:column}
+.seg.four button{font-size:13px;padding:9px 1px}
+.nums.sm b{font-size:18px}
+.exrow{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;background:var(--bg)}
+.exrow.off{opacity:.55}
+.exl{display:block;font-size:12.5px;color:var(--sub);margin:8px 0 4px}
+.exc{font-size:12px;color:var(--sub);margin-right:auto}
+.tag.warn{background:var(--warn-bg);color:var(--warn)}
+.bd .neg{color:var(--danger)}
+.fcard textarea.txt{min-height:200px}
 .seg.col button{text-align:left;padding:10px 12px}
 .stagebar{position:sticky;top:var(--hh);z-index:10;background:var(--bg);margin:0 -16px 12px;padding:8px 16px;border-bottom:1px solid var(--line)}
 .stagebar .seg button.on{color:var(--accent);box-shadow:inset 0 -2px 0 var(--brass),0 1px 3px rgba(0,0,0,.12)}
@@ -292,7 +301,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
 </style>
 </head>
 <body>
-<header><div class="hbar"><h1>キャラ人格調律工房</h1><div class="hright"><button class="hbtn" data-act="help"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>使い方</button><span class="ver">v0.4.2</span></div></div></header>
+<header><div class="hbar"><h1>キャラ人格調律工房</h1><div class="hright"><button class="hbtn" data-act="help"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>使い方</button><span class="ver">v0.5.0</span></div></div></header>
 <main id="app"></main>
 <nav id="tabs" aria-label="画面切り替え"></nav>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -309,7 +318,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
       <li><b>スライダーで調律する</b><br>上の段階タブ（初期／信頼成立後／関係深化後）を切り替え、段階ごとに値を決めます。スライダーの下の文が、AIに渡る行動規則です。関係が進んでも変わらない芯は「固定」にします。<br>「関係段階の作り方」で、後の段階の決め方を選べます。<b>自動提案</b>は初期の値から後の2段階を一度だけ提案し、その後は自由に変えられます。<b>連動調整</b>は初期を動かすと後の段階も同じ差で動きます（後の段階を手で変えると、その段階は連動から外れます）。<b>完全個別</b>は3段階をそれぞれ決めます。</li>
       <li><b>関係・反応を決める</b><br>信頼が成立する・深まる・後退する条件、恋愛感情の扱い（信頼とは別）、「もし〜なら〜する」の規則を設定します。Markdownに出すには、出力画面で該当する節をONにします（OFFの間は「出力されません」と表示されます）。If-Then は規則ごとに「出力する」を選べます。</li>
       <li><b>人格の試着で確かめる</b><br>12の状況で、3段階の反応を並べて比べます。口調や呼称を試しに変えても設定は変わりません。会話例はMarkdownで書き出せます。</li>
-      <li><b>Markdownを出力して貼る</b><br>上部の「Markdownに出力する内容」で、出す節（話し方・人格・関係の進展条件・恋愛感情・If-Then）を選びます。新しいキャラは話し方と人格だけがONです。外しても設定は消えず、各節の横に増減する字数が出ます。条件が未設定の行は出力しません。予定文字数に収まる詳細度を自動で選びます。コピーして、AIチャットのキャラクター設定欄に貼り付けます。超える場合は、使う項目を絞るか予定文字数を見直します。</li>
+      <li><b>Markdownを出力して貼る</b><br>上部の「Markdownに出力する内容」で、出す節（話し方・人格・関係の進展条件・恋愛感情・If-Then）を選びます。新しいキャラは話し方と人格だけがONです。外しても設定は消えず、各節の横に増減する字数が出ます。条件が未設定の行は出力しません。予定文字数に収まる詳細度を自動で選びます。コピーして、AIチャットのキャラクター設定欄に貼り付けます。超える場合は、使う項目を絞るか予定文字数を見直します。<br>上部の「出力先」で、共通Markdown・Talelynx・チャチャ・Plaitoonを切り替えられます。人格の設定は変わらず、出力する欄・字数の上限・数え方だけが変わります。会話例は「人格の試着」の「会話例に追加」で集め、出力画面で確認・編集してコピーします。</li>
       <li><b>控えを取る</b><br>設定はこの端末のブラウザに自動保存されます。iPhoneのSafariは長く開かないと消えることがあるので、ときどき「Markdown出力」の下からJSONを保存してください。別の端末へ移すときもJSONを使います。</li>
     </ol>
     <h3>うまく作るコツ</h3>
@@ -340,7 +349,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
 <script>
 'use strict';
 /* =====================================================================
-   キャラ人格調律工房 v0.4.2
+   キャラ人格調律工房 v0.5.0
    ---------------------------------------------------------------------
    構成
      1. 辞書   CATS / TRAITS / SPEECH / COND / ROMANCE_* / SITUATIONS
@@ -350,6 +359,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
      5. 画面とイベント
 
    拡張の目安
+     ・出力先を追加     : SERVICES に1件（欄・上限・計数方式・会話例）。計数方式は COUNTERS
      ・人格の軸を追加   : TRAITS に1件（levels 5段階 + shift + def + cat）
      ・口調を追加       : SPEECH に1件。試着テンプレートは未定義なら「標準」で代替
      ・出力節を追加     : SECTIONS に {id,title,build(c)}
@@ -359,8 +369,8 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
      ・段階の作り方     : D.link（自動提案・連動・個別）。連動は基準の段階差 diff を保存し、丸めても元へ戻せる
    ===================================================================== */
 
-const APP_VERSION = '0.4.2';
-const DATA_VERSION = 5;
+const APP_VERSION = '0.5.0';
+const DATA_VERSION = 6;
 const STORAGE_KEY = 'persona-tuning-workshop:data';
 const LEGACY_KEYS = ['kyara-tuning-workshop:v0.1'];
 const UI_KEY = 'persona-tuning-workshop:ui';
@@ -1436,6 +1446,62 @@ const ROMANCE_ADDON = {
 };
 
 /* =====================================================================
+   1b. 出力先の設定（v0.5.0）：人格は共通、出力はサービス別
+   サービスごとの違い（欄・上限・計数方式・会話例）はこの設定に集約する。仕様が変わったらここだけを直す。
+   ・limit は「その欄／合計」の上限。null は上限なし
+   ・spec は仕様の根拠。'given' = 依頼文書に記載された値（公式ページとは未照合）／'reported' = 利用者報告（暫定）
+   ===================================================================== */
+// 計数方式。画面の表示と上限判定は、必ず同じ関数を使う
+function isHalfWidthCp(cp){
+  return (cp >= 0x20 && cp <= 0x7E) || cp === 0x09 || (cp >= 0xFF61 && cp <= 0xFF9F) || (cp >= 0xFFE8 && cp <= 0xFFEE);
+}
+// チャチャ：全角1字・半角0.5字（利用者報告・暫定）。実機との照合結果に合わせて、この値だけを直せばよい
+const CHACHA_COUNT_RULES = {full:1, half:0.5, newline:0.5, cr:0};
+function countChacha(s, rules){
+  const R = rules || CHACHA_COUNT_RULES; let n = 0;
+  for(const ch of String(s ?? '')){
+    const cp = ch.codePointAt(0);
+    if(cp === 0x0A) n += R.newline;
+    else if(cp === 0x0D) n += R.cr;
+    else n += isHalfWidthCp(cp) ? R.half : R.full;
+  }
+  return n;
+}
+const COUNTERS = {
+  plain:{id:'plain', label:'1文字＝1字（Markdown記号・改行も1字）', fn:countChars, provisional:false},
+  chacha:{id:'chacha', label:'全角1字・半角0.5字（暫定・実機との一致は未確認）', fn:countChacha, provisional:true}
+};
+const fmtN = n => Number.isInteger(n) ? String(n) : n.toFixed(1);
+
+const SERVICES = [
+  {id:'common', name:'共通Markdown', short:'共通', desc:'従来の出力です（v0.4.2までと同じ）。字数の上限は予定文字数だけで決まります。', counter:'plain',
+   fields:[{id:'persona', label:'人格設定 Markdown', kind:'persona', limit:null}], examples:null, notes:[]},
+  {id:'talelynx', name:'Talelynx', desc:'キャラクターチャットの「詳細設定」欄向けです。', counter:'plain',
+   fields:[{id:'detail', label:'詳細設定', kind:'persona', limit:7000}],
+   examples:{mode:'inline'}, spec:'given',
+   notes:['会話例の専用欄は確認できていないため、使う場合は詳細設定の本文に含めます（字数に算入）。',
+          'ユーザー名などの変数の書き方は確認できていないため、変換していません（{{char}}・{{user}}のままです）。']},
+  {id:'chacha', name:'チャチャ', desc:'新チャットのプロンプト設定向けです。人格は「登場キャラクターのプロフィール」に出力します。', counter:'chacha',
+   fields:[{id:'profile', label:'登場キャラクターのプロフィール', kind:'persona', limit:null},
+           {id:'desc', label:'説明', kind:'user', limit:null}],
+   pool:{label:'プロンプト合計', ids:['profile','desc'], limit:2000},
+   examples:{mode:'separate', label:'会話例', maxCount:25, limit:1500}, spec:'given',
+   notes:['半角を0.5字と数える仕様は利用者情報にもとづく暫定です。実機の表示と一致するかは未確認で、端数の扱いも不明です。',
+          '「説明」は世界観や状況のための欄です。人格データにない内容は作らないので、必要なときだけご自分で入力してください。',
+          'ユーザー名などの変数の書き方は確認できていないため、変換していません（{{char}}・{{user}}のままです）。']},
+  {id:'plaitoon', name:'Plaitoon', desc:'日本語環境の詳細モード向けです。', counter:'plain', spec:'given',
+   templates:[
+     {id:'basic11', name:'1:1ベーシック', fields:[{id:'info', label:'作品設定および情報', kind:'persona', limit:8000}],
+      examples:{mode:'separate', label:'会話例', maxPairs:3, msgSoft:200}},
+     {id:'sim', name:'シミュレーションベーシック', fields:[{id:'info', label:'作品設定および情報', kind:'persona', limit:8000}],
+      examples:{mode:'separate', label:'会話例', maxPairs:3, msgSoft:200}},
+     {id:'custom', name:'クリエイターカスタム', fields:[{id:'custom', label:'設定本文（システム指示）', kind:'persona', limit:10000}],
+      examples:{mode:'inline'}, preface:true}
+   ],
+   notes:['ユーザー変数は {{char}}・{{user}} です（このツールの標準の表記と同じです）。']}
+];
+
+/* =====================================================================
    2. 設定データ D
    ===================================================================== */
 // use = この人格項目を使うか（出力・調律エリア・試着の対象）。新規作成は全項目OFFから始める
@@ -1467,7 +1533,9 @@ function defaultData(){
     output:{omit:[], showPreset:false, // omit=v0.2の「省略」記録（v0.3で使用状態へ読み替え済み。値は残す）/ showPreset=プリセット名をMarkdownに載せるか
       // Markdownに出力する節（v0.4.1）。新規は話し方と人格だけON。OFFでも設定は消さない
       sections:{speech:true, persona:true, progress:false, romance:false, ifthen:false},
-      progressParts:{trust:true, deepen:true, regress:true}}, // 関係の進展のうち出力する種類
+      progressParts:{trust:true, deepen:true, regress:true}, // 関係の進展のうち出力する種類
+      // 出力先（データ形式6 / アプリ v0.5.0）。人格データには触れず、出力画面の選択だけを持つ
+      dest:{service:'common', plaitoon:'basic11', chachaDesc:'', customPreface:true, exInline:false, examples:[]}},
     /* 関係段階の作り方（v0.4）
        mode : suggest=自動提案（新規の既定）/ linked=連動調整 / individual=完全個別（v0.3以前から移行したデータの既定）
        traits[id] : {ref, sugg, edited, base, diff, follow}
@@ -1570,6 +1638,15 @@ const MIGRATIONS = {
     d.meta.notice = [d.meta.notice, 'v5out'].filter(Boolean).join('+');
     d.v = 5;
     return d;
+  },
+  /* v0.4.2(形式5) → v0.5.0(形式6)：出力先の選択を追加。人格データには触れない。
+     従来の出力を保つため、出力先は「共通Markdown」で始める */
+  5(d){
+    d.output = (d.output && typeof d.output === 'object') ? d.output : {};
+    const dd = (d.output.dest && typeof d.output.dest === 'object') ? d.output.dest : {};
+    d.output.dest = Object.assign({service:'common', plaitoon:'basic11', chachaDesc:'', customPreface:true, exInline:false, examples:[]}, dd);
+    d.v = 6;
+    return d;
   }
 };
 function migrate(raw){
@@ -1597,6 +1674,16 @@ function normalize(saved){
   if(!PATTERNS.some(p => p.id === out.presets.pattern)) out.presets.pattern = 'gradual';
   if(!out.undo || typeof out.undo !== 'object' || Array.isArray(out.undo)) out.undo = {};
   out.relation.rules.forEach(r => { if(r && typeof r === 'object' && typeof r.out !== 'boolean') r.out = true; });
+  // 出力先の選択（v0.5.0）。不明な値は初期値へ。人格データは触らない
+  const dst = out.output.dest = (out.output.dest && typeof out.output.dest === 'object' && !Array.isArray(out.output.dest)) ? out.output.dest : {};
+  if(!SERVICES.some(x => x.id === dst.service)) dst.service = 'common';
+  const plTpl = SERVICES.find(x => x.id === 'plaitoon').templates;
+  if(!plTpl.some(x => x.id === dst.plaitoon)) dst.plaitoon = 'basic11';
+  if(typeof dst.chachaDesc !== 'string') dst.chachaDesc = '';
+  if(typeof dst.customPreface !== 'boolean') dst.customPreface = true;
+  if(typeof dst.exInline !== 'boolean') dst.exInline = false;
+  dst.examples = (Array.isArray(dst.examples) ? dst.examples : []).filter(e => e && typeof e === 'object')
+    .map((e, i) => ({...e, id:Number.isFinite(+e.id) ? +e.id : i + 1, label:String(e.label ?? ''), user:String(e.user ?? ''), char:String(e.char ?? ''), on:e.on !== false}));
   out.v = DATA_VERSION;
   return out;
 }
@@ -1892,6 +1979,11 @@ function presetNames(D){
   return PRESET_KINDS.map(k => presetOf(k.id, D.presets[k.id])).filter(Boolean).map(p => `「${p.name}」`).join('×');
 }
 function buildMarkdown(D, level){
+  const r = buildMarkdownRaw(D, level);
+  return {text:r.text, level:r.level, parts:r.parts.map(p => ({id:p.id, title:p.title, group:p.group, chars:countChars(p.text)}))};
+}
+// 節ごとの本文（text）を持つ版。サービスごとの計数方式で数え直すために使う
+function buildMarkdownRaw(D, level){
   const c = makeCtx(D, level);
   const parts = [];
   for(const sec of SECTIONS){
@@ -1909,7 +2001,7 @@ function buildMarkdown(D, level){
     else { const st = parts.find(p => p.id === 'stages'); if(st){ const i = st.text.indexOf('\n'); st.text = st.text.slice(0, i) + '\n' + note + st.text.slice(i); } }
   }
   const text = parts.map(p => p.text).join('\n\n');
-  return {text, level, parts:parts.map(p => ({id:p.id, title:p.title, group:p.group, chars:countChars(p.text)}))};
+  return {text, level, parts};
 }
 // 詳細度：自動=予定文字数に収まる最も詳しいもの。収まらなければ最小を出して警告（項目の省略は利用者が選ぶ）
 function chooseOutput(D, mode){
@@ -1923,15 +2015,114 @@ function chooseOutput(D, mode){
   return {...last, auto:true};
 }
 // 各項目を「使う／使わない」に切り替えたときの文字数の増減（使用中なら減る量、未使用なら増える量）
-function useImpact(D, level){
-  const base = countChars(buildMarkdown(D, level).text);
+function useImpact(D, level, cnt = countChars){
+  const base = cnt(buildMarkdown(D, level).text);
   return TRAITS.map(t => {
     const used = isUsed(D, t.id);
     const copy = {...D, traits:{...D.traits, [t.id]:{...D.traits[t.id], use:!used}}};
-    const other = countChars(buildMarkdown(copy, level).text);
+    const other = cnt(buildMarkdown(copy, level).text);
     return {id:t.id, used, delta:Math.abs(other - base),
             suggested: used && !D.traits[t.id].locked && prioOf(D, t.id) === 'low' && isDefaultTrait(D, t.id)};
   });
+}
+
+/* =====================================================================
+   3b. 出力先ごとの出力（共通人格データ → 詳細度 → サービス別の書式 → 文字数判定）
+   人格の辞書・Markdown生成（buildMarkdown / chooseOutput）はそのまま使い、ここでは「どの欄に、何を足して、どう数えるか」だけを扱う。D は変更しない
+   ===================================================================== */
+const PLAITOON_CUSTOM_PREFACE = '# 人格に関する指示\n{{char}}として{{user}}と会話する。以下の人格設定と行動規則に従って振る舞う。';
+
+function resolveTarget(D){
+  const dest = (D.output && D.output.dest) || {};
+  const svc = SERVICES.find(x => x.id === dest.service) || SERVICES[0];
+  const tpl = svc.templates ? (svc.templates.find(x => x.id === dest.plaitoon) || svc.templates[0]) : null;
+  const src = tpl || svc;
+  return {id:svc.id, name:svc.name, tplId:tpl ? tpl.id : null, tplName:tpl ? tpl.name : '',
+    label:tpl ? `${svc.name}（${tpl.name}）` : svc.name, desc:svc.desc, notes:svc.notes || [],
+    counter:COUNTERS[svc.counter], fields:src.fields, pool:svc.pool || null,
+    examples:src.examples || null, preface:!!src.preface};
+}
+const destOf = D => (D.output && D.output.dest) || {};
+const exList = D => Array.isArray(destOf(D).examples) ? destOf(D).examples : [];
+// 会話例：出力対象（on）のうち、出力先の件数・組数の上限までを使う。超えた分は削らずに「対象外」と表示する
+function exApplied(D, tgt){
+  const ex = tgt.examples; if(!ex) return {items:[], skipped:[]};
+  const act = exList(D).filter(e => e.on !== false), max = ex.maxCount || ex.maxPairs || Infinity;
+  return {items:act.slice(0, max), skipped:act.slice(max)};
+}
+function exSpeakers(D, tgt){
+  if(tgt.id === 'plaitoon') return {user:'{{user}}', char:'{{char}}'};
+  return {user:'ユーザー', char:(D.meta.name || '').trim() || 'キャラクター'};
+}
+// 本文に含める会話例（Talelynx・Plaitoonクリエイターカスタム）。話者名は確認できた表記だけを使う
+function examplesBlock(D, tgt){
+  const sp = exSpeakers(D, tgt);
+  const blocks = exApplied(D, tgt).items.map(e => [String(e.user).trim() && `${sp.user}：${String(e.user).trim()}`, String(e.char).trim() && `${sp.char}：${String(e.char).trim()}`].filter(Boolean))
+    .filter(l => l.length);
+  if(!blocks.length) return '';
+  return '## 会話例\n' + blocks.map((l, i) => `### 例${i + 1}\n${l.join('\n')}`).join('\n');
+}
+// 独立欄に出す会話例（チャチャ・Plaitoon通常）。字数は台詞の本文だけを数える
+function exStats(D, tgt){
+  const ex = tgt.examples, cnt = tgt.counter.fn;
+  if(!ex || ex.mode !== 'separate') return null;
+  const ap = exApplied(D, tgt);
+  const per = ap.items.map(e => ({id:e.id, user:cnt(e.user), char:cnt(e.char), total:cnt(e.user) + cnt(e.char),
+    emptyUser:!String(e.user).trim(), emptyChar:!String(e.char).trim(),
+    long:!!ex.msgSoft && (cnt(e.user) > ex.msgSoft || cnt(e.char) > ex.msgSoft)}));
+  const total = per.reduce((a, x) => a + x.total, 0);
+  const max = ex.maxCount || ex.maxPairs || null;
+  return {per, total, limit:ex.limit || null, over:!!ex.limit && total > ex.limit, count:ap.items.length, max, skipped:ap.skipped.length, unit:ex.maxPairs ? '組' : '件'};
+}
+
+// 人格Markdownを出力先の欄へ。本体の書式は共通のまま、欄ごとに必要な前置きだけを足す
+function adaptPersona(D, md, tgt){
+  let t = md.text;
+  if(tgt.preface && destOf(D).customPreface !== false) t = PLAITOON_CUSTOM_PREFACE + '\n\n' + t;
+  return t;
+}
+
+/* 出力を組み立てる。
+   共通Markdownは従来の chooseOutput をそのまま使う（出力は改修前と同じ）。
+   ほかの出力先は、予定文字数とサービス上限の両方に収まる最も詳しい詳細度を選ぶ。収まらなくても人格設定は削らず、警告だけ返す */
+function buildOutput(D, mode){
+  const tgt = resolveTarget(D), cnt = tgt.counter.fn, dest = destOf(D);
+  const budget = D.meta.budget || 0;
+  const descText = tgt.id === 'chacha' ? String(dest.chachaDesc || '') : '';
+  const inline = (tgt.examples && tgt.examples.mode === 'inline' && dest.exInline) ? examplesBlock(D, tgt) : '';
+  const main = tgt.fields.find(f => f.kind === 'persona');
+  const compose = md => { const persona = adaptPersona(D, md, tgt); return {persona, full:inline ? persona + '\n\n' + inline : persona}; };
+  let md, auto = false;
+  if(tgt.id === 'common'){ md = chooseOutput(D, mode); auto = !!md.auto; }
+  else if(mode !== 'auto'){ md = buildMarkdownRaw(D, +mode); }
+  else {
+    auto = true;
+    for(const lv of [3, 2, 1]){
+      md = buildMarkdownRaw(D, lv);
+      const c = compose(md), fullN = cnt(c.full) + cnt(descText);
+      const svcOk = tgt.pool ? fullN <= tgt.pool.limit : (!main.limit || cnt(c.full) <= main.limit);
+      if(svcOk && (budget <= 0 || cnt(c.persona) <= budget)) break;
+    }
+  }
+  // 節ごとの字数は、このサービスの計数方式で数え直す
+  const parts = md.parts.map(p => ({id:p.id, title:p.title, group:p.group, chars:p.text !== undefined ? cnt(p.text) : p.chars}));
+  const comp = tgt.id === 'common' ? {persona:md.text, full:md.text} : compose(md);
+  const fields = tgt.fields.map(f => {
+    const text = f.kind === 'persona' ? comp.full : descText;
+    const count = f.kind === 'persona' && tgt.id === 'common' ? countChars(text) : cnt(text);
+    return {id:f.id, label:f.label, kind:f.kind, text, count, limit:f.limit || null,
+      over:!!f.limit && count > f.limit, rem:f.limit ? f.limit - count : null, inPool:!!(tgt.pool && tgt.pool.ids.includes(f.id))};
+  });
+  let pool = null;
+  if(tgt.pool){
+    const count = fields.filter(f => f.inPool).reduce((a, f) => a + f.count, 0);
+    pool = {label:tgt.pool.label, limit:tgt.pool.limit, count, rem:tgt.pool.limit - count, over:count > tgt.pool.limit};
+  }
+  const personaN = tgt.id === 'common' ? countChars(comp.persona) : cnt(comp.persona);
+  const budgetInfo = {value:budget, count:personaN, rem:budget - personaN, over:budget > 0 && personaN > budget};
+  const svcOver = !!(pool && pool.over) || fields.some(f => f.over);
+  const text = fields.find(f => f.kind === 'persona').text;
+  return {tgt, md:{...md, parts}, level:md.level, auto, fields, pool, budget:budgetInfo, svcOver, text, descText, inlineChars:inline ? cnt(inline) : 0, ex:exStats(D, tgt)};
 }
 
 /* =====================================================================
@@ -2627,6 +2818,8 @@ function viewPreview(){
   <div id="pv-cards">${previewCards(sit)}</div>
   ${sit.uses.some(id => !isUsed(D, id)) ? `<p class="hint note">この状況に関わる項目のうち、使用していない項目（${sit.uses.filter(id => !isUsed(D, id)).map(id => esc(TRAIT[id].name)).join('・')}）は標準（Lv3）として扱っています。</p>` : ''}
   ${nRules ? `<p class="note-box">関係・反応のIf-Then規則（${nRules}件）は、この会話例には反映されていません。人格設定のMarkdownには含まれます。</p>` : ''}
+  <div class="row wrap" style="margin:0 0 8px"><button class="btn ghost sm" data-act="ex-add-all">この状況の3段階をすべて会話例に追加</button></div>
+  <p class="hint note" style="margin:0 2px 12px">「会話例に追加」で集めた会話例は、Markdown出力画面の出力先（Talelynx・チャチャ・Plaitoon）で選択・編集・コピーできます。${exList(D).length ? `いま${exList(D).length}件あります。` : ''}</p>
   <details class="card plain" id="pvmd-box"><summary>${ic('chevron')}会話例をMarkdownで出力</summary>
     <p class="hint">人格設定のMarkdownとは別の書き出しです。キャラクターの「会話例」欄などに使えます。</p>
     <div class="seg" style="margin-bottom:10px">${[['one','この状況'],['all','全状況']].map(([v,n]) => `<button class="${UI.pvScope === v ? 'on' : ''}" data-act="pv-scope" data-val="${v}">${n}</button>`).join('')}</div>
@@ -2642,7 +2835,7 @@ function previewCards(sit){
     const body = r.merged.map(m => `<p class="${m.k}">${esc(m.k === 'say' ? `「${m.text}」` : m.text)}</p>`).join('') || '<p class="act">（この状況の反応がありません）</p>';
     const tags = sit.uses.filter(id => isUsed(D, id) && !(TRAIT[id].romance && romOff(D))).map(id => `<span class="tag">${esc(TRAIT[id].name)}：${esc(TRAIT[id].levels[val(id, st.id) - 1].label)}</span>`).join('');
     return `<section class="card pv">
-      <div class="pv-head"><h3>${st.name}</h3><button class="btn ghost sm" data-act="copy-ex" data-stage="${st.id}">${ic('copy')}コピー</button></div>
+      <div class="pv-head"><h3>${st.name}</h3><span class="row" style="gap:6px"><button class="btn ghost sm" data-act="ex-add" data-stage="${st.id}">会話例に追加</button><button class="btn ghost sm" data-act="copy-ex" data-stage="${st.id}">${ic('copy')}コピー</button></span></div>
       <div class="pv-meta">一人称 <b>${esc(r.me)}</b> ／ 二人称 <b>${esc(r.you)}</b> ／ 口調 <b>${esc(SPEECH_BY[r.preset].name)}</b></div>
       <div class="pv-body">${body}</div>
       <div class="tags">${tags}</div>
@@ -2663,11 +2856,42 @@ function refreshPreviewCards(){
 }
 
 /* ---------- 画面4：Markdown出力 ---------- */
+/* ---------- 出力先の選択（v0.5.0） ---------- */
+const SPEC_NOTE = '上限などの仕様は、依頼文書に記載された値です（2026年11月3日時点。公式ページとの照合は未実施）。仕様は変わることがあります。';
+function destCardHTML(){
+  const tgt = resolveTarget(D), dest = destOf(D);
+  const seg = SERVICES.map(x => `<button class="${x.id === tgt.id ? 'on' : ''}" data-act="dest" data-val="${x.id}">${esc(x.short || x.name)}</button>`).join('');
+  const svc = SERVICES.find(x => x.id === tgt.id);
+  let extra = '';
+  if(svc.templates){
+    extra += `<h4 style="margin-top:14px">テンプレート</h4><div class="chips">${svc.templates.map(t => {
+      const lim = t.fields[0].limit;
+      return `<button class="chip ${t.id === tgt.tplId ? 'on' : ''}" data-act="dest-tpl" data-val="${t.id}">${esc(t.name)}<span class="mk">${lim.toLocaleString('en-US')}字</span></button>`;
+    }).join('')}</div>`;
+  }
+  if(tgt.id === 'chacha'){
+    extra += `<div class="field" style="margin:14px 0 0"><label for="d-desc">「説明」欄に入れる文章（任意・ご自分で入力）</label>
+      <textarea id="d-desc" class="txt" rows="3" data-dest-desc placeholder="世界観や物語の状況など。空欄なら説明は出力しません">${'\n' + esc(dest.chachaDesc)}</textarea>
+      <p class="hint" style="margin:4px 0 0">入力した文章は、プロフィールと合わせて合計2,000字の判定に入ります。人格データにない世界観や経歴は作りません。</p></div>`;
+  }
+  if(tgt.preface){
+    extra += `<label class="switchrow" style="margin-top:12px"><span>先頭に「人格に関する指示」を付ける<small class="hint" style="display:block;margin:0">ベースのシステム指示がないため、人格設定の前に短い指示を1つ足します。</small></span><input type="checkbox" class="switch" data-act-change="dest-preface" ${dest.customPreface !== false ? 'checked' : ''}></label>`;
+  }
+  return `<section class="card" id="dest-card">
+    <h2 style="margin:0 0 8px">出力先</h2>
+    <div class="seg four" id="o-dest">${seg}</div>
+    <p class="hint" style="margin:8px 0 0">${esc(tgt.desc)}人格の設定は出力先を変えても変わりません。</p>
+    ${extra}
+    ${tgt.id !== 'common' ? `<p class="hint" style="margin:10px 0 0">${esc(SPEC_NOTE)}</p>${tgt.notes.map(n => `<p class="hint" style="margin:4px 0 0">・${esc(n)}</p>`).join('')}` : ''}
+  </section>`;
+}
 function viewOutput(){
   const lv = [['auto','自動'],['3','詳細'],['2','標準'],['1','最小']].map(([v, n]) => `<button class="${String(UI.level) === v ? 'on' : ''}" data-act="level" data-val="${v}">${n}</button>`).join('');
+  const isCommon = resolveTarget(D).id === 'common';
   return `
+  ${destCardHTML()}
   <section class="card">
-    <div class="field" style="margin-bottom:0"><label for="o-budget">人格設定の予定文字数</label>
+    <div class="field" style="margin-bottom:0"><label for="o-budget">人格設定の予定文字数${isCommon ? '' : '（サービスの上限とは別に管理します）'}</label>
       <div class="row"><input id="o-budget" type="number" inputmode="numeric" class="txt num" value="${D.meta.budget}" data-path="meta.budget" min="0" step="100"><span class="unit">字</span></div>
       <div class="chips">${budgetChips()}</div></div>
     <h4 style="margin-top:16px">出力の詳細度</h4>
@@ -2681,12 +2905,8 @@ function viewOutput(){
     <div id="sec-list"></div>
   </details>
   <section class="card" id="counter"></section>
-  <section class="card">
-    <div class="row between" style="margin-bottom:10px"><h2 style="margin:0">人格設定 Markdown</h2></div>
-    <textarea id="md" class="txt mono" readonly></textarea>
-    <div class="row wrap" style="margin-top:10px"><button class="btn" data-act="copy-md">${ic('copy')}コピー</button><button class="btn ghost" data-act="dl-md">${ic('download')}.mdで保存</button></div>
-    <ul class="bd" id="breakdown"></ul>
-  </section>
+  <div id="fields"></div>
+  <div id="ex-card">${exCardHTML()}</div>
   <details class="card plain" id="omit-box"><summary>${ic('chevron')}項目ごとの出力設定（使用・優先度）<span class="tag" id="omit-count" style="margin-left:6px"></span></summary>
     <p class="hint">「使用する」は人格調律の「使用する人格項目を選ぶ」と同じ設定です。外しても数値や固定は消えません。優先度は詳細度ごとの書き方に効きます（使用するかどうかとは別の設定です）。<span class="cand">外す候補</span>は優先度「低」で初期値のままの項目です。</p>
     <div class="row wrap" style="margin-bottom:6px"><button class="btn ghost sm" data-act="unuse-suggested">候補をまとめて外す</button></div>
@@ -2703,7 +2923,16 @@ function viewOutput(){
 let lastOutput = null;
 function updateOutput(){
   const counter = $('#counter'); if(!counter) return;
-  const r = chooseOutput(D, UI.level); lastOutput = r;
+  const T = buildOutput(D, UI.level); lastOutput = T;
+  if(T.tgt.id === 'common') counterCommon(T); else counterService(T);
+  renderFields(T);
+  renderExStats(T);
+  updateSecList(T.level, T.tgt.counter.fn);
+  updateOmitList(T.level, T.tgt.counter.fn);
+}
+// 共通Markdown：従来（v0.4.2）の表示のまま
+function counterCommon(T){
+  const r = T.md, counter = $('#counter');
   const budget = D.meta.budget || 0, used = countChars(r.text), rem = budget - used;
   const ratio = budget > 0 ? used / budget : 0;
   const cls = budget <= 0 ? 'na' : (used > budget ? 'over' : (ratio >= 0.9 ? 'near' : 'ok'));
@@ -2724,30 +2953,165 @@ function updateOutput(){
     <div class="nums"><div><small>指定</small><b>${budget || '—'}</b></div><div><small>実際</small><b id="used-n">${used}</b></div><div><small>残り</small><b class="${rem < 0 && budget > 0 ? 'neg' : ''}">${budget > 0 ? rem : '—'}</b></div></div>
     <div class="msg ${cls}">${esc(msg)}${action}</div>
     <p class="hint" style="margin:8px 0 0">詳細度（${esc(modeTxt)}）／ 使用中の人格項目 ${nUse} / ${TRAITS.length} ／ 改行・記号も1字として数えています。</p>`;
-  $('#md').value = r.text;
-  $('#breakdown').innerHTML = r.parts.map(p => `<li><span>${esc(p.title)}</span><span>${p.chars}字</span></li>`).join('');
-  updateSecList(r.level);
-  updateOmitList(r.level);
 }
+// 共通以外：サービスの上限と予定文字数を別々に判定する（どちらも同じ計数関数で数える）
+function counterService(T){
+  const tgt = T.tgt, b = T.budget, counter = $('#counter');
+  const main = T.fields.find(f => f.kind === 'persona');
+  const lim = T.pool || main.limit && {label:main.label, limit:main.limit, count:main.count, rem:main.rem, over:main.over};
+  const svcRatio = lim ? lim.count / lim.limit : 0, budRatio = b.value > 0 ? b.count / b.value : 0;
+  const ratio = Math.max(svcRatio, budRatio);
+  const over = T.svcOver || b.over;
+  const cls = over ? 'over' : (ratio >= 0.9 ? 'near' : 'ok');
+  let msg;
+  if(!over) msg = b.value > 0 ? 'サービス上限内かつ予定文字数内です。' : 'サービス上限内です（予定文字数は未設定のため、サービス上限を使っています）。';
+  else {
+    msg = [T.svcOver && lim && `サービス上限（${lim.label} ${lim.limit.toLocaleString('en-US')}字）を${fmtN(-lim.rem)}字超えています。`,
+           b.over && `予定文字数を${fmtN(b.count - b.value)}字超えています。`].filter(Boolean).join(' ')
+         + (T.auto && T.level === 1 ? '最小の詳細度でも収まりませんでした。' : '') + '設定データは削除していません。使う人格項目を絞るか、条件・If-Thenを減らすか、予定文字数や会話例を見直してください。';
+  }
+  const warns = [];
+  if(tgt.counter.provisional) warns.push('計数方式は暫定です。実機の表示と一致するかは未確認で、端数の扱いも不明です。');
+  if((tgt.id === 'talelynx' || tgt.id === 'chacha') && T.fields.some(f => f.text.includes('{{'))) warns.push('{{char}}・{{user}}の表記は、このサービスで使えるか確認できていません。貼り付け後に、実際の編集画面で確認してください。');
+  const modeTxt = T.auto ? `自動選択：${LEVEL_NAMES[T.level]}` : `手動：${LEVEL_NAMES[T.level]}`;
+  const line = (name, a, l, r, bad) => `<li><span>${esc(name)}</span><span class="${bad ? 'neg' : ''}">${fmtN(a)} / ${l.toLocaleString('en-US')}字（残り${fmtN(r)}字）</span></li>`;
+  counter.innerHTML = `
+    <div class="meter"><div class="bar ${cls}" style="width:${Math.min(100, ratio * 100)}%"></div></div>
+    <div class="nums"><div><small>予定</small><b>${b.value || '—'}</b></div><div><small>人格設定</small><b id="used-n">${fmtN(b.count)}</b></div><div><small>予定の残り</small><b class="${b.over ? 'neg' : ''}">${b.value > 0 ? fmtN(b.rem) : '—'}</b></div></div>
+    <ul class="bd">${lim ? line(`サービス上限：${lim.label}`, lim.count, lim.limit, lim.rem, lim.over) : ''}</ul>
+    <div class="msg ${cls}">${esc(msg)}${over ? '<button class="btn sm" data-act="open-omit" style="display:block;margin-top:8px">出力する項目を確認する</button>' : ''}</div>
+    ${warns.map(w => `<p class="note-box">${esc(w)}</p>`).join('')}
+    <p class="hint" style="margin:8px 0 0">詳細度（${esc(modeTxt)}）／ 使用中の人格項目 ${usedTraits(D).length} / ${TRAITS.length} ／ 計数方式：${esc(tgt.counter.label)}</p>`;
+}
+// 出力欄（画面に出す文字列＝コピーする文字列。字数表示や案内は textarea の外に置く）
+function fieldTaId(T, f){ return T.tgt.id === 'common' ? 'md' : 'f-' + f.id; }
+function fieldStatHTML(T, f){
+  const lim = f.inPool ? T.pool.limit : f.limit, rem = f.inPool ? T.pool.rem : f.rem, over = f.inPool ? T.pool.over : f.over;
+  if(!lim) return `<div class="nums sm"><div><small>使用</small><b>${fmtN(f.count)}</b></div><div><small>上限</small><b>なし</b></div></div>`;
+  return `<div class="nums sm"><div><small>使用</small><b>${fmtN(f.count)}</b></div>
+    <div><small>上限${f.inPool ? '（' + esc(T.pool.label) + '）' : ''}</small><b>${lim.toLocaleString('en-US')}</b></div>
+    <div><small>残り</small><b class="${rem < 0 ? 'neg' : ''}">${fmtN(rem)}</b></div></div>
+    ${f.inPool ? `<p class="hint" style="margin:0">この欄の字数：${fmtN(f.count)}字 ／ ${esc(T.pool.label)}：${fmtN(T.pool.count)}字（欄をまたいだ合計で判定）</p>` : ''}
+    ${over ? `<div class="msg over">上限を${fmtN(-rem)}字超えています。設定データは削除していません。</div>` : ''}`;
+}
+function renderFields(T){
+  const box = $('#fields'); if(!box) return;
+  const common = T.tgt.id === 'common';
+  box.innerHTML = T.fields.map(f => {
+    if(common) return `<section class="card">
+    <div class="row between" style="margin-bottom:10px"><h2 style="margin:0">${esc(f.label)}</h2></div>
+    <textarea id="md" class="txt mono" readonly></textarea>
+    <div class="row wrap" style="margin-top:10px"><button class="btn" data-act="copy-md">${ic('copy')}コピー</button><button class="btn ghost" data-act="dl-md">${ic('download')}.mdで保存</button></div>
+    <ul class="bd" id="breakdown"></ul>
+  </section>`;
+    const id = fieldTaId(T, f), body = f.kind === 'user' && !f.text
+      ? '<p class="hint" style="margin:0">未入力です（「出力先」欄で入力できます）。出力しません。</p>'
+      : `<textarea id="${id}" class="txt mono" readonly></textarea>
+    <div class="row wrap" style="margin-top:10px"><button class="btn" data-act="copy-field" data-ta="${id}">${ic('copy')}コピー</button><button class="btn ghost" data-act="dl-field" data-ta="${id}" data-label="${esc(f.label)}">${ic('download')}.mdで保存</button></div>`;
+    return `<section class="card fcard" data-field="${f.id}">
+    <div class="row between" style="margin-bottom:6px"><h2 style="margin:0">${esc(f.label)}</h2>${f.over || (f.inPool && T.pool.over) ? '<span class="tag warn">上限超過</span>' : ''}</div>
+    ${fieldStatHTML(T, f)}${body}
+    ${f.kind === 'persona' ? '<ul class="bd" id="breakdown"></ul>' : ''}
+  </section>`;
+  }).join('');
+  T.fields.forEach(f => { const ta = $('#' + fieldTaId(T, f)); if(ta) ta.value = f.text; });
+  const bd = $('#breakdown');
+  if(bd) bd.innerHTML = T.md.parts.map(p => `<li><span>${esc(p.title)}</span><span>${fmtN(p.chars)}字</span></li>`).join('');
+}
+/* ---------- 会話例（試着から選ぶ・編集する・出力欄ごとにコピーする） ---------- */
+function exCardHTML(){
+  const tgt = resolveTarget(D), ex = tgt.examples; if(!ex) return '';
+  const inline = ex.mode === 'inline';
+  return `<section class="card" id="ex-box" data-ex-mode="${ex.mode}">
+    <h2 style="margin:0 0 6px">会話例${inline ? '（本文に含める）' : ''}</h2>
+    <p class="hint">「人格の試着」の各段階にある「会話例に追加」で、使いたい会話例を集めます。${inline ? `${esc(tgt.name)}${tgt.id === 'plaitoon' ? '（クリエイターカスタム）' : ''}には独立した会話例欄がないため、使う場合は本文に含めます（字数に算入）。` : '独立した会話例欄に入れる内容です。'}</p>
+    ${inline ? `<label class="switchrow"><span>会話例を本文に含める</span><input type="checkbox" class="switch" data-act-change="dest-exinline" ${destOf(D).exInline ? 'checked' : ''}></label>` : ''}
+    <div id="ex-stats"></div>
+    <div id="ex-list">${exListHTML()}</div>
+    <p class="hint note">試着の会話例は外部AIを使わない簡易テンプレートで、台詞が自然とは限りません。ユーザー発言は空欄で追加されます。内容を確認・編集してから使ってください（編集は人格設定に影響しません）。</p>
+  </section>`;
+}
+function exListHTML(){
+  const list = exList(D);
+  if(!list.length) return '<p class="hint" style="margin:8px 0 0">まだありません。「人格の試着」で会話例を追加してください。</p>';
+  const tgt = resolveTarget(D), sp = exSpeakers(D, tgt);
+  return list.map((e, i) => `<div class="exrow ${e.on !== false ? '' : 'off'}" data-ex-row="${e.id}">
+    <div class="row between"><label class="omit"><input type="checkbox" data-act-change="ex-on" data-ex="${e.id}" ${e.on !== false ? 'checked' : ''}>${esc(e.label || '会話例' + (i + 1))}</label>
+      <button class="btn ghost sm" data-act="ex-del" data-ex="${e.id}">削除</button></div>
+    <label class="exl">ユーザー発言</label>
+    <textarea class="txt" rows="2" data-ex-field="user" data-ex="${e.id}" placeholder="ここにユーザーの発言を入力" autocomplete="off">${'\n' + esc(e.user)}</textarea>
+    <div class="row wrap"><span class="exc" data-exc="${e.id}:user"></span><button class="btn ghost sm" data-act="ex-copy" data-ex="${e.id}" data-field="user">${ic('copy')}コピー</button></div>
+    <label class="exl">キャラクター応答</label>
+    <textarea class="txt" rows="3" data-ex-field="char" data-ex="${e.id}" autocomplete="off">${'\n' + esc(e.char)}</textarea>
+    <div class="row wrap"><span class="exc" data-exc="${e.id}:char"></span><button class="btn ghost sm" data-act="ex-copy" data-ex="${e.id}" data-field="char">${ic('copy')}コピー</button></div>
+    <div class="tags" data-exflags="${e.id}"></div>
+  </div>`).join('');
+}
+function renderExStats(T){
+  const box = $('#ex-stats'); if(!box) return;
+  const tgt = T.tgt, ex = tgt.examples, cnt = tgt.counter.fn;
+  if(!ex){ box.innerHTML = ''; return; }
+  const ap = exApplied(D, tgt), nOn = exList(D).filter(e => e.on !== false).length;
+  let html = '';
+  if(ex.mode === 'separate'){
+    const st = T.ex, unit = st.unit;
+    html = `<div class="nums sm"><div><small>出力する会話例</small><b>${st.count}${st.max ? ' / ' + st.max : ''}</b></div>${st.limit ? `<div><small>合計字数（上限${st.limit.toLocaleString('en-US')}）</small><b class="${st.over ? 'neg' : ''}">${fmtN(st.total)}</b></div>` : `<div><small>合計字数</small><b>${fmtN(st.total)}</b></div>`}</div>`;
+    if(st.skipped) html += `<div class="msg near">選択中の${nOn}${unit}のうち、${st.skipped}${unit}は出力先の上限（${st.max}${unit}）を超えるため対象外です。削除はしていません。</div>`;
+    if(st.over) html += `<div class="msg over">会話例の合計が上限を${fmtN(st.total - st.limit)}字超えています。会話例は自動では削っていません。選択を減らすか、内容を短くしてください。</div>`;
+    if(ex.msgSoft && st.per.some(x => x.long)) html += `<div class="msg near">1メッセージあたり約${ex.msgSoft}字までが目安です。超えているものがあります。</div>`;
+    if(st.count && !st.over && !st.skipped && !(ex.msgSoft && st.per.some(x => x.long))) html += `<div class="msg ok">会話例は出力先の上限に収まっています。</div>`;
+  } else {
+    const on = !!destOf(D).exInline;
+    html = `<div class="nums sm"><div><small>本文に含める</small><b>${on ? ap.items.length : 0}件</b></div><div><small>本文に加わる字数</small><b>${on ? fmtN(T.inlineChars) : 0}</b></div></div>`;
+    if(!on && nOn) html += `<div class="msg na">会話例は本文に含めない設定です（上のスイッチで切り替えられます）。</div>`;
+  }
+  box.innerHTML = html;
+  // 会話例ごとの字数と注意
+  const per = T.ex ? Object.fromEntries(T.ex.per.map(x => [String(x.id), x])) : {};
+  const skippedIds = new Set(ap.skipped.map(e => String(e.id)));
+  exList(D).forEach(e => {
+    const u = $(`[data-exc="${e.id}:user"]`), c = $(`[data-exc="${e.id}:char"]`), fl = $(`[data-exflags="${e.id}"]`);
+    if(u) u.textContent = `${fmtN(cnt(e.user))}字`;
+    if(c) c.textContent = `${fmtN(cnt(e.char))}字`;
+    if(fl){
+      const tags = [];
+      if(e.on === false) tags.push(['', '出力しない']);
+      else if(skippedIds.has(String(e.id))) tags.push(['warn', '件数上限のため対象外']);
+      if(!String(e.user).trim()) tags.push(['warn', 'ユーザー発言が未入力']);
+      if(per[String(e.id)] && per[String(e.id)].long) tags.push(['warn', `約${ex.msgSoft}字を超えています`]);
+      fl.innerHTML = tags.map(([k, t]) => `<span class="tag ${k}">${esc(t)}</span>`).join('');
+    }
+  });
+}
+function addExample(sitId, stageId){
+  const sit = SITUATIONS.find(s => s.id === sitId) || SITUATIONS[0], st = STAGES.find(s => s.id === stageId);
+  const r = renderSituation(D, sit, stageId, UI.romance, pvOverride());
+  const dst = D.output.dest; if(!Array.isArray(dst.examples)) dst.examples = [];
+  if(dst.examples.length >= 60){ toast('会話例は60件までです。不要なものを削除してください'); return false; }
+  const id = dst.examples.reduce((m, e) => Math.max(m, +e.id || 0), 0) + 1;
+  dst.examples.push({id, label:`${sit.name}（${st.name}）`, user:'', char:r.text, on:true});
+  return true;
+}
+
 // 節（と関係の進展の種類）を切り替えたときの文字数の増減。実際に作り直して数えるので、出力と必ず一致する
 function withOutput(D, patch){ return {...D, output:{...D.output, ...patch}}; }
-function secImpact(D, level){
-  const base = countChars(buildMarkdown(D, level).text), res = {};
+function secImpact(D, level, cnt = countChars){
+  const base = cnt(buildMarkdown(D, level).text), res = {};
   SEC_DEFS.forEach(x => {
     const other = buildMarkdown(withOutput(D, {sections:{...D.output.sections, [x.id]:!secOn(D, x.id)}}), level).text;
-    res[x.id] = Math.abs(countChars(other) - base);
+    res[x.id] = Math.abs(cnt(other) - base);
   });
   PROGRESS_PARTS.forEach(x => {
     const on = D.output.progressParts[x.id] !== false;
     const other = buildMarkdown(withOutput(D, {progressParts:{...D.output.progressParts, [x.id]:!on}}), level).text;
-    res['p.' + x.id] = Math.abs(countChars(other) - base);
+    res['p.' + x.id] = Math.abs(cnt(other) - base);
   });
   return res;
 }
-function updateSecList(level){
+function updateSecList(level, cnt = countChars){
   const box = $('#sec-list'); if(!box) return;
-  const imp = secImpact(D, level), R = D.relation;
-  const n = (on, d) => d ? `<span class="sec-n">${on ? `${d}字` : `+${d}字`}</span>` : `<span class="sec-n zero">0字</span>`;
+  const imp = secImpact(D, level, cnt), R = D.relation;
+  const n = (on, d) => d ? `<span class="sec-n">${on ? `${fmtN(d)}字` : `+${fmtN(d)}字`}</span>` : `<span class="sec-n zero">0字</span>`;
   const condN = k => R[k].presets.filter(id => COND[k].some(c => c.id === id)).length + R[k].custom.filter(x => String(x).trim()).length;
   const nb = usedTraits(D).filter(t => !t.scope).length;
   const outRules = R.rules.filter(r => r.out !== false && String(r.when).trim() && String(r.then).trim()).length;
@@ -2779,9 +3143,9 @@ function updateSecList(level){
   }).join('');
   $('#sec-count').textContent = `${SEC_DEFS.filter(x => secOn(D, x.id)).length} / ${SEC_DEFS.length}`;
 }
-function updateOmitList(level){
+function updateOmitList(level, cnt = countChars){
   const box = $('#omit-list'); if(!box) return;
-  const imp = useImpact(D, level);
+  const imp = useImpact(D, level, cnt);
   const byId = Object.fromEntries(imp.map(c => [c.id, c]));
   $('#omit-count').textContent = `使用 ${imp.filter(c => c.used).length} / ${TRAITS.length}`;
   box.innerHTML = TRAITS.map(t => {
@@ -2790,7 +3154,7 @@ function updateOmitList(level){
     const stateTxt = (d.locked ? '核（固定）・' : '') + lvText;
     const seg = !used ? '' : d.locked ? '<span class="hint" style="grid-column:1 / -1;margin:0">固定した核は常に優先度「高」で出力します。</span>'
       : `<div class="seg">${['high','normal','low'].map(k => `<button class="${p === k ? 'on' : ''}" data-act="prio" data-trait="${t.id}" data-val="${k}">優先度 ${PRIO_NAMES[k]}</button>`).join('')}</div>`;
-    const delta = c && c.delta ? `（${used ? '−' : '+'}${c.delta}字）` : '';
+    const delta = c && c.delta ? `（${used ? '−' : '+'}${fmtN(c.delta)}字）` : '';
     const box = `<label class="omit"><input type="checkbox" data-act-change="use" data-trait="${t.id}" ${used ? 'checked' : ''}>使用する${delta}</label>`;
     return `<div class="oprow ${used ? '' : 'off'}"><div><div class="on-name">${esc(t.name)}${c && c.suggested ? '<span class="cand">外す候補</span>' : ''}</div><div class="on-sub">${esc(stateTxt)}</div></div>${box}${seg}</div>`;
   }).join('');
@@ -2918,6 +3282,19 @@ const ACTIONS = {
   'pvmd-dl'(){ download(`${fileBase()}_会話例.md`, $('#pvmd').value, 'text/markdown'); },
   level(b){ UI.level = b.dataset.val; $$('#o-level button').forEach(x => x.classList.toggle('on', x.dataset.val === UI.level)); updateOutput(); },
   'copy-md'(){ copyText($('#md').value); },
+  // 出力先（v0.5.0）：人格データには触れず、出力画面の選択だけを変える。予定文字数は書き換えない
+  dest(b){ D.output.dest.service = b.dataset.val; save(); render(true); },
+  'dest-tpl'(b){ D.output.dest.plaitoon = b.dataset.val; save(); render(true); },
+  'copy-field'(b){ const ta = $('#' + b.dataset.ta); if(ta) copyText(ta.value); },
+  'dl-field'(b){
+    const ta = $('#' + b.dataset.ta); if(!ta) return;
+    const T = resolveTarget(D);
+    download(`${fileBase()}_${T.label.replace(/[（）()\s:：]+/g, '_')}_${b.dataset.label}.md`, ta.value, 'text/markdown');
+  },
+  'ex-add'(b){ if(addExample(UI.sit, b.dataset.stage)){ save(); toast(`会話例に追加しました（${exList(D).length}件）`); } },
+  'ex-add-all'(){ let n = 0; STAGES.forEach(st => { if(addExample(UI.sit, st.id)) n++; }); if(n){ save(); toast(`会話例に${n}件追加しました（合計${exList(D).length}件）`); } },
+  'ex-del'(b){ D.output.dest.examples = exList(D).filter(e => String(e.id) !== b.dataset.ex); save(); $('#ex-list').innerHTML = exListHTML(); updateOutput(); },
+  'ex-copy'(b){ const ta = $(`textarea[data-ex="${b.dataset.ex}"][data-ex-field="${b.dataset.field}"]`); if(ta) copyText(ta.value); },
   'dl-md'(){ download(`${fileBase()}_人格設定.md`, $('#md').value, 'text/markdown'); },
   'open-omit'(){ const d = $('#omit-box'); d.open = true; d.scrollIntoView({behavior:'smooth', block:'start'}); },
   prio(b){ D.traits[b.dataset.trait].prio = b.dataset.val; save(); updateOutput(); },
@@ -2983,6 +3360,12 @@ const CHANGES = {
   'pre-lock'(el){ UI.pre.locks[el.dataset.trait] = el.checked; },
   'pre-rule'(el){ UI.pre.rules[+el.dataset.i] = el.checked; refreshPresetPreview(); },
   'show-preset'(el){ D.output.showPreset = el.checked; save(); updateOutput(); },
+  'dest-preface'(el){ D.output.dest.customPreface = el.checked; save(); updateOutput(); },
+  'dest-exinline'(el){ D.output.dest.exInline = el.checked; save(); updateOutput(); },
+  'ex-on'(el){
+    const e = exList(D).find(x => String(x.id) === el.dataset.ex); if(!e) return;
+    e.on = el.checked; save(); const row = el.closest('.exrow'); if(row) row.classList.toggle('off', !el.checked); updateOutput();
+  },
   sec(el){ D.output.sections[el.dataset.sec] = el.checked; save(); updateOutput(); },
   'sec-part'(el){ D.output.progressParts[el.dataset.part] = el.checked; save(); updateOutput(); },
   'rule-out'(el){ const r = D.relation.rules[+el.dataset.i]; if(!r) return; r.out = el.checked; save(); el.closest('.rule-row').classList.toggle('off', !el.checked); },
@@ -3026,6 +3409,11 @@ document.addEventListener('input', e => {
   const el = e.target;
   if(el.matches('input[type=range][data-trait]')) return setLevel(el.dataset.trait, +el.value);
   if(el.dataset && el.dataset.pv){ UI[el.dataset.pv] = el.value; refreshPreviewCards(); return; }
+  if(el.dataset && el.dataset.destDesc !== undefined){ D.output.dest.chachaDesc = el.value; save(); updateOutput(); return; }
+  if(el.dataset && el.dataset.exField){
+    const e = exList(D).find(x => String(x.id) === el.dataset.ex); if(!e) return;
+    e[el.dataset.exField] = el.value; save(); updateOutput(); return;
+  }
   if(el.dataset && el.dataset.path) onBind(el);
 });
 document.addEventListener('change', e => {
