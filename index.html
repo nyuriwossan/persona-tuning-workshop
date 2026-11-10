@@ -121,6 +121,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .poles{display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);margin-top:-2px}
 .rule{margin:10px 0 4px;font-size:13.5px;line-height:1.7;border-left:2px solid var(--brass);padding-left:11px}
 .trans{margin:8px 0 0;font-size:12px;color:var(--sub);display:flex;flex-wrap:wrap;gap:2px 4px;align-items:center}
+.trans:empty{display:none}
 .trans .st b{margin-left:3px;color:var(--ink);font-weight:600}
 .trans .st.cur b{color:var(--accent)}
 .trans .arr{opacity:.45}
@@ -301,7 +302,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
 </style>
 </head>
 <body>
-<header><div class="hbar"><h1>キャラ人格調律工房</h1><div class="hright"><button class="hbtn" data-act="help"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>使い方</button><span class="ver">v0.5.0</span></div></div></header>
+<header><div class="hbar"><h1>キャラ人格調律工房</h1><div class="hright"><button class="hbtn" data-act="help"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>使い方</button><span class="ver">v0.6.0</span></div></div></header>
 <main id="app"></main>
 <nav id="tabs" aria-label="画面切り替え"></nav>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -312,12 +313,13 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
     <h3>基本の流れ</h3>
     <ol>
       <li><b>予定文字数を決める</b><br>人格設定に使う字数です。キャラ設定欄の上限から、世界観など他の記述に使う分を引いた字数が目安です。</li>
+      <li><b>人格の構成方式を選ぶ</b><br>「人格調律」の一番上で選びます。<b>単独人格</b>は関係の段階を設けず、一定の人格を1つ設計します（段階の切り替えや急変の確認は出ません）。<b>段階変化型</b>は初期・信頼成立後・関係深化後の3段階を設計します（従来の方式で、初期値はこちら）。切り替えても値は消えません。単独人格では各項目の「初期」の値を使い、信頼成立後・関係深化後の値や関係の進展条件は保持したまま、段階変化型に戻すと元どおり使えます。</li>
       <li><b>使う人格項目を選ぶ</b><br>人格項目はすべて任意で、全部を設定する必要はありません。「人格調律」の一番上の一覧か、各カテゴリの中で、このキャラに必要な項目だけにチェックを入れます。チェックした項目にだけ5段階のスライダーが出て、Markdownにもその項目だけが出力されます。使っていない項目は薄い色で並んでいて、いつでもチェックできます。外しても値は消えません。</li>
       <li><b>プリセットから始める（任意）</b><br>「人格プリセットから始める」で、基本人格（12種）と愛情スタイル（8種）を選べます。選ぶと、どの項目にどんな値が入るか（今の値 → 提案）が出るので、確かめてから「適用する」を押します。使用中で値が違う項目は、初めは今の値を残します。プリセット値にしたい項目だけ切り替えてください。基本人格と愛情スタイルは別の項目を変えるので、重ねて使えます。直前の適用は取り消せます。</li>
       <li><b>口調と呼称を決める</b><br>「話し方・礼節」で口調プリセットと一人称・二人称を選びます。{{user}} はそのまま使えます。関係が進むと呼び方や口調が変わるなら、スイッチをONにして段階ごとに設定します。</li>
-      <li><b>スライダーで調律する</b><br>上の段階タブ（初期／信頼成立後／関係深化後）を切り替え、段階ごとに値を決めます。スライダーの下の文が、AIに渡る行動規則です。関係が進んでも変わらない芯は「固定」にします。<br>「関係段階の作り方」で、後の段階の決め方を選べます。<b>自動提案</b>は初期の値から後の2段階を一度だけ提案し、その後は自由に変えられます。<b>連動調整</b>は初期を動かすと後の段階も同じ差で動きます（後の段階を手で変えると、その段階は連動から外れます）。<b>完全個別</b>は3段階をそれぞれ決めます。</li>
-      <li><b>関係・反応を決める</b><br>信頼が成立する・深まる・後退する条件、恋愛感情の扱い（信頼とは別）、「もし〜なら〜する」の規則を設定します。Markdownに出すには、出力画面で該当する節をONにします（OFFの間は「出力されません」と表示されます）。If-Then は規則ごとに「出力する」を選べます。</li>
-      <li><b>人格の試着で確かめる</b><br>12の状況で、3段階の反応を並べて比べます。口調や呼称を試しに変えても設定は変わりません。会話例はMarkdownで書き出せます。</li>
+      <li><b>スライダーで調律する</b><br>単独人格では、各項目のスライダーで値を1つ決め、どの場面でも変えない芯は「固定」にします（「人格の核」として出力されます）。段階変化型では、上の段階タブ（初期／信頼成立後／関係深化後）を切り替え、段階ごとに値を決めます。スライダーの下の文が、AIに渡る行動規則です。関係が進んでも変わらない芯は「固定」にします。<br>「関係段階の作り方」で、後の段階の決め方を選べます。<b>自動提案</b>は初期の値から後の2段階を一度だけ提案し、その後は自由に変えられます。<b>連動調整</b>は初期を動かすと後の段階も同じ差で動きます（後の段階を手で変えると、その段階は連動から外れます）。<b>完全個別</b>は3段階をそれぞれ決めます。</li>
+      <li><b>関係・反応を決める</b><br>単独人格では、恋愛感情の扱いとIf-Thenの規則を設定します（関係の進展条件は段階変化型だけで使います）。段階変化型では、信頼が成立する・深まる・後退する条件、恋愛感情の扱い（信頼とは別）、「もし〜なら〜する」の規則を設定します。Markdownに出すには、出力画面で該当する節をONにします（OFFの間は「出力されません」と表示されます）。If-Then は規則ごとに「出力する」を選べます。</li>
+      <li><b>人格の試着で確かめる</b><br>12の状況で反応を確かめます。単独人格は1種類、段階変化型は3段階を並べて比べます。口調や呼称を試しに変えても設定は変わりません。会話例はMarkdownで書き出せます。</li>
       <li><b>Markdownを出力して貼る</b><br>上部の「Markdownに出力する内容」で、出す節（話し方・人格・関係の進展条件・恋愛感情・If-Then）を選びます。新しいキャラは話し方と人格だけがONです。外しても設定は消えず、各節の横に増減する字数が出ます。条件が未設定の行は出力しません。予定文字数に収まる詳細度を自動で選びます。コピーして、AIチャットのキャラクター設定欄に貼り付けます。超える場合は、使う項目を絞るか予定文字数を見直します。<br>上部の「出力先」で、共通Markdown・Talelynx・チャチャ・Plaitoonを切り替えられます。人格の設定は変わらず、出力する欄・字数の上限・数え方だけが変わります。会話例は「人格の試着」の「会話例に追加」で集め、出力画面で確認・編集してコピーします。</li>
       <li><b>控えを取る</b><br>設定はこの端末のブラウザに自動保存されます。iPhoneのSafariは長く開かないと消えることがあるので、ときどき「Markdown出力」の下からJSONを保存してください。別の端末へ移すときもJSONを使います。</li>
     </ol>
@@ -349,7 +351,7 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
 <script>
 'use strict';
 /* =====================================================================
-   キャラ人格調律工房 v0.5.0
+   キャラ人格調律工房 v0.6.0
    ---------------------------------------------------------------------
    構成
      1. 辞書   CATS / TRAITS / SPEECH / COND / ROMANCE_* / SITUATIONS
@@ -367,10 +369,12 @@ nav#tabs button.on::before{content:"";position:absolute;top:0;left:30%;right:30%
      ・使用状態         : D.traits[id].use。未使用の項目は出力せず、試着では Lv3 として扱う
      ・プリセットを追加 : PRESETS.base / PRESETS.love に1件（axes に3段階の値）。適用は applyPreset が競合を確かめて行う
      ・段階の作り方     : D.link（自動提案・連動・個別）。連動は基準の段階差 diff を保存し、丸めても元へ戻せる
+     ・人格の構成方式   : D.structure.mode（staged=段階変化型〔既定〕／single=単独人格）。単独人格は各項目の初期段階の値
+                          （固定・全段階共通の項目は common）を1つの人格として使い、信頼成立後・関係深化後の値には触れない
    ===================================================================== */
 
-const APP_VERSION = '0.5.0';
-const DATA_VERSION = 6;
+const APP_VERSION = '0.6.0';
+const DATA_VERSION = 7;
 const STORAGE_KEY = 'persona-tuning-workshop:data';
 const LEGACY_KEYS = ['kyara-tuning-workshop:v0.1'];
 const UI_KEY = 'persona-tuning-workshop:ui';
@@ -865,7 +869,7 @@ const YOU_OPTIONS = ['{{user}}','{{user}}さん','あなた','君','お前','あ
    各状況は
      plan(t)  : 人格パラメータ t から「発話意図」を先に決める
      slots    : 台詞・動作の枠。opts を上から見て when(t, i) を満たす最初の1つを使う
-   t は {軸id: 1〜5, $stage: 0〜2, $rom: 恋愛モード}。恋愛専用の軸は恋愛なしなら null。
+   t は {軸id: 1〜5, $stage: 0〜2（単独人格は null＝段階なし）, $rom: 恋愛モード}。恋愛専用の軸は恋愛なしなら null。
    台詞は口調ごとに書き分ける（S の引数順は SPEECH と同じ）。'' はその口調では言わない。
    呼称の書き方：
      {me} {you}         必ず入れる
@@ -956,7 +960,7 @@ const SITUATIONS = [
       '{you:が}そんな顔してると、{me:も}心配だよ。力になりたいな。', 'そんな顔されると、こっちまで調子が狂うんだよね。手伝わせてよ。', 'そんな顔してんの、見てらんねえんだよ。手貸すから。', 'そのような顔をされては、こちらも落ち着かぬ。力を貸そう。')}
    ]},
    {k:'say', opts:[
-    {when:(t,i)=>t.disclosure>=4 && i.notice!=='detached' && t.$stage>=1, say:S(
+    {when:(t,i)=>t.disclosure>=4 && i.notice!=='detached' && (t.$stage === null || t.$stage>=1), say:S(
       '{me:も}前に似たようなことがあってさ。そのとき、誰かに話して少し楽になったんだ。', '{me:も}以前、似たようなことがありました。誰かに話して、少し楽になったんです。', '{me:にも}覚えがある。話せば少しは楽になるものだ。', '{me:も}前に似たことがあった。話したら、少し楽になった。',
       '{me:も}前に同じようなことがあってね。誰かに聞いてもらったら、少し楽になったんだ。', '{me:も}昔さ、似たようなことがあってね。まあ、話すと案外楽になるもんだよ。', '……{me:も}前に似たようなことあったんだよ。話すと、ちょっとはマシになる。', '{me:にも}覚えがある。語れば、幾分か心も軽くなろう。')}
    ]},
@@ -1504,6 +1508,11 @@ const SERVICES = [
 /* =====================================================================
    2. 設定データ D
    ===================================================================== */
+// 人格の構成方式（v0.6.0）。「関係段階の作り方」（自動提案・連動・個別）とは別の設定
+const STRUCTURE_MODES = [
+  {id:'single', name:'単独人格', desc:'関係段階を設けず、一定の人格を設計します。'},
+  {id:'staged', name:'段階変化型', desc:'初期・信頼成立後・関係深化後の3段階を設計します。'}
+];
 // use = この人格項目を使うか（出力・調律エリア・試着の対象）。新規作成は全項目OFFから始める
 function defaultTrait(t){
   return {use:false, locked:false, common:t.def[0], stages:{initial:t.def[0], trust:t.def[1], deep:t.def[2]}, prio:null};
@@ -1514,6 +1523,10 @@ function defaultData(){
   return {
     v:DATA_VERSION,
     meta:{name:'', budget:2000, budgetSet:false, notice:''},
+    /* 人格の構成方式（データ形式7 / アプリ v0.6.0）
+       mode : staged=段階変化型（初期・信頼成立後・関係深化後の3段階。既定）/ single=単独人格（関係段階を設けない）
+       切り替えは表示と出力の方式だけを変え、人格の値・段階・関係の条件には触れない */
+    structure:{mode:'staged'},
     traits,
     // 口調：enabled=false なら common を全段階に使う。段階別は null（=共通）。OFFに戻しても段階別の値は保持
     speech:{enabled:false, common:'std', stages:{initial:null, trust:null, deep:null}},
@@ -1647,6 +1660,13 @@ const MIGRATIONS = {
     d.output.dest = Object.assign({service:'common', plaitoon:'basic11', chachaDesc:'', customPreface:true, exInline:false, examples:[]}, dd);
     d.v = 6;
     return d;
+  },
+  /* v0.5.0(形式6) → v0.6.0(形式7)：人格の構成方式を追加。従来の設定と出力を保つため「段階変化型」で始める。人格の値には触れない */
+  6(d){
+    const st = (d.structure && typeof d.structure === 'object' && !Array.isArray(d.structure)) ? d.structure : {};
+    d.structure = Object.assign({mode:'staged'}, st);
+    d.v = 7;
+    return d;
   }
 };
 function migrate(raw){
@@ -1674,6 +1694,9 @@ function normalize(saved){
   if(!PATTERNS.some(p => p.id === out.presets.pattern)) out.presets.pattern = 'gradual';
   if(!out.undo || typeof out.undo !== 'object' || Array.isArray(out.undo)) out.undo = {};
   out.relation.rules.forEach(r => { if(r && typeof r === 'object' && typeof r.out !== 'boolean') r.out = true; });
+  // 人格の構成方式（v0.6.0）。不明な値は段階変化型へ（既知でないほかのキーは残す）
+  if(!out.structure || typeof out.structure !== 'object' || Array.isArray(out.structure)) out.structure = {mode:'staged'};
+  if(!STRUCTURE_MODES.some(m => m.id === out.structure.mode)) out.structure.mode = 'staged';
   // 出力先の選択（v0.5.0）。不明な値は初期値へ。人格データは触らない
   const dst = out.output.dest = (out.output.dest && typeof out.output.dest === 'object' && !Array.isArray(out.output.dest)) ? out.output.dest : {};
   if(!SERVICES.some(x => x.id === dst.service)) dst.service = 'common';
@@ -1728,6 +1751,9 @@ let D = loadData();
 
 /* ---------- 設定データの参照（D を引数に取り、出力生成を純関数に保つ） ---------- */
 const isGlobal = id => !!(TRAIT[id] && TRAIT[id].scope === 'global');
+// 単独人格：関係段階を設けない。人格の値は各項目の初期段階（固定・全段階共通の項目は common）、口調・呼称は共通の設定を使う
+const isSingle = D => !!(D && D.structure && D.structure.mode === 'single');
+const BASE_STAGE = 'initial';
 const valOf = (D, id, stage) => {
   const t = D.traits[id]; if(!t) return 3;
   return (t.locked || isGlobal(id)) ? t.common : t.stages[stage];
@@ -1744,6 +1770,9 @@ const speechOf = (D, stage) => {
   if(!v || !SPEECH_BY[v]) v = D.speech.common;
   return SPEECH_BY[v] ? v : 'std';
 };
+// 構成方式に応じた口調・呼称。単独人格は段階別の設定を使わず共通の設定だけを使う（段階別の値は消さずに保持）
+const speechAt = (D, stage) => isSingle(D) ? speechOf({speech:{...D.speech, enabled:false}}, stage) : speechOf(D, stage);
+const pronAt = (D, kind, stage) => isSingle(D) ? pronOf({pron:{...D.pron, enabled:false}}, kind, stage) : pronOf(D, kind, stage);
 const romOff = D => D.relation.romance.mode === 'none';
 const isUsed = (D, id) => !!(D.traits[id] && D.traits[id].use);
 const secOn = (D, k) => !!(D.output && D.output.sections && D.output.sections[k]);
@@ -1760,6 +1789,9 @@ const PROGRESS_PARTS = [
   {id:'regress', name:'後退する条件'}
 ];
 const usedTraits = D => TRAITS.filter(t => isUsed(D, t.id));
+// 構成方式で使える節。単独人格では「関係の進展条件」を出力しない（選択とデータは保持）
+const secAvail = (D, k) => !(isSingle(D) && k === 'progress');
+const secName = (D, x) => (isSingle(D) && x.id === 'persona') ? '基本人格・人格の核' : x.name;
 const prioOf = (D, id) => (D.traits[id] && D.traits[id].locked) ? 'high' : ((D.traits[id] && D.traits[id].prio) || (TRAIT[id] && TRAIT[id].prio) || 'normal');
 const isDefaultTrait = (D, id) => {
   const t = D.traits[id], d = defaultTrait(TRAIT[id]);
@@ -1818,9 +1850,10 @@ const DETAIL = {3:{high:'full', normal:'full', low:'full'}, 2:{high:'full', norm
 const PRIO_NAMES = {high:'高', normal:'中', low:'低'};
 
 function makeCtx(D, level){
-  const c = {D, level, name:(D.meta.name || '').trim() || '{{char}}'};
-  c.lv = (id, st) => valOf(D, id, st);
-  c.pron = (kind, st) => pronOf(D, kind, st);
+  const c = {D, level, name:(D.meta.name || '').trim() || '{{char}}', single:isSingle(D)};
+  // 単独人格はどの段階を聞かれても基準（初期段階）の値を返す
+  c.lv = c.single ? (id) => valOf(D, id, BASE_STAGE) : (id, st) => valOf(D, id, st);
+  c.pron = (kind, st) => pronAt(D, kind, st);
   c.rule = (id, l) => {
     const lv = TRAIT[id].levels[l - 1], mode = DETAIL[level][prioOf(D, id)];
     if(mode === 'full') return lv.r + lv.x;
@@ -1833,7 +1866,7 @@ function makeCtx(D, level){
   c.part = k => !D.output.progressParts || D.output.progressParts[k] !== false;
   c.inBody = t => !t.scope && c.used(t.id);
   c.hasBody = c.sec('persona') && TRAITS.some(t => c.inBody(t));
-  c.hasStages = c.sec('persona') && TRAITS.some(t => c.inBody(t) && changesAcross(D, t.id));
+  c.hasStages = !c.single && c.sec('persona') && TRAITS.some(t => c.inBody(t) && changesAcross(D, t.id));
   c.loveNames = LOVE_IDS.filter(id => isUsed(D, id)).map(id => TRAIT[id].short || TRAIT[id].name).join('・');
   c.condItems = key => {
     const R = D.relation[key];
@@ -1974,6 +2007,64 @@ const SECTIONS = [
  }}
 ];
 
+/* 単独人格の節（v0.6.0）。関係段階を前提としない書き方にする。
+   ・関係の進展（段階の移行・深化・後退）は出力しない（条件のデータは保持し、段階変化型に戻すと使う）
+   ・固定した項目は「人格の核」、それ以外は「基本人格」。固定は段階変化とは別の概念として扱う
+   ・概要と If-Then は段階変化型と同じ節を使う（段階の表現を含まない） */
+const SECTION_BY = Object.fromEntries(SECTIONS.map(x => [x.id, x]));
+const SINGLE_SECTIONS = [
+ SECTION_BY.head,
+
+ {id:'speech', title:'話し方', group:'speech', build:c => {
+   const L = ['## 話し方'];
+   L.push(`- 一人称：「${c.pron('me', BASE_STAGE)}」`);
+   L.push(`- 相手の呼び方：「${c.pron('you', BASE_STAGE)}」`);
+   const p = SPEECH_BY[speechAt(c.D, BASE_STAGE)];
+   const body = c.level >= 2 ? p.rule : firstSentence(p.rule);
+   L.push(`- 文体：${p.name}。${body}` + (c.level >= 3 ? p.ex : ''));
+   if(c.level >= 2) L.push('- 一人称や呼び方から性格を決めつけず、文体と以下の行動規則に従う。');
+   return L.join('\n');
+ }},
+
+ {id:'core', title:'人格の核', group:'persona', build:c => {
+   const locked = TRAITS.filter(t => c.inBody(t) && c.D.traits[t.id].locked);
+   if(!locked.length) return null;
+   return '## 人格の核（どの場面でも変えない）\n' + locked.map(t => `- ${t.name}：${c.rule(t.id, c.lv(t.id))}`).join('\n');
+ }},
+
+ {id:'base', title:'基本人格', group:'persona', build:c => {
+   const list = TRAITS.filter(t => c.inBody(t) && !c.D.traits[t.id].locked);
+   if(!list.length) return null;
+   return '## 基本人格\n' + list.map(t => `- ${t.name}：${c.rule(t.id, c.lv(t.id))}`).join('\n');
+ }},
+
+ {id:'romance', title:'信頼と恋愛感情', group:'romance', build:c => {
+   // 段階変化型と同じ内容。「信頼の段階」に触れる一文だけを、段階を前提としない書き方にする
+   const Rm = c.D.relation.romance, af = ROMANCE_AFTER.find(a => a.id === Rm.after) || ROMANCE_AFTER[0];
+   const H = '## 信頼と恋愛感情（別軸）';
+   if(Rm.mode === 'none'){
+     return H + '\n- 恋愛感情は持たない。信頼が深まっても、親愛・友情として表す。' + (c.level >= 2 && c.loveNames ? `\n- ${c.loveNames}の規則は、友人としての親愛の範囲で表し、恋愛的な言動にはしない。` : '');
+   }
+   const L = [H];
+   L.push(c.level >= 2
+     ? '- 恋愛感情は信頼とは別に扱う。相手を信頼しているだけでは恋愛感情は生じず、恋愛感情があっても信頼が深いとは限らない。'
+     : '- 恋愛感情は信頼とは別管理。信頼が深まるだけでは生じない。');
+   if(Rm.mode === 'conditional'){
+     if(c.condItems('romance').length) L.push(c.fmtList('恋愛感情が芽生える条件', c.condItems('romance'), ''));
+   } else {
+     L.push('- 最初から相手に惹かれている。ただし信頼が低い間は、その気持ちを押し出さない。');
+   }
+   L.push(`- ${Rm.mode === 'conditional' ? '芽生えた後' : '気持ちの表れ方'}：${c.level >= 2 ? af.text : af.short}`);
+   if(c.used('romInitiative')) L.push(`- 恋愛への積極性：${c.rule('romInitiative', c.lv('romInitiative'))}`);
+   if(c.level >= 2 && c.loveNames) L.push(`- 恋愛感情が生じた後は、${c.loveNames}の規則を恋愛の文脈でも同じ強さで表す。相手の自由を制限する言動はしない。`);
+   if(c.level >= 2 && Rm.mode === 'conditional') L.push('- 信頼が深くても恋愛感情が無い間は、親友のような距離感にとどめ、恋愛的な言動はしない。');
+   return L.join('\n');
+ }},
+
+ SECTION_BY.ifthen
+];
+const sectionsOf = D => isSingle(D) ? SINGLE_SECTIONS : SECTIONS;
+
 // 最後に適用したプリセットの名前（表示用）。例：「高慢・尊大」×「無口な溺愛」
 function presetNames(D){
   return PRESET_KINDS.map(k => presetOf(k.id, D.presets[k.id])).filter(Boolean).map(p => `「${p.name}」`).join('×');
@@ -1986,7 +2077,7 @@ function buildMarkdown(D, level){
 function buildMarkdownRaw(D, level){
   const c = makeCtx(D, level);
   const parts = [];
-  for(const sec of SECTIONS){
+  for(const sec of sectionsOf(D)){
     if(sec.group && !c.sec(sec.group)) continue; // 出力OFFの節は見出しごと出さない（設定は保持）
     const text = sec.build(c);
     if(text) parts.push({id:sec.id, title:sec.title, group:sec.group || 'head', text});
@@ -2129,11 +2220,12 @@ function buildOutput(D, mode){
    4. 試着（外部AIなし。意図 → 口調別テンプレート → 呼称の実体化）
    ===================================================================== */
 function traitCtx(D, stageId){
+  if(isSingle(D)) stageId = BASE_STAGE;
   const t = {};
   // 未使用の項目は試着では標準（Lv3）として扱う
   TRAITS.forEach(x => { t[x.id] = isUsed(D, x.id) ? valOf(D, x.id, stageId) : 3; });
   if(romOff(D)) TRAITS.forEach(x => { if(x.romance) t[x.id] = null; });
-  t.$stage = STAGES.findIndex(s => s.id === stageId);
+  t.$stage = isSingle(D) ? null : STAGES.findIndex(s => s.id === stageId); // 単独人格は段階による出し分けをしない
   t.$rom = D.relation.romance.mode;
   return t;
 }
@@ -2165,9 +2257,9 @@ function pickText(say, preset){
 }
 function renderSituation(D, sit, stageId, withRomance, override){
   const t = traitCtx(D, stageId);
-  const preset = (override && override.preset) || speechOf(D, stageId);
-  const me  = (override && override.me)  || pronOf(D, 'me', stageId);
-  const you = (override && override.you) || pronOf(D, 'you', stageId);
+  const preset = (override && override.preset) || speechAt(D, stageId);
+  const me  = (override && override.me)  || pronAt(D, 'me', stageId);
+  const you = (override && override.you) || pronAt(D, 'you', stageId);
   const intent = sit.plan ? sit.plan(t) : {};
   const items = [];
   const Rm = D.relation.romance;
@@ -2207,6 +2299,8 @@ function previewMarkdown(D, sits, withRomance, override){
   const out = [`# ${name}｜会話例`];
   sits.forEach(sit => {
     out.push(`\n## ${sit.name}\n状況：${sit.desc}`);
+    // 単独人格：段階の見出しを付けず、1種類だけ書く
+    if(isSingle(D)){ out.push(renderSituation(D, sit, BASE_STAGE, withRomance, override).text); return; }
     STAGES.forEach(st => {
       const r = renderSituation(D, sit, st.id, withRomance, override);
       out.push(`### ${st.name}\n${r.text}`);
@@ -2277,7 +2371,9 @@ function viewTune(){
   };
   const msgs = String(D.meta.notice || '').split('+').map(k => NOTICES[k]).filter(Boolean);
   const notice = msgs.length ? `<div class="chk info">${msgs.join('<br><br>')}<br><button class="btn ghost sm" data-act="notice-ok" style="margin:8px 0 0">確認しました</button></div>` : '';
+  const single = isSingle(D);
   return `
+  ${structureHTML()}
   ${selectorHTML()}
   ${notice}
   ${presetHTML()}
@@ -2288,8 +2384,8 @@ function viewTune(){
       <div class="row"><input id="f-budget" type="number" inputmode="numeric" class="txt num" value="${D.meta.budget}" data-path="meta.budget" min="0" step="100"><span class="unit">字</span></div>
       <div class="chips">${budgetChips()}</div></div>
   </section>
-  ${modeHTML()}
-  <div class="stagebar"><div class="stagecap"><span>編集中の関係段階</span><b id="stage-now">${STAGES.find(s => s.id === UI.stage).name}</b></div><div class="seg">${seg}</div></div>
+  ${single ? '' : modeHTML()}
+  ${single ? '' : `<div class="stagebar"><div class="stagecap"><span>編集中の関係段階</span><b id="stage-now">${STAGES.find(s => s.id === UI.stage).name}</b></div><div class="seg">${seg}</div></div>`}
   <div id="trait-area">${traitAreaHTML()}</div>
   <div id="checks"></div>`;
 }
@@ -2310,11 +2406,12 @@ function splitNotice(){
 const clone = o => o == null ? o : JSON.parse(JSON.stringify(o));
 const traitState = id => { const t = D.traits[id]; return {use:!!t.use, locked:!!t.locked, common:t.common, stages:{initial:t.stages.initial, trust:t.stages.trust, deep:t.stages.deep}}; };
 const sameJSON = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-const lvChain = a => (a[0] === a[1] && a[1] === a[2]) ? `Lv${a[0]}（全段階）` : `Lv${a.join('→')}`;
-const labelChain = (id, a) => { const L = TRAIT[id].levels; return (a[0] === a[1] && a[1] === a[2]) ? L[a[0] - 1].label : a.map(v => L[v - 1].label).join('→'); };
+const lvChain = a => isSingle(D) ? `Lv${a[0]}` : (a[0] === a[1] && a[1] === a[2]) ? `Lv${a[0]}（全段階）` : `Lv${a.join('→')}`;
+const labelChain = (id, a) => { const L = TRAIT[id].levels; return (isSingle(D) || (a[0] === a[1] && a[1] === a[2])) ? L[a[0] - 1].label : a.map(v => L[v - 1].label).join('→'); };
 
 function presetRows(kind, id, pattern){
   const P = presetOf(kind, id); if(!P) return [];
+  if(isSingle(D)) return presetRowsSingle(P);
   return Object.entries(P.axes).filter(([tid]) => TRAIT[tid] && D.traits[tid]).map(([tid, raw]) => {
     const g = isGlobal(tid), d = D.traits[tid];
     const to = g ? [raw[0], raw[0], raw[0]] : patternVals(raw, pattern);
@@ -2322,6 +2419,16 @@ function presetRows(kind, id, pattern){
     const same = sameJSON(cur, to);
     const status = d.locked ? 'locked' : !d.use ? 'new' : same ? 'same' : 'conflict';
     return {id:tid, g, raw, to, cur, status};
+  });
+}
+/* 単独人格：プリセットの「初期」の値だけを使う。変化パターンは使わない。
+   to / cur は表示と固定候補の判定のため3つ同じ値にそろえる（実際に書き込むのは基準の値だけ） */
+function presetRowsSingle(P){
+  return Object.entries(P.axes).filter(([tid]) => TRAIT[tid] && D.traits[tid]).map(([tid, raw]) => {
+    const g = isGlobal(tid), d = D.traits[tid], v = raw[0], c = valOf(D, tid, BASE_STAGE);
+    const to = [v, v, v], cur = [c, c, c];
+    const status = d.locked ? 'locked' : !d.use ? 'new' : c === v ? 'same' : 'conflict';
+    return {id:tid, g, raw, to, cur, status, single:true};
   });
 }
 // 行ごとの選択。new=使用して適用（既定）/ skip、conflict=keep（既定）/ apply
@@ -2353,7 +2460,11 @@ function applyPreset(){
     const d = D.traits[r.id];
     if(r.status === 'new') nNew++; else nChg++;
     d.use = true;
-    if(r.g){ d.common = r.to[0]; STAGES.forEach(s => { d.stages[s.id] = r.to[0]; }); }
+    if(r.single){
+      // 単独人格：基準の値だけを入れる。信頼成立後・関係深化後の値と、連動・自動提案の基準には触れない
+      if(r.g) d.common = r.to[0]; else d.stages[BASE_STAGE] = r.to[0];
+    }
+    else if(r.g){ d.common = r.to[0]; STAGES.forEach(s => { d.stages[s.id] = r.to[0]; }); }
     else {
       STAGES.forEach((s, i) => { d.stages[s.id] = r.to[i]; });
       const L = linkOf(r.id);
@@ -2370,6 +2481,7 @@ function applyPreset(){
   D.presets[kind] = P.id;
   const kname = PRESET_KINDS.find(k => k.id === kind).name;
   D.undo = {label:`${kname}「${P.name}」`, at:Date.now(), ids:touched, before, after:{traits:Object.fromEntries(touched.map(id => [id, traitState(id)]))}, rules:added};
+  if(isSingle(D)) D.undo.mode = 'single'; // 単独人格で適用した記録（取り消しは適用前の値へそのまま戻す）
   UI.pre.sel = null; UI.pre.undoAsk = false;
   saveUI(); saveNow();
   const msg = [nNew && `${nNew}項目を使用`, nChg && `${nChg}項目を変更`, locks.length && `${locks.length}項目を固定`, added.length && `規則を${added.length}件追加`].filter(Boolean).join('・');
@@ -2421,9 +2533,9 @@ function presetHTML(){
       <p class="hint" style="margin-top:12px">プリセットは出発点です。選んだ型の値を、対応する人格項目のスライダーに入れます。適用後は自由に調律でき、出力は常に今の値から作ります。基本人格と愛情スタイルは別の項目を変えるので、重ねて使えます。</p>
       <div class="seg" style="margin-top:4px">${tabs}</div>
       <div class="chips" style="margin-top:10px">${chips}</div>
-      <h4 style="margin-top:14px">関係での変わり方</h4>
+      ${isSingle(D) ? '' : `<h4 style="margin-top:14px">関係での変わり方</h4>
       <div class="seg">${pats}</div>
-      <p class="hint" style="margin:6px 0 0">${esc(pat.desc)}</p>
+      <p class="hint" style="margin:6px 0 0">${esc(pat.desc)}</p>`}
       <div id="pre-preview">${presetPreviewHTML()}</div>
     </div>
   </details>`;
@@ -2456,20 +2568,22 @@ function presetPreviewHTML(){
     return `<div class="pr-row st-${r.status}">
       <div class="pr-top"><b>${name}</b><span class="pr-badge">${badge}</span></div>
       <div class="pr-vals"><span class="pr-cur">${esc(curTxt)}</span><span class="arr">→</span><span class="pr-to">${esc(lvChain(r.to))}</span></div>
-      <div class="pr-lab">${esc(labelChain(r.id, r.to))}${r.g ? '（全段階共通）' : ''}</div>
+      <div class="pr-lab">${esc(labelChain(r.id, r.to))}${r.g && !r.single ? '（全段階共通）' : ''}</div>
       ${seg}
     </div>`;
   };
-  const changedByPattern = D.presets.pattern !== 'gradual' && rows.some(r => !sameJSON(r.to, r.g ? r.to : r.raw));
+  const single = isSingle(D);
+  const changedByPattern = !single && D.presets.pattern !== 'gradual' && rows.some(r => !sameJSON(r.to, r.g ? r.to : r.raw));
   const lockC = lockCandidates(P, rows);
   const locks = lockC.length ? `<h4 style="margin-top:14px">固定の候補（任意）</h4>
-    <p class="hint" style="margin:0 0 4px">関係が進んでも変わらない芯です。チェックした項目だけ固定します。</p>
+    <p class="hint" style="margin:0 0 4px">${single ? 'どの場面でも変えない芯です（「人格の核」として出力します）。' : '関係が進んでも変わらない芯です。'}チェックした項目だけ固定します。</p>
     ${lockC.map(r => `<label class="omit"><input type="checkbox" data-act-change="pre-lock" data-trait="${r.id}" ${UI.pre.locks[r.id] ? 'checked' : ''}>${esc(TRAIT[r.id].name)}を固定する（Lv${rowResult(r)[0]}「${esc(TRAIT[r.id].levels[rowResult(r)[0] - 1].label)}」）</label>`).join('')}` : '';
   const rules = (P.ifthen || []).length ? `<h4 style="margin-top:14px">If-Then規則の候補（任意）</h4>
     ${(P.ifthen).map((x, i) => `<label class="omit ifc"><input type="checkbox" data-act-change="pre-rule" data-i="${i}" ${UI.pre.rules[i] ? 'checked' : ''}><span>${esc(x.when)} → ${esc(x.then)}</span></label>`).join('')}` : '';
   const Rm = D.relation.romance, rmLabel = (ROMANCE_MODES.find(m => m.id === Rm.mode) || ROMANCE_MODES[0]).label;
   const loveNote = kind === 'love' ? `<p class="note-box">恋愛感情の設定（現在：${esc(rmLabel)}）・嫉妬・独占志向・恋愛への積極性は変えません。${romOff(D) ? '恋愛感情を持たない設定なので、親愛・友情の範囲の振る舞いとして出力します。' : '恋愛感情が生じるまでは、親愛の範囲の振る舞いとして出力します。'}</p>` : '';
-  const modeNote = D.link.mode === 'suggest' ? '入れた3段階の値が、その項目の自動提案の基準になります。'
+  const modeNote = single ? '単独人格なので、各項目の「初期」の値だけに入れます。信頼成立後・関係深化後に保存されている値は変えません。'
+    : D.link.mode === 'suggest' ? '入れた3段階の値が、その項目の自動提案の基準になります。'
     : D.link.mode === 'linked' ? '連動調整中です。入れた値の段階差を保って、初期の値と連動します。' : '完全個別設定です。3段階の値をそのまま入れます。';
   return `<div class="pv-box">
     <h3 class="pv-title">${esc(P.name)}</h3>
@@ -2477,7 +2591,7 @@ function presetPreviewHTML(){
     ${P.note ? `<p class="hint" style="margin:8px 0 0">${esc(P.note)}</p>` : ''}
     <p class="pr-sum">入れる ${n.apply}項目（うち新たに使用 ${n.nw}）／ 今の値のまま ${n.keep}項目${changedByPattern ? '<br>「' + esc(PATTERNS.find(p => p.id === D.presets.pattern).name) + '」で段階の値を調整しています。' : ''}</p>
     ${conflicts.length > 1 ? `<div class="row wrap" style="margin:4px 0 2px"><button class="linkbtn" data-act="pre-all" data-val="apply">今の値と違う項目をすべてプリセット値に</button><button class="linkbtn" data-act="pre-all" data-val="keep">すべて今の値のまま</button></div>` : ''}
-    <p class="hint" style="margin:6px 0 0">値は 初期→信頼成立後→関係深化後 の順です。プリセットに含まれない項目は変わりません。</p>
+    <p class="hint" style="margin:6px 0 0">${single ? '単独人格の値です（プリセットの「初期」の値を使います）。' : '値は 初期→信頼成立後→関係深化後 の順です。'}プリセットに含まれない項目は変わりません。</p>
     ${rows.map(rowHTML).join('')}
     ${locks}${rules}${loveNote}
     <p class="hint" style="margin:10px 0 0">${modeNote}口調・一人称・二人称は変えません。</p>
@@ -2487,6 +2601,27 @@ function presetPreviewHTML(){
 function refreshPresets(){ const el = $('#preset-card'); if(el) el.outerHTML = presetHTML(); }
 function refreshPresetPreview(){
   const el = $('#pre-preview'); if(el) el.innerHTML = presetPreviewHTML();
+}
+
+/* 人格の構成方式（v0.6.0）：単独人格／段階変化型。「関係段階の作り方」（段階変化型の中での作り方）とは別 */
+function structureHTML(){
+  const m = STRUCTURE_MODES.find(x => x.id === D.structure.mode) || STRUCTURE_MODES[1];
+  const keep = isSingle(D)
+    ? '各項目の値には「初期」の値（固定した項目は固定の値）を、口調・呼称には共通の設定を使います。信頼成立後・関係深化後の値、段階別の口調・呼称、関係の進展条件は保持していて、段階変化型に戻すと元どおり使えます。'
+    : '単独人格に切り替えても、3段階の値や関係の条件は消えません。';
+  return `<section class="card" id="structure-card"><h4 style="margin:0 0 8px">人格の構成方式</h4>
+    <div class="seg" id="structure-seg">${STRUCTURE_MODES.map(x => `<button class="${D.structure.mode === x.id ? 'on' : ''}" data-act="structure" data-val="${x.id}" aria-pressed="${D.structure.mode === x.id}">${x.name}</button>`).join('')}</div>
+    <p class="hint" style="margin:8px 0 0"><b>${esc(m.name)}</b>：${esc(m.desc)}${esc(keep)}</p></section>`;
+}
+// 切り替えは表示と出力の方式だけを変える。人格の値・段階・連動の基準・関係の条件・口調・呼称は書き換えない
+function setStructure(mode){
+  if(mode === D.structure.mode || !STRUCTURE_MODES.some(x => x.id === mode)) return;
+  commitSugg();
+  D.structure.mode = mode;
+  UI.stage = BASE_STAGE; UI.resug = null;
+  if(UI.pre.sel) resetPreChoice(); // プリセットの確認内容は方式で変わるので選び直してもらう
+  saveNow(); render(true);
+  toast(mode === 'single' ? '単独人格にしました（3段階の値は保持しています）' : '段階変化型にしました（3段階の値をそのまま使います）');
 }
 
 /* 関係段階の作り方 */
@@ -2509,6 +2644,14 @@ function setLinkMode(mode){
       : mode === 'suggest' ? '自動提案にしました。今ある段階の値は変えません' : '完全個別設定にしました');
 }
 
+/* 単独人格では「全段階共通」という区別が無いので、その表示を出さない */
+const scopeTag = t => (t.scope && !isSingle(D)) ? '<small>全段階共通</small>' : '';
+const SINGLE_NOTES = {
+  trustSpeed:'関係が進む速さを決める項目です。単独人格では関係の進展条件を出力しないため、Markdownには使いません（値は保持し、段階変化型に戻すと使います）。',
+  romInitiative:'恋愛関係を進める積極性。恋愛なし設定では使いません。'
+};
+const noteOf = t => (isSingle(D) && SINGLE_NOTES[t.id]) || t.note || '';
+
 /* 使用する人格項目の選択欄 */
 function selectorHTML(){
   const n = usedTraits(D).length, N = TRAITS.length;
@@ -2518,7 +2661,7 @@ function selectorHTML(){
       <div class="sel-head"><h4>${esc(cat.name)} <span class="sel-n" data-catn="${cat.id}">${k}/${list.length}</span></h4>
         <button class="linkbtn" data-act="sel-cat" data-cat="${cat.id}">${k === list.length ? 'まとめて解除' : 'まとめて選択'}</button></div>
       <div class="sel-grid">${list.map(t => `<label class="selbox ${isUsed(D, t.id) ? 'on' : ''}" data-selbox="${t.id}">
-        <input type="checkbox" data-act-change="use" data-trait="${t.id}" ${isUsed(D, t.id) ? 'checked' : ''}><span>${esc(t.name)}${t.scope ? '<small>全段階共通</small>' : ''}</span></label>`).join('')}</div>
+        <input type="checkbox" data-act-change="use" data-trait="${t.id}" ${isUsed(D, t.id) ? 'checked' : ''}><span>${esc(t.name)}${scopeTag(t)}</span></label>`).join('')}</div>
     </div>`;
   }).join('');
   return `<details class="cat sel" data-cat="selector" ${UI.open.selector !== false ? 'open' : ''}>
@@ -2569,7 +2712,7 @@ function catHTML(cat){
 function catSummary(catId){
   const all = TRAITS.filter(t => t.cat === catId), list = all.filter(t => isUsed(D, t.id));
   const locked = list.filter(t => D.traits[t.id].locked).length;
-  const jumps = list.filter(t => hasJump(t.id)).length;
+  const jumps = isSingle(D) ? 0 : list.filter(t => hasJump(t.id)).length; // 単独人格には段階差が無いので急変も出さない
   const base = CATS.find(c => c.id === catId).desc + `・使用 ${list.length} / ${all.length}`;
   return esc(base) + (locked ? `<span class="badge lock">固定${locked}</span>` : '') + (jumps ? `<span class="badge jump">急変${jumps}</span>` : '');
 }
@@ -2582,20 +2725,20 @@ const hasJump = id => {
 function traitOffHTML(t){
   return `<label class="trait-off" data-off="${t.id}">
     <input type="checkbox" data-act-change="use" data-trait="${t.id}" aria-label="${esc(t.name)}を使う">
-    <span class="to-t"><span class="to-name">${esc(t.name)}${t.scope ? '<small>全段階共通</small>' : ''}</span><span class="to-poles">${esc(t.poles[0])} ↔ ${esc(t.poles[1])}</span></span>
+    <span class="to-t"><span class="to-name">${esc(t.name)}${scopeTag(t)}</span><span class="to-poles">${esc(t.poles[0])} ↔ ${esc(t.poles[1])}</span></span>
     <span class="to-add">使う</span>
   </label>`;
 }
 function traitHTML(t){
   const g = !!t.scope;
   return `<div class="trait" id="tc-${t.id}">
-    <div class="trait-head"><label class="use-tg"><input type="checkbox" data-act-change="use" data-trait="${t.id}" checked aria-label="${esc(t.name)}を使う（外すとスライダーを閉じます。値は残ります）"><h3>${esc(t.name)}</h3></label>${g ? '<span class="scope">全段階共通</span>' : `<button class="lockbtn" data-act="lock" data-trait="${t.id}"></button>`}</div>
+    <div class="trait-head"><label class="use-tg"><input type="checkbox" data-act-change="use" data-trait="${t.id}" checked aria-label="${esc(t.name)}を使う（外すとスライダーを閉じます。値は残ります）"><h3>${esc(t.name)}</h3></label>${g ? (isSingle(D) ? '' : '<span class="scope">全段階共通</span>') : `<button class="lockbtn" data-act="lock" data-trait="${t.id}"></button>`}</div>
     <div class="lvline"><span class="lvstage"></span><span class="lvname"></span></div>
     <input type="range" min="1" max="5" step="1" value="3" data-trait="${t.id}" aria-label="${esc(t.name)}">
     <div class="ticks">${[1,2,3,4,5].map(n => `<button class="tick" data-act="lv" data-trait="${t.id}" data-val="${n}" aria-label="${esc(t.name)} レベル${n}">${n}</button>`).join('')}</div>
     <div class="poles"><span>${esc(t.poles[0])}</span><span>${esc(t.poles[1])}</span></div>
     <p class="rule"></p>
-    ${t.note ? `<p class="hint" style="margin:6px 0 0">${esc(t.note)}</p>` : ''}
+    ${noteOf(t) ? `<p class="hint" style="margin:6px 0 0">${esc(noteOf(t))}</p>` : ''}
     <p class="trans"></p>
     <div class="linkrow"></div>
   </div>`;
@@ -2611,16 +2754,21 @@ function transHTML(t){
 function refreshTrait(id){
   const t = TRAIT[id], d = D.traits[id], card = $('#tc-' + id);
   if(!t || !card) return;
-  const g = isGlobal(id), v = valOf(D, id, UI.stage);
+  const single = isSingle(D), g = isGlobal(id), v = valOf(D, id, single ? BASE_STAGE : UI.stage);
   card.classList.toggle('locked', !!d.locked);
   card.classList.toggle('dim', !!(t.romance && romOff(D)));
-  $('.lvstage', card).textContent = g ? `Lv${v}` : d.locked ? `Lv${v}・固定` : `${STAGES.find(s => s.id === UI.stage).name}  Lv${v}`;
+  $('.lvstage', card).textContent = g ? `Lv${v}` : d.locked ? `Lv${v}・固定` : single ? `Lv${v}` : `${STAGES.find(s => s.id === UI.stage).name}  Lv${v}`;
   $('.lvname', card).textContent = t.levels[v - 1].label;
   const r = $('input[type=range]', card); r.value = v; r.style.setProperty('--p', ((v - 1) / 4 * 100) + '%');
   $$('.tick', card).forEach(b => b.classList.toggle('on', +b.dataset.val === v));
   $('.rule', card).textContent = t.levels[v - 1].r;
   const tr = $('.trans', card);
   if(t.romance && romOff(D)) tr.innerHTML = '<span class="tag">恋愛なし設定のため、出力・試着には使いません（値は保持）</span>';
+  else if(single){
+    // 単独人格：段階の推移・急変・連動は出さない
+    tr.innerHTML = id === 'trustSpeed' ? '<span class="tag">単独人格では出力に使いません（値は保持）</span>'
+      : g ? '<span class="tag">「信頼と恋愛感情」に反映</span>' : d.locked ? '<span class="tag">人格の核（固定）</span>' : '';
+  }
   else if(g) tr.innerHTML = id === 'trustSpeed' ? '<span class="tag">「関係の進展」の進め方に反映</span>' : '<span class="tag">「信頼と恋愛感情」に反映</span>';
   else if(d.locked) tr.innerHTML = '<span class="tag">全段階で不変（核）</span>';
   else tr.innerHTML = transHTML(t);
@@ -2630,7 +2778,7 @@ function refreshTrait(id){
 }
 // 連動調整：段階ごとの連動ON/OFF。自動提案：提案済みで今の値と違えば「再提案」
 function linkRowHTML(id){
-  if(!linkable(id)) return '';
+  if(!linkable(id) || isSingle(D)) return '';
   const d = D.traits[id], mode = D.link.mode;
   if(mode === 'linked'){
     const L = ensureLink(id);
@@ -2658,6 +2806,12 @@ const refreshAllTraits = () => { TRAITS.forEach(t => refreshTrait(t.id)); refres
 function checks(){
   const used = usedTraits(D);
   if(!used.length) return [];
+  if(isSingle(D)){
+    // 単独人格：段階差・急変・関係の進展に関する確認はしない（段階が無いため）
+    const out = speechConflicts().map(t => ({k:'info', t}));
+    if(!out.length) out.push({k:'ok', t:'矛盾の兆候はありません。'});
+    return out;
+  }
   const out = [], free = used.filter(t => !t.scope && !D.traits[t.id].locked), lockedN = used.filter(t => D.traits[t.id].locked).length;
   if(lockedN === 0) out.push({k:'info', t:'固定している項目がありません。関係が進んでも変わらない芯を1〜3項目固定すると、別人化を防げます。'});
   if(lockedN >= 8) out.push({k:'info', t:'固定が多いため、関係が進んでも振る舞いの変化が小さくなります。'});
@@ -2681,6 +2835,11 @@ function checks(){
 function speechConflicts(){
   const msgs = [];
   if(!isUsed(D, 'politeness')) return msgs;
+  if(isSingle(D)){
+    const p = SPEECH_BY[speechAt(D, BASE_STAGE)], pl = valOf(D, 'politeness', BASE_STAGE);
+    if(p.clash && p.clash.lv.includes(pl)) msgs.push(`口調：${p.clash.msg}意図したものなら問題ありません。`);
+    return msgs;
+  }
   groupStages(st => speechOf(D, st) + '|' + valOf(D, 'politeness', st)).forEach(g => {
     const [pid, pl] = g.v.split('|'), p = SPEECH_BY[pid];
     if(p.clash && p.clash.lv.includes(+pl)){
@@ -2697,6 +2856,7 @@ function updateChecks(){
 
 /* 口調 */
 function speechHTML(){
+  if(isSingle(D)) return speechSingleHTML();
   const on = D.speech.enabled;
   const cur = SPEECH_BY[D.speech.common];
   const chips = SPEECH.map(p => `<button class="chip ${D.speech.common === p.id ? 'on' : ''}" data-act="speech-pick" data-val="${p.id}">${esc(p.name)}</button>`).join('');
@@ -2716,6 +2876,19 @@ function speechHTML(){
     ${perStage}
   </div>`;
 }
+// 単独人格：口調は1つだけ（共通の設定）。段階別の口調は表示せず、値は保持する
+function speechSingleHTML(){
+  const cur = SPEECH_BY[D.speech.common];
+  const chips = SPEECH.map(p => `<button class="chip ${D.speech.common === p.id ? 'on' : ''}" data-act="speech-pick" data-val="${p.id}">${esc(p.name)}</button>`).join('');
+  const kept = D.speech.enabled && STAGES.some(s => D.speech.stages[s.id]);
+  return `<div class="sub-block" id="speech-card">
+    <h2>口調プリセット</h2>
+    <p class="hint">語彙・文末・間・文の長さを決めます。一人称・二人称や性格とは独立しています。</p>
+    <div class="chips">${chips}</div>
+    <div class="preset-desc"><b>${esc(cur.name)}</b>：${esc(cur.rule)}<small>${esc(cur.ex)}</small></div>
+    ${kept ? '<p class="hint" style="margin:0">単独人格ではこの口調を使います。段階ごとの口調の設定は保持していて、段階変化型に戻すと使えます。</p>' : ''}
+  </div>`;
+}
 /* 呼称 */
 function pickerHTML(kind, slot, label){
   const opts = kind === 'me' ? ME_OPTIONS : YOU_OPTIONS;
@@ -2727,10 +2900,16 @@ function pickerHTML(kind, slot, label){
     <input type="text" class="txt" placeholder="${esc(ph)}" value="${esc(raw ?? '')}" data-path="pron.${kind}.${slot}" autocomplete="off"></div>`;
 }
 function pronBodyHTML(){
-  if(!D.pron.enabled) return `<div style="margin-top:10px">${pickerHTML('me','common','一人称')}${pickerHTML('you','common','相手の呼び方（二人称）')}</div>`;
+  if(!D.pron.enabled || isSingle(D)) return `<div style="margin-top:10px">${pickerHTML('me','common','一人称')}${pickerHTML('you','common','相手の呼び方（二人称）')}</div>`;
   return STAGES.map(s => `<div class="group"><h4>${s.name}</h4>${pickerHTML('me', s.id, '一人称')}${pickerHTML('you', s.id, '二人称')}</div>`).join('');
 }
 function pronHTML(){
+  if(isSingle(D)){
+    const kept = D.pron.enabled && ['me','you'].some(k => STAGES.some(s => D.pron[k][s.id] != null && String(D.pron[k][s.id]).trim() !== ''));
+    return `<h2>呼称（一人称・二人称）</h2>
+    <p class="hint">${kept ? '単独人格ではここで決めた呼び方を使います。段階ごとの呼び方の設定は保持していて、段階変化型に戻すと使えます。<br>' : ''}{{user}}・{{char}} などの変数表記は、そのまま入力・出力されます。一人称から性格を自動判定することはありません。</p>
+    <div id="pron-body">${pronBodyHTML()}</div>`;
+  }
   const on = D.pron.enabled;
   const kept = ['me','you'].some(k => STAGES.some(s => D.pron[k][s.id] != null));
   const hint = on ? '段階ごとに呼び方を変えられます。空欄の段階は共通の設定を使います。'
@@ -2770,13 +2949,17 @@ function viewRelation(){
       <textarea class="txt" rows="2" placeholder="例：怒鳴らず、黙って視線を外し、静かに事情を聞く" data-path="relation.rules.${i}.then">${esc(r.then)}</textarea>
     </div>`).join('');
   const exs = IFTHEN_EXAMPLES.map((e, i) => `<button class="chip" data-act="rule-ex" data-i="${i}">${esc(e.when)}</button>`).join('');
-  return `
+  // 単独人格：3段階の進行を前提とする条件（成立・深化・後退）は編集・出力しない。データは保持し、段階変化型に戻すと使う
+  const progress = isSingle(D) ? `
+  <section class="card" id="progress-kept"><h2>関係の進展条件</h2>
+    <p class="hint" style="margin:0">信頼が成立する・関係が深まる・関係が後退する条件は、関係の段階を前提とするため、単独人格では使いません（Markdownにも出力しません）。今の設定（成立 ${condCount('trust')}件・深化 ${condCount('deepen')}件・後退 ${condCount('regress')}件）は保持していて、「人格調律」で段階変化型に戻すと元どおり使えます。</p></section>` : `
   <section class="card"><h2>信頼が成立する条件</h2>
     <p class="hint">「${STAGES[0].name}」から「${STAGES[1].name}」へ進む条件です。進む速さは信頼形成速度（現在 Lv${ts}「${esc(TRAIT.trustSpeed.levels[ts - 1].label)}」、人格調律で変更）に従います。</p>${outNote('progress', 'trust')}${condBlock('trust')}</section>
   <section class="card"><h2>関係が深まる条件</h2>
     <p class="hint">「${STAGES[1].name}」から「${STAGES[2].name}」へ進む条件です。</p>${outNote('progress', 'deepen')}${condBlock('deepen')}</section>
   <section class="card"><h2>関係が後退する条件</h2>
-    <p class="hint">起きると一段階だけ前の振る舞いに戻る出来事です。</p>${outNote('progress', 'regress')}${condBlock('regress')}</section>
+    <p class="hint">起きると一段階だけ前の振る舞いに戻る出来事です。</p>${outNote('progress', 'regress')}${condBlock('regress')}</section>`;
+  return `${progress}
   <section class="card"><h2>恋愛感情（信頼とは別軸）</h2>
     <p class="hint">信頼が深まっても恋愛感情が生まれるとは限らず、逆も同じです。「恋愛感情は持たない」では、愛情表現・嫉妬・独占志向は友情の範囲で扱い、恋愛への積極性は使いません。</p>
     ${outNote('romance')}
@@ -2792,6 +2975,8 @@ function viewRelation(){
     <details class="plain" style="margin-top:14px"><summary>${ic('chevron')}例から追加</summary><div class="chips">${exs}</div></details>
   </section>`;
 }
+// 関係の条件の件数（辞書にある既定の条件＋空でない自作の条件）
+const condCount = k => D.relation[k].presets.filter(id => COND[k].some(c => c.id === id)).length + D.relation[k].custom.filter(x => String(x).trim()).length;
 
 /* ---------- 画面3：人格の試着 ---------- */
 const pvOverride = () => ({preset:UI.pvPreset || '', me:(UI.pvMe || '').trim(), you:(UI.pvYou || '').trim()});
@@ -2818,7 +3003,7 @@ function viewPreview(){
   <div id="pv-cards">${previewCards(sit)}</div>
   ${sit.uses.some(id => !isUsed(D, id)) ? `<p class="hint note">この状況に関わる項目のうち、使用していない項目（${sit.uses.filter(id => !isUsed(D, id)).map(id => esc(TRAIT[id].name)).join('・')}）は標準（Lv3）として扱っています。</p>` : ''}
   ${nRules ? `<p class="note-box">関係・反応のIf-Then規則（${nRules}件）は、この会話例には反映されていません。人格設定のMarkdownには含まれます。</p>` : ''}
-  <div class="row wrap" style="margin:0 0 8px"><button class="btn ghost sm" data-act="ex-add-all">この状況の3段階をすべて会話例に追加</button></div>
+  ${isSingle(D) ? '' : '<div class="row wrap" style="margin:0 0 8px"><button class="btn ghost sm" data-act="ex-add-all">この状況の3段階をすべて会話例に追加</button></div>'}
   <p class="hint note" style="margin:0 2px 12px">「会話例に追加」で集めた会話例は、Markdown出力画面の出力先（Talelynx・チャチャ・Plaitoon）で選択・編集・コピーできます。${exList(D).length ? `いま${exList(D).length}件あります。` : ''}</p>
   <details class="card plain" id="pvmd-box"><summary>${ic('chevron')}会話例をMarkdownで出力</summary>
     <p class="hint">人格設定のMarkdownとは別の書き出しです。キャラクターの「会話例」欄などに使えます。</p>
@@ -2830,6 +3015,7 @@ function viewPreview(){
   <p class="hint note">外部AIを使わない簡易プレビューです。性格の値から発話の意図を決め、口調ごとに書き分けた台詞テンプレートを選んでいます。用意した型の組み合わせなので、人格や口調の組み合わせによってはぎこちない言い回しになることがあります。この画面は設定を書き換えません。</p>`;
 }
 function previewCards(sit){
+  if(isSingle(D)) return previewCardSingle(sit);
   return STAGES.map(st => {
     const r = renderSituation(D, sit, st.id, UI.romance, pvOverride());
     const body = r.merged.map(m => `<p class="${m.k}">${esc(m.k === 'say' ? `「${m.text}」` : m.text)}</p>`).join('') || '<p class="act">（この状況の反応がありません）</p>';
@@ -2842,6 +3028,19 @@ function previewCards(sit){
       ${r.notes.map(n => `<p class="note-box">${esc(n)}</p>`).join('')}
     </section>`;
   }).join('');
+}
+// 単独人格：選んだ状況について1種類だけ表示する。見出しに段階名を付けない
+function previewCardSingle(sit){
+  const r = renderSituation(D, sit, BASE_STAGE, UI.romance, pvOverride());
+  const body = r.merged.map(m => `<p class="${m.k}">${esc(m.k === 'say' ? `「${m.text}」` : m.text)}</p>`).join('') || '<p class="act">（この状況の反応がありません）</p>';
+  const tags = sit.uses.filter(id => isUsed(D, id) && !(TRAIT[id].romance && romOff(D))).map(id => `<span class="tag">${esc(TRAIT[id].name)}：${esc(TRAIT[id].levels[valOf(D, id, BASE_STAGE) - 1].label)}</span>`).join('');
+  return `<section class="card pv" data-pv-single>
+      <div class="pv-head"><h3>${esc(sit.name)}</h3><span class="row" style="gap:6px"><button class="btn ghost sm" data-act="ex-add" data-stage="${BASE_STAGE}">会話例に追加</button><button class="btn ghost sm" data-act="copy-ex" data-stage="${BASE_STAGE}">${ic('copy')}コピー</button></span></div>
+      <div class="pv-meta">一人称 <b>${esc(r.me)}</b> ／ 二人称 <b>${esc(r.you)}</b> ／ 口調 <b>${esc(SPEECH_BY[r.preset].name)}</b></div>
+      <div class="pv-body">${body}</div>
+      <div class="tags">${tags}</div>
+      ${r.notes.map(n => `<p class="note-box">${esc(n)}</p>`).join('')}
+    </section>`;
 }
 function updatePreviewMD(){
   const box = $('#pvmd'); if(!box) return;
@@ -2894,6 +3093,7 @@ function viewOutput(){
     <div class="field" style="margin-bottom:0"><label for="o-budget">人格設定の予定文字数${isCommon ? '' : '（サービスの上限とは別に管理します）'}</label>
       <div class="row"><input id="o-budget" type="number" inputmode="numeric" class="txt num" value="${D.meta.budget}" data-path="meta.budget" min="0" step="100"><span class="unit">字</span></div>
       <div class="chips">${budgetChips()}</div></div>
+    <p class="hint" style="margin:10px 0 0" id="o-structure">人格の構成方式：<b>${esc((STRUCTURE_MODES.find(x => x.id === D.structure.mode) || STRUCTURE_MODES[1]).name)}</b>${isSingle(D) ? '（関係段階を前提としない文章で出力します）' : ''}。切り替えは「人格調律」の上部で行います。</p>
     <h4 style="margin-top:16px">出力の詳細度</h4>
     <div class="seg" id="o-level">${lv}</div>
     <p class="hint" style="margin:8px 0 0">詳細＝全項目に補足の言動まで ／ 標準＝優先度「中」は標準の言動、「低」は中核の一文 ／ 最小＝「高」以外は中核の一文。どの詳細度でも項目は削りません。</p>
@@ -2944,7 +3144,7 @@ function counterCommon(T){
   }
   else if(cls === 'near') msg = `上限に近づいています（残り${rem}字）。`;
   else msg = '予定文字数に収まっています。';
-  if(!SEC_DEFS.some(x => secOn(D, x.id))) msg += '（出力する内容がすべてOFFのため、タイトルだけを出力しています）';
+  if(!SEC_DEFS.some(x => secOn(D, x.id) && secAvail(D, x.id))) msg += '（出力する内容がすべてOFFのため、タイトルだけを出力しています）';
   else if(secOn(D, 'persona') && !usedTraits(D).some(t => !t.scope)) msg += '（人格項目が選ばれていないため、人格の規則は出力していません）';
   const modeTxt = r.auto ? `自動選択：${LEVEL_NAMES[r.level]}` : `手動：${LEVEL_NAMES[r.level]}`;
   const nUse = usedTraits(D).length;
@@ -3089,7 +3289,7 @@ function addExample(sitId, stageId){
   const dst = D.output.dest; if(!Array.isArray(dst.examples)) dst.examples = [];
   if(dst.examples.length >= 60){ toast('会話例は60件までです。不要なものを削除してください'); return false; }
   const id = dst.examples.reduce((m, e) => Math.max(m, +e.id || 0), 0) + 1;
-  dst.examples.push({id, label:`${sit.name}（${st.name}）`, user:'', char:r.text, on:true});
+  dst.examples.push({id, label:isSingle(D) ? sit.name : `${sit.name}（${st.name}）`, user:'', char:r.text, on:true}); // 単独人格は段階名を付けない
   return true;
 }
 
@@ -3131,17 +3331,23 @@ function updateSecList(level, cnt = countChars){
   const warn = secOn(D, 'romance') && R.romance.mode === 'conditional' && condN('romance') === 0
     ? '<p class="msg near" style="margin:6px 0 0">「条件が揃えば芽生える」を選んでいますが、芽生える条件が1件もありません。今は条件の行を省いて出力しています。「関係・反応」で条件を選んでください。</p>' : '';
   box.innerHTML = SEC_DEFS.map(x => {
+    // 単独人格：関係の進展条件は選べない（理由と、データ・選択が保持されることを示す）
+    if(!secAvail(D, x.id)) return `<div class="secrow off na" data-sec-na="${x.id}">
+      <div class="sec-top"><label class="omit sec-main"><input type="checkbox" disabled>${x.name}</label><span class="sec-n zero">単独人格では使えません</span></div>
+      <p class="sec-note">関係の段階（初期→信頼成立後→関係深化後、後退）を前提とする条件なので、単独人格では出力しません。条件（成立 ${condN('trust')}件・深化 ${condN('deepen')}件・後退 ${condN('regress')}件）と出力の選択は保持していて、段階変化型に戻すと元どおり使えます。</p>
+    </div>`;
     const on = secOn(D, x.id);
     const parts = x.id === 'progress' ? `<div class="sec-parts">${PROGRESS_PARTS.map(pp => {
       const pon = D.output.progressParts[pp.id] !== false;
       return `<div class="sec-part"><label class="omit"><input type="checkbox" data-act-change="sec-part" data-part="${pp.id}" ${pon ? 'checked' : ''} ${on ? '' : 'disabled'}>${pp.name}（${condN(pp.id)}件）</label>${on ? n(pon, imp['p.' + pp.id]) : ''}</div>`;
     }).join('')}</div>` : '';
     return `<div class="secrow ${on ? '' : 'off'}">
-      <div class="sec-top"><label class="omit sec-main"><input type="checkbox" data-act-change="sec" data-sec="${x.id}" ${on ? 'checked' : ''}>${x.name}</label>${n(on, imp[x.id])}</div>
+      <div class="sec-top"><label class="omit sec-main"><input type="checkbox" data-act-change="sec" data-sec="${x.id}" ${on ? 'checked' : ''}>${secName(D, x)}</label>${n(on, imp[x.id])}</div>
       <p class="sec-note">${esc(notes[x.id])}</p>${parts}${x.id === 'romance' ? warn : ''}
     </div>`;
   }).join('');
-  $('#sec-count').textContent = `${SEC_DEFS.filter(x => secOn(D, x.id)).length} / ${SEC_DEFS.length}`;
+  const avail = SEC_DEFS.filter(x => secAvail(D, x.id));
+  $('#sec-count').textContent = `${avail.filter(x => secOn(D, x.id)).length} / ${avail.length}`;
 }
 function updateOmitList(level, cnt = countChars){
   const box = $('#omit-list'); if(!box) return;
@@ -3150,7 +3356,8 @@ function updateOmitList(level, cnt = countChars){
   $('#omit-count').textContent = `使用 ${imp.filter(c => c.used).length} / ${TRAITS.length}`;
   box.innerHTML = TRAITS.map(t => {
     const d = D.traits[t.id], c = byId[t.id], p = prioOf(D, t.id), used = isUsed(D, t.id);
-    const lvText = isGlobal(t.id) ? t.levels[d.common - 1].label + '（全段階共通）' : changesAcross(D, t.id) ? STAGES.map(s => t.levels[d.stages[s.id] - 1].label).join('→') : t.levels[(d.locked ? d.common : d.stages.initial) - 1].label;
+    const lvText = isSingle(D) ? t.levels[valOf(D, t.id, BASE_STAGE) - 1].label // 単独人格は基準の値だけ
+      : isGlobal(t.id) ? t.levels[d.common - 1].label + '（全段階共通）' : changesAcross(D, t.id) ? STAGES.map(s => t.levels[d.stages[s.id] - 1].label).join('→') : t.levels[(d.locked ? d.common : d.stages.initial) - 1].label;
     const stateTxt = (d.locked ? '核（固定）・' : '') + lvText;
     const seg = !used ? '' : d.locked ? '<span class="hint" style="grid-column:1 / -1;margin:0">固定した核は常に優先度「高」で出力します。</span>'
       : `<div class="seg">${['high','normal','low'].map(k => `<button class="${p === k ? 'on' : ''}" data-act="prio" data-trait="${t.id}" data-val="${k}">優先度 ${PRIO_NAMES[k]}</button>`).join('')}</div>`;
@@ -3182,7 +3389,11 @@ function setLevel(id, v, commit){
   const d = D.traits[id]; v = clampLv(v);
   if(pendingSugg && pendingSugg !== id) commitSugg();
   let note = '';
-  if(d.locked || isGlobal(id)){ d.common = v; if(isGlobal(id)) STAGES.forEach(s => d.stages[s.id] = v); }
+  if(isSingle(D)){
+    // 単独人格：基準の値だけを変える。連動・自動提案は使わず、信頼成立後・関係深化後の値には触れない
+    if(d.locked || isGlobal(id)) d.common = v; else d.stages[BASE_STAGE] = v;
+  }
+  else if(d.locked || isGlobal(id)){ d.common = v; if(isGlobal(id)) STAGES.forEach(s => d.stages[s.id] = v); }
   else if(UI.stage === 'initial'){
     const mode = D.link.mode;
     if(mode === 'linked'){ ensureLink(id); d.stages.initial = v; applyLinked(id); }
@@ -3211,13 +3422,14 @@ const ACTIONS = {
   stage(b){ commitSugg(); UI.stage = b.dataset.stage; $$('.stagebar .seg button').forEach(x => x.classList.toggle('on', x.dataset.stage === UI.stage)); $('#stage-now').textContent = STAGES.find(s => s.id === UI.stage).name; refreshAllTraits(); },
   lv(b){ setLevel(b.dataset.trait, +b.dataset.val, true); },
   lock(b){
-    const id = b.dataset.trait, d = D.traits[id];
-    if(!d.locked) d.common = d.stages[UI.stage]; // 固定する時点の値を共通値にする（段階別の値は残る）
+    const id = b.dataset.trait, d = D.traits[id], single = isSingle(D);
+    if(!d.locked) d.common = d.stages[single ? BASE_STAGE : UI.stage]; // 固定する時点の値を共通値にする（段階別の値は残る）
     d.locked = !d.locked;
-    if(!d.locked && D.link.mode === 'linked') relink(id); // 固定を外したら、今の段階差を連動の基準にする
+    if(!d.locked && !single && D.link.mode === 'linked') relink(id); // 固定を外したら、今の段階差を連動の基準にする（単独人格では連動に触れない）
     save(); refreshTrait(id); refreshCatSums(); updateChecks();
   },
   'link-mode'(b){ setLinkMode(b.dataset.val); },
+  structure(b){ setStructure(b.dataset.val); },
   'out-on'(b){
     D.output.sections[b.dataset.sec] = true;
     if(b.dataset.part) D.output.progressParts[b.dataset.part] = true;
@@ -3292,7 +3504,7 @@ const ACTIONS = {
     download(`${fileBase()}_${T.label.replace(/[（）()\s:：]+/g, '_')}_${b.dataset.label}.md`, ta.value, 'text/markdown');
   },
   'ex-add'(b){ if(addExample(UI.sit, b.dataset.stage)){ save(); toast(`会話例に追加しました（${exList(D).length}件）`); } },
-  'ex-add-all'(){ let n = 0; STAGES.forEach(st => { if(addExample(UI.sit, st.id)) n++; }); if(n){ save(); toast(`会話例に${n}件追加しました（合計${exList(D).length}件）`); } },
+  'ex-add-all'(){ if(isSingle(D)) return; let n = 0; STAGES.forEach(st => { if(addExample(UI.sit, st.id)) n++; }); if(n){ save(); toast(`会話例に${n}件追加しました（合計${exList(D).length}件）`); } },
   'ex-del'(b){ D.output.dest.examples = exList(D).filter(e => String(e.id) !== b.dataset.ex); save(); $('#ex-list').innerHTML = exListHTML(); updateOutput(); },
   'ex-copy'(b){ const ta = $(`textarea[data-ex="${b.dataset.ex}"][data-ex-field="${b.dataset.field}"]`); if(ta) copyText(ta.value); },
   'dl-md'(){ download(`${fileBase()}_人格設定.md`, $('#md').value, 'text/markdown'); },
