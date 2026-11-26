@@ -5,11 +5,14 @@
   2. 出力先4系統の出力・試着・会話例Markdown・プリセット適用と取り消し・関係段階の作り方・急変チェック
      … v0.5.0 と比較（tests/baseline-v0.5.0.json）。v0.6.0 の単独人格モードを追加しても、
      段階変化型（既定）の結果が変わっていないことを確かめる
+  3. 単独人格モードの出力先4系統の出力・試着、人格の自律性OFF（詳細設定をすべてOFFにしたデータを含む）
+     … v0.6.0 と比較（tests/baseline-v0.6.0.json）。v0.7.0 の「人格の自律性」がOFFなら、出力が改修前と同じことを確かめる
 
 使い方（Python の playwright と chromium が必要）:
   python3 tests/regression.py              # index.html を2つの基準データと比較
   python3 tests/regression.py --make-baseline /path/to/v0.4.2/index.html        # 基準1を作り直す（通常は不要）
   python3 tests/regression.py --make-baseline-v050 /path/to/v0.5.0/index.html   # 基準2を作り直す（通常は不要）
+  python3 tests/regression.py --make-baseline-v060 /path/to/v0.6.0/index.html   # 基準3を作り直す（通常は不要）
 
 基準データには長い文字列そのものではなく SHA-256 と長さを保存しています。
 """
@@ -19,6 +22,7 @@ from playwright.sync_api import sync_playwright
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 BASE = pathlib.Path(__file__).resolve().parent / "baseline-v0.4.2.json"
 BASE050 = pathlib.Path(__file__).resolve().parent / "baseline-v0.5.0.json"
+BASE060 = pathlib.Path(__file__).resolve().parent / "baseline-v0.6.0.json"
 
 FIXTURES = {
   "default": "(() => defaultData())()",
@@ -141,6 +145,26 @@ def snapshot_v050(html):
         b.close()
     return h(res)
 
+# v0.6.0 の基準：単独人格モードの出力先ごとの出力・試着（v0.7.0 の「人格の自律性」がOFFなら、改修前と同じであることを確かめる）
+# 自律性の詳細設定をすべてOFFにしたデータ（メイン設定はOFF）も含める。旧版では未知のキーとして無視される
+AUTONOMY_OFF = "d.autonomy = {enabled:false, narration:false, core:false, ooc:false};"
+FIXTURES_V060 = {}
+for _n, _src in FIXTURES_V050.items():
+    FIXTURES_V060["single_" + _n] = f"(() => {{ const d = {_src}; d.structure.mode = 'single'; return d; }})()"
+for _n in ["all_sections", "locked_mix", "romance_cond_conds"]:
+    for _m in ["staged", "single"]:
+        FIXTURES_V060[f"autoff_{_m}_{_n}"] = f"(() => {{ const d = {FIXTURES_V050[_n]}; d.structure.mode = '{_m}'; {AUTONOMY_OFF} return d; }})()"
+
+def snapshot_v060(html):
+    res = {}
+    with sync_playwright() as p:
+        b = p.chromium.launch(); pg = b.new_page()
+        pg.goto("file://" + str(html)); pg.wait_for_function("typeof buildOutput === 'function'")
+        for name, src in FIXTURES_V060.items():
+            res["svc_" + name] = pg.evaluate(SVC_JS, src)
+        b.close()
+    return h(res)
+
 def diff(a, b, path, out):
     if isinstance(a, dict) and isinstance(b, dict):
         for k in sorted(set(a) | set(b)):
@@ -155,9 +179,13 @@ if __name__ == "__main__":
     if len(sys.argv) > 2 and sys.argv[1] == "--make-baseline-v050":
         BASE050.write_text(json.dumps(snapshot_v050(pathlib.Path(sys.argv[2]).resolve()), ensure_ascii=False, sort_keys=True, separators=(",", ":")), encoding="utf-8")
         print("baseline written:", BASE050); sys.exit(0)
+    if len(sys.argv) > 2 and sys.argv[1] == "--make-baseline-v060":
+        BASE060.write_text(json.dumps(snapshot_v060(pathlib.Path(sys.argv[2]).resolve()), ensure_ascii=False, sort_keys=True, separators=(",", ":")), encoding="utf-8")
+        print("baseline written:", BASE060); sys.exit(0)
     failed = False
     for label, fn, path in [("共通Markdown出力・旧形式の移行（基準 v0.4.2）", snapshot, BASE),
-                            ("出力先4系統・試着・プリセット・段階の作り方（基準 v0.5.0）", snapshot_v050, BASE050)]:
+                            ("出力先4系統・試着・プリセット・段階の作り方（基準 v0.5.0）", snapshot_v050, BASE050),
+                            ("単独人格の出力・試着、自律性OFF（基準 v0.6.0）", snapshot_v060, BASE060)]:
         now = fn(ROOT / "index.html"); base = json.loads(path.read_text(encoding="utf-8"))
         bad = []; diff(base, now, "", bad)
         n = sum(1 for _ in json.dumps(base).split(","))
