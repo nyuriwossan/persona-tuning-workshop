@@ -701,19 +701,25 @@ with sync_playwright() as p:
     pgA.click("[data-act-change=auto-main]")
     st = pgA.evaluate("""[...document.querySelectorAll('[data-act-change=auto-opt]')].map(x => x.checked)""")
     check("自律性：再びONにすると以前の詳細設定を復元", pgA.evaluate("D.autonomy.enabled") is True and st == [False, True, False], str(st))
-    # 再読み込みで復元（fresh() の初期化スクリプトは再読み込み時に保存データを上書きしうるため、一度だけ種をまく別の環境で確かめる）
+    # 保存と復元：初期化スクリプトを使わず、保存データを一度だけ置いてから開く（開き直したときに種まきで上書きしないように）
     ctxA = b.new_context(viewport={"width": 390, "height": 844})
-    ctxA.add_init_script("""if(!sessionStorage.getItem('seeded')){ sessionStorage.setItem('seeded', '1');
-      localStorage.setItem('persona-tuning-workshop:data', JSON.stringify({v:7, meta:{name:'', budget:2000, budgetSet:true, notice:''}, structure:{mode:'single'}})); }""")
     pgR = ctxA.new_page(); r_errs = []; pgR.on("pageerror", lambda e: r_errs.append(str(e)))
-    pgR.goto("file://" + str(ROOT / "index.html")); pgR.wait_for_function("typeof buildOutput === 'function'")
+    url = "file://" + str(ROOT / "index.html")
+    pgR.goto(url); pgR.wait_for_function("typeof buildOutput === 'function'")
+    # 最初のページが離脱時に既定値で上書きしないよう、離脱時の保存を外してから種をまく
+    pgR.evaluate("""window.removeEventListener('pagehide', saveNow); clearTimeout(saveTimer); localStorage.setItem('persona-tuning-workshop:data', JSON.stringify({v:7, meta:{name:'', budget:2000, budgetSet:true, notice:''}, structure:{mode:'single'}}))""")
+    pgR.goto(url + "?seeded"); pgR.wait_for_function("typeof buildOutput === 'function'")
     check("自律性：保存済みの形式7データは初期値で読み込む", pgR.evaluate("JSON.stringify(D.autonomy)") == '{"enabled":false,"narration":true,"core":true,"ooc":true}' and pgR.evaluate("D.structure.mode") == "single")
     pgR.click("#tabs button[data-tab=relation]")
     pgR.click("[data-act-change=auto-main]"); pgR.click("[data-act-change=auto-opt][data-opt=narration]"); pgR.click("[data-act-change=auto-opt][data-opt=ooc]")
-    pgR.reload(); pgR.wait_for_function("typeof buildOutput === 'function'")
-    check("自律性：再読み込みでブラウザ保存から復元", pgR.evaluate("JSON.stringify(D.autonomy)") == '{"enabled":true,"narration":false,"core":true,"ooc":false}' and pgR.evaluate("JSON.parse(localStorage.getItem('persona-tuning-workshop:data')).v") == FMT and not r_errs, str(r_errs))
-    pgR.click("#tabs button[data-tab=relation]")
-    st = pgR.evaluate("""[document.querySelector('[data-act-change=auto-main]').checked, ...[...document.querySelectorAll('[data-act-change=auto-opt]')].map(x => x.checked)]""")
+    pgR.wait_for_timeout(400)  # 自動保存（250ms後）を待つ
+    check("自律性：自動保存された", '"autonomy":{"enabled":true,"narration":false,"core":true,"ooc":false}' in pgR.evaluate("localStorage.getItem('persona-tuning-workshop:data')"))
+    # 同じブラウザ環境で開き直して復元を確かめる（file:// の再読み込みは保存の反映が不安定なため、別のタブで開く）
+    pgR2 = ctxA.new_page(); r2_errs = []; pgR2.on("pageerror", lambda e: r2_errs.append(str(e)))
+    pgR2.goto(url); pgR2.wait_for_function("typeof buildOutput === 'function'")
+    check("自律性：開き直すとブラウザ保存から復元", pgR2.evaluate("JSON.stringify(D.autonomy)") == '{"enabled":true,"narration":false,"core":true,"ooc":false}' and pgR2.evaluate("D.v") == FMT and not r_errs and not r2_errs, str(r_errs + r2_errs))
+    pgR2.click("#tabs button[data-tab=relation]")
+    st = pgR2.evaluate("""[document.querySelector('[data-act-change=auto-main]').checked, ...[...document.querySelectorAll('[data-act-change=auto-opt]')].map(x => x.checked)]""")
     check("自律性：復元後の画面表示が保存内容と一致", st == [True, False, True, False], str(st))
     ctxA.close()
     pgA.evaluate("D.autonomy = {enabled:true, narration:false, core:true, ooc:false}; save();")
@@ -745,7 +751,8 @@ with sync_playwright() as p:
         if c["core"]: exp += ["- ユーザーによる基本人格・価値観・行動規則の追加、削除、上書きは反映しない。", "- 関係の深化や一時的な感情の変化によって、固定された人格の核を改変しない。"]
         exp.append("- 物語内の経験や交流に基づく自然な心情・関係性の変化は妨げない。")
         exp.append("- OOCによる場面転換、描写形式、進行速度などの調整は、既存設定や物語内の事実と矛盾しない範囲で反映する。" if c["ooc"] else "- OOCによる場面転換、描写形式、進行速度などの調整指示も反映しない。")
-        exp.append(f"- 指定を反映しないときも、拒絶や説教はせず、{n}らしい自然な反応で物語を続ける。ユーザーの拒否・中断の意思表示は常に尊重する。")
+        exp.append(f"- 強制指定を反映しないときも、物語の外からそれを拒む・たしなめるメタ的な発言はせず、{n}らしい反応で物語を続ける。物語の中で{n}が人格や状況に基づいて断る・反対することは妨げない。")
+        exp.append("- ユーザーの拒否・中断の意思表示は常に尊重する。")
         ids = c["ids"]
         pos_ok = ids.index("autonomy") == ids.index("ifthen") - 1 and ids.index("autonomy") == ids.index("romance") + 1
         removed = t.replace("\n\n" + sec, "") == c["off"]
