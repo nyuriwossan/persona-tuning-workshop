@@ -3,10 +3,12 @@
   1〜9：v0.5.0 出力先拡張（段階変化型）
   10〜：v0.6.0 単独人格モード
   21〜：v0.7.0 キャラクターの自律性
+  v0.8.0 の新機能は tests/e2e_v080.py
 
   ※ v0.6.0 でデータ形式が 6→7、アプリ版が 0.5.0→0.6.0 になったため、版番号を確かめる5か所の期待値だけを更新している
     （出力・計数・移行の内容に関する期待値は変えていない）
   ※ v0.7.0 でデータ形式が 7→8、アプリ版が 0.6.0→0.7.0 になったため、版番号の期待値を FMT / APPV にまとめた
+  ※ v0.8.0 でデータ形式が 8→9、アプリ版が 0.7.0→0.8.0。FMT / APPV と、全状況の件数（12→16）だけを更新
 
 使い方: python3 tests/e2e.py [--shots DIR]
 """
@@ -17,8 +19,8 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 SHOTS = None
 if "--shots" in sys.argv: SHOTS = pathlib.Path(sys.argv[sys.argv.index("--shots") + 1]); SHOTS.mkdir(parents=True, exist_ok=True)
 
-FMT = 8          # データ形式（DATA_VERSION）
-APPV = "0.7.0"   # アプリ版（APP_VERSION）
+FMT = 9          # データ形式（DATA_VERSION）
+APPV = "0.8.0"   # アプリ版（APP_VERSION）
 results = []
 def check(name, cond, detail=""):
     results.append((name, bool(cond), detail))
@@ -618,7 +620,8 @@ with sync_playwright() as p:
     check("試着（単独）：会話例Markdownは単独の形式（段階の見出しなし）", pvmd.startswith("# ミナト｜会話例\n\n## 会ったとき\n状況：") and "###" not in pvmd and not [w for w in ["初期", "信頼成立後", "関係深化後"] if w in pvmd], pvmd[:200])
     pgS.click("[data-act=pv-scope][data-val=all]")
     pvall = pgS.input_value("#pvmd")
-    check("試着（単独）：全状況のMarkdownも単独の形式", pvall.count("\n## ") == 12 and "###" not in pvall)
+    # v0.8.0 で試着の状況を4つ追加（12→16。全状況の書き出しは ALL_SITUATIONS）
+    check("試着（単独）：全状況のMarkdownも単独の形式", pvall.count("\n## ") == pgS.evaluate("ALL_SITUATIONS.length") == 16 and "###" not in pvall)
     pgS.check("[data-act-change=rom-preview]")
     check("試着（単独）：恋愛感情の反応を足せる（段階で抑えない）", "大切に思" in pgS.inner_text("#pv-cards") or "大事に思" in pgS.inner_text("#pv-cards") or "好き" in pgS.inner_text("#pv-cards") or "隣にいろ" in pgS.inner_text("#pv-cards"), pgS.inner_text("#pv-cards")[:200])
     pgS.click("details:has([data-pv=pvMe]) > summary")
