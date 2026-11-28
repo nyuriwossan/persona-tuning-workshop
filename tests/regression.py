@@ -7,12 +7,15 @@
      段階変化型（既定）の結果が変わっていないことを確かめる
   3. 単独人格モードの出力先4系統の出力・試着、人格の自律性OFF（詳細設定をすべてOFFにしたデータを含む）
      … v0.6.0 と比較（tests/baseline-v0.6.0.json）。v0.7.0 の「人格の自律性」がOFFなら、出力が改修前と同じことを確かめる
+  4. 人格の自律性ON・段階変化型／単独人格、v0.8.0 の新しい設定を「未使用」の状態で持つデータ
+     … v0.7.0 と比較（tests/baseline-v0.7.0.json）。v0.8.0 の新機能が未使用なら、出力・試着・プリセット操作が改修前と同じことを確かめる
 
 使い方（Python の playwright と chromium が必要）:
   python3 tests/regression.py              # index.html を2つの基準データと比較
   python3 tests/regression.py --make-baseline /path/to/v0.4.2/index.html        # 基準1を作り直す（通常は不要）
   python3 tests/regression.py --make-baseline-v050 /path/to/v0.5.0/index.html   # 基準2を作り直す（通常は不要）
   python3 tests/regression.py --make-baseline-v060 /path/to/v0.6.0/index.html   # 基準3を作り直す（通常は不要）
+  python3 tests/regression.py --make-baseline-v070 /path/to/v0.7.0/index.html   # 基準4を作り直す（通常は不要）
 
 基準データには長い文字列そのものではなく SHA-256 と長さを保存しています。
 """
@@ -23,6 +26,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 BASE = pathlib.Path(__file__).resolve().parent / "baseline-v0.4.2.json"
 BASE050 = pathlib.Path(__file__).resolve().parent / "baseline-v0.5.0.json"
 BASE060 = pathlib.Path(__file__).resolve().parent / "baseline-v0.6.0.json"
+BASE070 = pathlib.Path(__file__).resolve().parent / "baseline-v0.7.0.json"
 
 FIXTURES = {
   "default": "(() => defaultData())()",
@@ -165,6 +169,36 @@ def snapshot_v060(html):
         b.close()
     return h(res)
 
+# v0.7.0 の基準：自律性ON、および v0.8.0 の設定を「未使用」で持つデータ（v0.7.0 では未知のキーとして無視される）
+# 未使用＝状態遷移OFF・背景は「出力しない」か「設定集用」だけ・ギャップは空・従来形式・再掲OFF・配分OFF
+V08_UNUSED = """
+d.background = {items:[
+  {id:1, title:'裏切り', preset:'betrayal', event:'裏切られた', belief:'行動を信じる', influence:'慎重', reactWhen:'過去を聞かれた', reactThen:'話題を変える', change:'', disclose:'信頼が成立したら', out:'off', prio:'high', keys:''},
+  {id:2, title:'', preset:'', event:'騎士の家に生まれた', belief:'', influence:'', reactWhen:'', reactThen:'', change:'', disclose:'', out:'lore', prio:'low', keys:'騎士, 家'}]};
+d.romanceFlow = {enabled:false, start:'open', use:{unaware:false, accepted:true, open:true},
+  trans:{emerge:{conds:['a'], logic:'and', before:'b', after:'c'}, aware:{conds:[], logic:'or', before:'', after:''}, accept:{conds:['x'], logic:'accum', before:'', after:''},
+         confess:{conds:[], logic:'or', before:'', after:''}, regress:{conds:['y'], logic:'or', before:'', after:'z'}}, perceive:['dull'], perceiveCustom:'q'};
+d.transition = {enabled:false, skip:'allow', logic:{trust:'or', deepen:'and'}, stages:{initial:{state:'s', act:'a', first:''}, trust:{state:'', act:'', first:'f'}, deep:{state:'', act:'', first:''}}, core:'嘘をつかない'};
+d.gap = {scope:'', scopeCustom:'x', from:'', to:'', keep:''};
+d.output.layout = 'classic'; d.output.recap = false; d.output.alloc = false; d.output.extra = {background:true, gap:true};
+"""
+FIXTURES_V070 = {}
+for _n in ["all_sections", "locked_mix", "romance_cond_conds", "romance_start_open", "speech_pron_stages", "romance_none_progress"]:
+    for _m in ["staged", "single"]:
+        FIXTURES_V070[f"auton_{_m}_{_n}"] = f"(() => {{ const d = {FIXTURES_V050[_n]}; d.structure.mode = '{_m}'; d.autonomy = {{enabled:true, narration:true, core:true, ooc:true}}; return d; }})()"
+        FIXTURES_V070[f"unused_{_m}_{_n}"] = f"(() => {{ const d = {FIXTURES_V050[_n]}; d.structure.mode = '{_m}'; d.autonomy = {{enabled:{'true' if _m == 'single' else 'false'}, narration:false, core:true, ooc:false}}; {V08_UNUSED} return d; }})()"
+
+def snapshot_v070(html):
+    res = {}
+    with sync_playwright() as p:
+        b = p.chromium.launch(); pg = b.new_page()
+        pg.goto("file://" + str(html)); pg.wait_for_function("typeof buildOutput === 'function'")
+        for name, src in FIXTURES_V070.items():
+            res["svc_" + name] = pg.evaluate(SVC_JS, src)
+        res["ops"] = pg.evaluate(OPS_JS)
+        b.close()
+    return h(res)
+
 def diff(a, b, path, out):
     if isinstance(a, dict) and isinstance(b, dict):
         for k in sorted(set(a) | set(b)):
@@ -182,10 +216,14 @@ if __name__ == "__main__":
     if len(sys.argv) > 2 and sys.argv[1] == "--make-baseline-v060":
         BASE060.write_text(json.dumps(snapshot_v060(pathlib.Path(sys.argv[2]).resolve()), ensure_ascii=False, sort_keys=True, separators=(",", ":")), encoding="utf-8")
         print("baseline written:", BASE060); sys.exit(0)
+    if len(sys.argv) > 2 and sys.argv[1] == "--make-baseline-v070":
+        BASE070.write_text(json.dumps(snapshot_v070(pathlib.Path(sys.argv[2]).resolve()), ensure_ascii=False, sort_keys=True, separators=(",", ":")), encoding="utf-8")
+        print("baseline written:", BASE070); sys.exit(0)
     failed = False
     for label, fn, path in [("共通Markdown出力・旧形式の移行（基準 v0.4.2）", snapshot, BASE),
                             ("出力先4系統・試着・プリセット・段階の作り方（基準 v0.5.0）", snapshot_v050, BASE050),
-                            ("単独人格の出力・試着、自律性OFF（基準 v0.6.0）", snapshot_v060, BASE060)]:
+                            ("単独人格の出力・試着、自律性OFF（基準 v0.6.0）", snapshot_v060, BASE060),
+                            ("自律性ON・v0.8.0の新機能が未使用のデータ（基準 v0.7.0）", snapshot_v070, BASE070)]:
         now = fn(ROOT / "index.html"); base = json.loads(path.read_text(encoding="utf-8"))
         bad = []; diff(base, now, "", bad)
         n = sum(1 for _ in json.dumps(base).split(","))
