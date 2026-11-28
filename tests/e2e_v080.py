@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """v0.8.0 の動作テスト（実ブラウザ Chromium で index.html を操作する）
   人格形成の背景／恋愛感情の状態遷移／関係段階の状態遷移／ギャップ設計／プロンプトの配置・再掲・配分／設定集／試着の追加と比較
+  出力先 ZETA・Zetter の追加と、出力先ごとの案内
 
   ※ 出力の「文章の効果」（実際のチャットモデルでの人格維持率・条件遵守率）はここでは測れない。
      ここで確かめるのは、設定どおりの文章が・設定どおりの位置に・壊れずに出ることだけ
@@ -407,6 +408,71 @@ with sync_playwright() as p:
         sw = pl.locator("[data-act-change=tr-on]"); sw.scroll_into_view_if_needed(); sw.click()
         check(f"操作：状態遷移のスイッチ（{tag}）", pl.evaluate("D.transition.enabled") is False and pl.locator("[data-act=tr-skip]").count() == 0)
         check(f"操作：例外なし（{tag}）", not pl.errs, str(pl.errs))
+
+    # ---------- 10. 出力先：ZETA・Zetter と出力先ごとの案内 ----------
+    pz = fresh(b)
+    pz.evaluate(RICH + "; D.output.layout = 'priority'; D.output.recap = true; saveNow();")
+    tab(pz, "output")
+    names = pz.locator("#o-dest button").all_inner_texts()
+    check("出力先：6つの選択肢にサービス名を明示", names == ["共通（汎用）", "ZETA", "Zetter", "Talelynx", "チャチャ", "Plaitoon"], str(names))
+    persona0 = pz.evaluate("JSON.stringify({t:D.traits, r:D.relation, b:D.background, f:D.romanceFlow, tr:D.transition, g:D.gap, s:D.speech, p:D.pron, m:D.meta.budget})")
+    for svc in ["common", "zeta", "zetter", "talelynx", "chacha", "plaitoon"]:
+        pz.click(f"[data-act=dest][data-val={svc}]"); pz.wait_for_selector("#fields section")
+        g = pz.inner_text("#dest-card")
+        check(f"出力先：{svc} の案内（貼り付ける欄・上限と数え方・設定集・会話例）", all(x in g for x in ["貼り付ける欄", "文字数の上限と数え方", "設定集（ロアブック）", "会話例"]), g[:200])
+        check(f"出力先：{svc} 横スクロールなし", no_overflow(pz))
+    check("出力先：切り替えても人格設計データ・予定文字数は変わらない", pz.evaluate("JSON.stringify({t:D.traits, r:D.relation, b:D.background, f:D.romanceFlow, tr:D.transition, g:D.gap, s:D.speech, p:D.pron, m:D.meta.budget})") == persona0)
+    # ZETA
+    pz.click("[data-act=dest][data-val=zeta]"); pz.wait_for_selector("#f-zprofile")
+    zg = pz.inner_text("#dest-card")
+    check("ZETA：プロットのキャラクターのプロフィール欄・合計2,400字（公式告知）・数え方は未確認と表示", "キャラクターのプロフィール" in zg and "2,400字" in zg and "公式告知" in zg and "未確認" in zg)
+    check("ZETA：設定集の上限は利用者の実機確認による値と表示", "最大50件" in zg and "500字" in zg and "5語" in zg and "実機確認" in zg)
+    check("ZETA：人格設定だけで全体を使い切ることを推奨しない旨", "使い切ることはおすすめしません" in zg)
+    same = pz.evaluate("""() => { const r = {}; for(const lv of ['1','2','3']){ const X = JSON.parse(JSON.stringify(D)); X.output.dest.exInline = false;
+      for(const s of ['zeta','zetter']){ X.output.dest.service = s; r[s + lv] = buildOutput(X, lv).fields[0].text === buildMarkdown(X, +lv).text; } } return r; }""")
+    check("ZETA・Zetter：人格Markdownは共通Markdownと同じ処理（詳細度3種）", all(same.values()), str(same))
+    zc = pz.evaluate("""() => { const X = defaultData(); ['warmth','pride','candor'].forEach(id => X.traits[id].use = true); X.output.dest.service = 'zeta'; X.output.dest.exInline = false;
+      const T0 = buildOutput(X, '2'), n = T0.fields[0].count; const r = {n, pc0:T0.pool.count, lim:T0.pool.limit};
+      X.output.dest.zetaReserve = 2400 - n; const T1 = buildOutput(X, '2'); r.at = [T1.pool.count, T1.pool.over, T1.pool.rem];
+      X.output.dest.zetaReserve = 2400 - n + 1; const T2 = buildOutput(X, '2'); r.over = [T2.pool.count, T2.pool.over, T2.svcOver];
+      X.output.dest.zetaReserve = 1500; X.meta.budget = 0; const T3 = buildOutput(X, 'auto'); r.auto = [T3.level, T3.pool.count, T3.fields[0].count];
+      return r; }""")
+    check("ZETA：合計は人格設定＋ほかの欄の予定字数", zc["pc0"] == zc["n"] and zc["lim"] == 2400, str(zc))
+    check("ZETA：上限ちょうどは超過でない／1字超えで超過", zc["at"] == [2400, False, 0] and zc["over"][1] and zc["over"][2], str(zc))
+    check("ZETA：自動選択はほかの欄の予定字数を差し引いて収まる詳細度を選ぶ", zc["auto"][1] <= 2400 or zc["auto"][0] == 1, str(zc))
+    pz.fill("#d-reserve", "800")
+    check("ZETA：ほかの欄の予定字数を入力（予定文字数は書き換えない）", pz.evaluate("D.output.dest.zetaReserve") == 800 and pz.evaluate("D.meta.budget") == 2000 and "うちほかの欄（予定）" in pz.inner_text("#counter"))
+    pz.fill("#d-reserve", "0")
+    cw = pz.inner_text("#counter")
+    check("ZETA：ほかの欄が0字なら、人格設定だけで上限まで使う前提だと警告", "0字のため、人格設定だけで" in cw and "数え方" in cw, cw)
+    pz.evaluate("window.__clip.length = 0"); pz.click("[data-act=copy-field][data-ta=f-zprofile]")
+    zv = pz.input_value("#f-zprofile")
+    check("ZETA：表示とコピーが一致し、v0.8.0の配置・再掲を含む", pz.evaluate("window.__clip[0]") == zv and zv.rstrip().split("\n\n")[-1].startswith("## 重要事項の再確認") and "## 重要な行動原則" in zv)
+    pz.evaluate("D.background.items[2].keys = 'a,b,c,d,e,f'; D.background.items[2].event = 'あ'.repeat(520); saveNow(); render(true);")
+    lc = pz.inner_text("#lore-card")
+    check("ZETA：設定集のキーワード5語・本文500字の超過を警告（削らない）", "5語を超えています" in lc and "500字を超えています" in lc and pz.evaluate("D.background.items[2].keys") == "a,b,c,d,e,f", lc[:300])
+    # Zetter
+    pz.click("[data-act=dest][data-val=zetter]"); pz.wait_for_selector("#f-zsetting")
+    tg = pz.inner_text("#dest-card")
+    check("Zetter：性格・設定欄・全体20,000字（利用者の確認・公式未確認）・ナレーター欄なし", "性格・設定" in tg and "20,000字" in tg and "公式の仕様文書では未確認" in tg and "ナレーター専用の欄はありません" in tg)
+    check("Zetter：設定集の上限は未確認と表示し、ZETAの上限チェックはしない", "確認できていません" in tg and "5語を超えています" not in pz.inner_text("#lore-card"))
+    pz.fill("#d-reserve", "3000")
+    check("Zetter：ほかの欄の予定字数はZETAと別に保存", pz.evaluate("[D.output.dest.zetterReserve, D.output.dest.zetaReserve]") == [3000, 0])
+    pz.click("[data-act-change=dest-exinline]")
+    check("Zetter：会話例を本文に含められる（字数に算入）", pz.evaluate("D.output.dest.exInline") is True)
+    # 互換
+    cm = pz.evaluate("""() => { const a = migrate({v:6, traits:{}, output:{dest:{service:'chacha'}}}), b2 = migrate({v:9, traits:{}, output:{dest:{service:'unknown', zetaReserve:'-5', zetterReserve:'1200'}}});
+      return [a.output.dest.service, a.output.dest.zetaReserve, b2.output.dest.service, b2.output.dest.zetaReserve, b2.output.dest.zetterReserve]; }""")
+    check("出力先：旧データの出力先はそのまま・不明な値は共通・予定字数は0以上の整数に", cm == ["chacha", 0, "common", 0, 1200], str(cm))
+    for (w, h, tag) in [(320, 640, "narrow"), (390, 844, "mobile")]:
+        pm = fresh(b, w, h); tab(pm, "output")
+        bbs = [pm.locator(f"[data-act=dest][data-val={v}]").bounding_box() for v in ["common", "zeta", "zetter", "talelynx", "chacha", "plaitoon"]]
+        check(f"出力先：6つのボタンが画面内で押せる大きさ（{tag}）", all(bb and bb["x"] >= 0 and bb["x"] + bb["width"] <= w and bb["height"] >= 36 for bb in bbs), str(bbs))
+        pm.click("[data-act=dest][data-val=zeta]"); pm.wait_for_selector("#f-zprofile")
+        check(f"出力先：ZETA選択後も横スクロールなし（{tag}）", no_overflow(pm))
+        if SHOTS: pm.locator("#dest-card").screenshot(path=str(SHOTS / f"dest_zeta_{tag}.png"))
+        check(f"出力先：例外なし（{tag}）", not pm.errs, str(pm.errs))
+    check("出力先：操作中に例外なし", not pz.errs, str(pz.errs))
 
     b.close()
 
